@@ -1,0 +1,9 @@
+Le pagine di base da sviluppare sono:
+
+
+1) Homepage (cos'è il sito, esempi di viaggi e di utenti)
+2) Login
+3) Explore (dove trovare tutti i viaggi)
+4) Profile (deve contenere una sezione per i messaggi)
+5) Trip (visualizza un viaggio)
+6) 404 page not found

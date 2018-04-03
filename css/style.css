@@ -1,9 +1,4 @@
-/* La classe tooltip è la classe che permetti di visualizzare il meteo 
-
-/* Tooltip container */
-#tooltip {
-    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
-}
+/* La classe tooltip è la classe che permetti di visualizzare il meteo*/
 
 /* Tooltip text */
 #tooltip .tooltiptext {

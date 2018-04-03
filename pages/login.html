@@ -9,11 +9,11 @@
     <meta name="author" content="Sciolla Luigi - Stucci Francesco">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!--_______________________________________Per Laboratorio 2_______________________________-->
+    <!--_______________________________________Controlli Ajax_______________________________-->
     <script type="text/javascript" src="../js/inputChecks.js"></script>
     <script type="text/javascript" src="../js/weatherAPI.js"></script>
     <style>
-    
+
     </style>
     <!--_________________________________________________________________________________________-->
 
@@ -90,15 +90,18 @@
                         <form action="#" method="post" onsubmit="return validateForm()">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" onchange="jsonRequest(id, value)">
+                                <input required type="text" class="form-control" id="name" onchange="jsonRequest(id, value)">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="text" class="form-control" id="email" onchange="jsonRequest(id, value)">
+                                <input required type="text" class="form-control" id="email" onchange="jsonRequest(id, value)">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password">
+                                <input required type="password" class="form-control" id="password" onchange="validatePassword()">
+                                <div class="requirements">
+                                  Your password must be at least 6 characters
+                                </div>
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="navbar-btn nav-button wow bounceInRight login">Register</button>

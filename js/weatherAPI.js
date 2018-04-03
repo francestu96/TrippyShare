@@ -1,13 +1,6 @@
 var request;
 
 function jsonAPIRequest(){
-  // var url="http://api.openweathermap.org/data/2.5/weather?q=Lisboa&&appid=5f4cd1cf7f21d214ead24a56a0ed49f3";
-  // getXMLHttpRequestObject();
-  //
-  // request.open("GET", url, true);
-  // request.onreadystatechange=ajaxCallback;
-  // request.send();
-
   $.ajax({
          url : "http://api.openweathermap.org/data/2.5/weather?q=Lisboa&&appid=5f4cd1cf7f21d214ead24a56a0ed49f3",
          type : 'GET',

@@ -49,16 +49,25 @@ function formatJson(jsonText){
 
 /** -------------- Ho aggiunto queste ---------------- */
 function validatePassword(){
-  // TODO: validare la password, mettere il bordo anche a lei se non è almeno di 6 caratteri
+  var passElem=document.getElementById("password");
+
+  if(passElem.value.length>5){
+    passElem.style="border:1px solid green";
+    correct[fromIdToIndex("password")] = 1;
+  }
+  else{
+    passElem.style="border:1px solid red";
+    correct[fromIdToIndex("password")] = 0;
+  }
 }
 
 function validateForm(){
   for(var i = 0; i < correct.length; i++){
     if(correct[i] == 0){
-      // DIsplay del messaggio di errore generico (impossibile registrarsi), se hai sbatti di scriverlo direttamente in pagina e non su alert meglio
+      alert("Your "+fromIndexToId(i)+ " is not valid");
       return false;
     }
-  }  
+  }
 
   alert("An horrible alert to prove you are now registered on no one's cloud");
   return true;
@@ -87,6 +96,15 @@ function fromIdToIndex(field){
   switch(field){
     case "name":  return 0;
     case "email": return 1;
+    case "password": return 2;
+    default: return -1;
+  }
+}
+function fromIndexToId(index){
+  switch(index){
+    case 0:  return "Name";
+    case 1: return "E-Mail";
+    case 2: return "Password";
     default: return -1;
   }
 }

@@ -26,10 +26,8 @@ function checkField(){
       if (request.responseText != null)
         formatJson(request.responseText);
       else
-        alert("Ajax error: no data received");
+        console.log("Ajax error: no data received");
     }
-    else
-      alert("Ajax error: " + request.statusText);
   }
 }
 
@@ -64,7 +62,7 @@ function validatePassword(){
 function validateForm(){
   for(var i = 0; i < correct.length; i++){
     if(correct[i] == 0){
-      alert("Your "+fromIndexToId(i)+ " is not valid");
+      alert("Your " + fromIndexToId(i) + " is not valid");
       return false;
     }
   }

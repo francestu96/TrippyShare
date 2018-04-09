@@ -1,5 +1,6 @@
 var request;
 
+// Permette di effettuare una richiesta al server meteo
 function jsonAPIRequest(){
   $.ajax({
          url : "http://api.openweathermap.org/data/2.5/weather?q=Lisboa&&appid=5f4cd1cf7f21d214ead24a56a0ed49f3",

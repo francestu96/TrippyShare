@@ -87,18 +87,18 @@
                 <div class="box-for overflow">
                     <div class="col-md-12 col-xs-12 register-blocks">
                         <h2>Sign up</h2>
-                        <form action="#" method="post" onsubmit="return validateForm()">
+                        <form action="#" id="login-form" method="post" onsubmit="return validateForm()">
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input required type="text" class="form-control" id="name" onchange="jsonRequest(id, value)">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input required type="text" class="form-control" id="email" onchange="jsonRequest(id, value)">
+                                <input required type="email" class="form-control" id="email" onchange="jsonRequest(id, value)">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input required type="password" class="form-control" id="password" onchange="validatePassword()">
+                                <input required type="password" class="form-control" id="password" minlength="6">
                                 <div class="requirements">
                                   Your password must be at least 6 characters
                                 </div>
@@ -118,11 +118,11 @@
                         <form action="#" method="post">
                             <div class="form-group">
                                 <label for="email_signin">Email</label>
-                                <input type="text" class="form-control" id="email_signin">
+                                <input required type="email" class="form-control" id="email_signin">
                             </div>
                             <div class="form-group">
                                 <label for="password_signin">Password</label>
-                                <input type="password" class="form-control" id="password_signin">
+                                <input required type="password" class="form-control" id="password_signin">
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="navbar-btn nav-button wow bounceInRight login"> Log in</button>

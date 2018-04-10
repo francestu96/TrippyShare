@@ -1,7 +1,6 @@
 var request;
 var field;
 var value;
-var correct = [0,0,0];
 
 function jsonRequest(field, value){
   var url="https://saw1718.herokuapp.com/validation.php";
@@ -35,43 +34,22 @@ function formatJson(jsonText){
   var jsonObj=JSON.parse(jsonText);
 
   if(jsonObj[0].status=="ok"){
-    document.getElementById(field).style="border:1px solid green";
-    correct[fromIdToIndex(field)] = 1;
+    var el=document.getElementById(field);
+    el.style="border:1px solid green";
+    el.setCustomValidity("");
   }
   else{
-    document.getElementById(field).style="border:1px solid red";
-    correct[fromIdToIndex(field)] = 0;
+    var el=document.getElementById(field);
+    el.style="border:1px solid red";
+    el.setCustomValidity("Invalid "+field);
   }
 }
 
-
-/** -------------- Ho aggiunto queste ---------------- */
-function validatePassword(){
-  var passElem=document.getElementById("password");
-
-  if(passElem.value.length>5){
-    passElem.style="border:1px solid green";
-    correct[fromIdToIndex("password")] = 1;
-  }
-  else{
-    passElem.style="border:1px solid red";
-    correct[fromIdToIndex("password")] = 0;
-  }
-}
-
+//aletr per dimostrare che viene inviato il form
 function validateForm(){
-  for(var i = 0; i < correct.length; i++){
-    if(correct[i] == 0){
-      alert("Your " + fromIndexToId(i) + " is not valid");
-      return false;
-    }
-  }
-
   alert("An horrible alert to prove you are now registered on no one's cloud");
   return true;
 }
-
-/** -------------- End ---------------- */
 
 
 function getXMLHttpRequestObject(){
@@ -86,23 +64,5 @@ function getXMLHttpRequestObject(){
       try { request = new ActiveXObject('Microsoft.XMLHTTP'); }
       catch (e) {}
     }
-  }
-}
-
-
-function fromIdToIndex(field){
-  switch(field){
-    case "name":  return 0;
-    case "email": return 1;
-    case "password": return 2;
-    default: return -1;
-  }
-}
-function fromIndexToId(index){
-  switch(index){
-    case 0:  return "Name";
-    case 1: return "E-Mail";
-    case 2: return "Password";
-    default: return -1;
   }
 }

@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Icona della scheda -->
-    <link rel="shortcut icon" href="../../assets/img/favicon.png" type="image/x-icon">
-    <link rel="icon" href="../../assets/img/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon">
+    <link rel="icon" href="../assets/img/favicon.png" type="image/x-icon">
 
     <!-- Stili per i font, almeno non se li perde -->
     <!-- Così sono sicuro che abbia il font che voglio -->
@@ -96,18 +96,18 @@
                 <div class="box-for overflow">
                     <div class="col-md-12 col-xs-12 register-blocks">
                         <h2>Sign up</h2>
-                        <form action="#" method="post" onsubmit="return validateForm()">
+                        <form action="#" id="login-form" method="post" onsubmit="return validateForm()">
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input required type="text" class="form-control" id="name" onchange="jsonRequest(id, value)">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" type="text" class="form-control" id="email" onchange="jsonRequest(id, value)">
+                                <input required type="email" class="form-control" id="email" onchange="jsonRequest(id, value)">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input required type="password" class="form-control" id="password" onchange="validatePassword()">
+                                <input required type="password" class="form-control" id="password" minlength="6">
                                 <div>
                                   Your password must be at least 6 characters
                                 </div>
@@ -160,7 +160,7 @@
                             <h4>About us </h4>
                             <div class="footer-title-line"></div>
 
-                            <img src="../img/footer-logo.png" alt="" class="wow pulse" data-wow-delay="1s">
+                            <img src="../assets/img/footer-logo.png" alt="" class="wow pulse" data-wow-delay="1s">
                             <p>Lorem ipsum dolor cum necessitatibus su quisquam molestias. Vel unde, blanditiis.</p>
                             <ul class="footer-adress">
                                 <li>

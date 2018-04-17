@@ -7,77 +7,12 @@
 <!--<![endif]-->
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SAW | Home page</title>
-    <meta name="description" content="Saw project">
-    <meta name="author" content="Sciolla Luigi - Stucci Francesco">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="shortcut icon" href="./../assets/img/favicon.png" type="image/x-icon">
-    <link rel="icon" href="./../assets/img/favicon.png" type="image/x-icon">
-
-    <!-- Così sono sicuro che abbia il font che voglio -->
-    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800'>
-    <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
-
-    <link rel="stylesheet" href="../assets/css/normalize.css">
-    <link rel="stylesheet" href="../assets/css/fontello.css">
-    <link href="../assets/css/animate.css" rel="stylesheet" media="screen">
-
-
-    <!-- Bootstrap & co -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/icheck.min_all.css">
-    <link rel="stylesheet" href="../assets/css/price-range.css">
-    <link rel="stylesheet" href="../assets/css/owl.carousel.css">
-    <link rel="stylesheet" href="../assets/css/owl.theme.css">
-    <link rel="stylesheet" href="../assets/css/owl.transitions.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
+  <title>SAW | Home page</title>
+  <?php require("common/header.php"); ?>
 </head>
 
 <body>
-    <div id="preloader">
-        <div id="status">&nbsp;</div>
-    </div>
-
-    <nav class="navbar navbar-default ">
-        <div class="container">
-            <!-- Barra in alto -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">
-                    <img src="./../assets/img/logo.png" alt="">
-                </a>
-            </div>
-
-            <!-- Pulsanti in alto a destra -->
-            <div class="collapse navbar-collapse yamm" id="navigation">
-                <ul class="main-nav nav navbar-nav navbar-right">
-
-                    <li >
-                        <a class="" href="index.html">Home</a>
-                    </li>
-                    <li >
-                        <a class="" href="explore.html">Explore</a>
-                    </li>
-                    <li >
-                        <a class="" href="login.html">Sign in</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-
+    <?php require("common/navbar.php"); ?>
 
     <!-- Area centrale con immagine e corpo -->
     <div class="slider-area">
@@ -85,15 +20,15 @@
             <div id="bg-slider" class="owl-carousel owl-theme">
 
                 <div class="item">
-                    <img src="./../assets/img/airplane.jpg" alt="Airplane">
+                    <img src="./assets/img/airplane.jpg" alt="Airplane">
                 </div>
 
                 <div class="item">
-                    <img src="./../assets/img/airplane.jpg" alt="Airplane">
+                    <img src="./assets/img/airplane.jpg" alt="Airplane">
                 </div>
 
                 <div class="item">
-                    <img src="./../assets/img/airplane.jpg" alt="Airplane">
+                    <img src="./assets/img/airplane.jpg" alt="Airplane">
                 </div>
 
 
@@ -265,7 +200,7 @@
                                         <div class="welcome-icon">
                                             <i class="pe-7s-photo pe-4x"></i>
                                         </div>
-                                        <h3>Any property</h3>
+                                        <h3>Any place</h3>
                                     </div>
                                 </div>
                                 <div class="col-xs-6 m-padding">
@@ -456,98 +391,10 @@
         </div>
     </div>
 
-    <!-- Footer-->
-    <div class="footer-area" >
-
-        <div class=" footer">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-md-3 col-md-offset-2 col-sm-6 wow fadeInRight animated">
-                        <div class="single-footer">
-                            <h4>About us </h4>
-                            <div class="footer-title-line"></div>
-
-                            <img src="./../assets/img/footer-logo.png" alt="" class="wow pulse" data-wow-delay="1s">
-                            <p>Lorem ipsum dolor cum necessitatibus su quisquam molestias. Vel unde, blanditiis.</p>
-                            <ul class="footer-adress">
-                                <li>
-                                    <i class="pe-7s-map-marker strong"> </i> Indirizzo</li>
-                                <li>
-                                    <i class="pe-7s-mail strong"> </i> email@mail.com</li>
-                                <li>
-                                    <i class="pe-7s-call strong"> </i> +1 234567890</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-md-offset-1 col-sm-6 wow fadeInRight animated">
-                        <div class="single-footer news-letter">
-                            <h4>Stay in touch</h4>
-                            <div class="footer-title-line"></div>
-                            <p>Lorem ipsum dolor sit amet, nulla suscipit similique quisquam molestias. Vel unde, blanditiis.</p>
-
-
-                            <div class="social pull-right">
-                                <ul>
-                                    <li>
-                                        <a class="wow fadeInUp animated" href="https://twitter.com/">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="wow fadeInUp animated" href="https://www.facebook.com/" data-wow-delay="0.2s">
-                                            <i class="fa fa-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="wow fadeInUp animated" href="https://plus.google.com/" data-wow-delay="0.3s">
-                                            <i class="fa fa-google-plus"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="wow fadeInUp animated" href="https://instagram.com/" data-wow-delay="0.4s">
-                                            <i class="fa fa-instagram"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="footer-copy text-center">
-            <div class="container">
-                <div class="row">
-                    <div class="pull-center">
-                        <span> (C) Sciolla - Stucci , All rights reserved 2018 </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-</div>
-
-    <script src="../assets/js/modernizr-2.6.2.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.4/js/bootstrap-select.js"></script>
-    <script src="../assets/js/bootstrap-hover-dropdown.js"></script>
-
-    <script src="../assets/js/easypiechart.min.js"></script>
-    <script src="../assets/js/jquery.easypiechart.min.js"></script>
-
-    <script src="../assets/js/owl.carousel.min.js"></script>
-    <script src="../assets/js/wow.js"></script>
-
-    <script src="../assets/js/icheck.min.js"></script>
-    <script src="../assets/js/price-range.js"></script>
-
-    <script src="../assets/js/main.js"></script>
+    <?php
+      require("common/footer.php");
+      require("common/scripts.php");
+    ?>
 
 </body>
 

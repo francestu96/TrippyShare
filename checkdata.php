@@ -29,6 +29,6 @@
     dontHackMySite();
   else{
     echo "<center><h2>Your fiscal code is: $fiscalCode </h2>";
-    echo "<input type=\"button\" value=\"Home\" onclick=\"document.location.href='index.html'\"></center>";
+    echo "<input type=\"button\" value=\"Home\" onclick=\"document.location.href='index.php'\"></center>";
   }
 ?>

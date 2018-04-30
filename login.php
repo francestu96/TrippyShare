@@ -1,8 +1,16 @@
+<?php 
+    // Se l'utente è già loggato ritorna ad index.html
+    session_start();
+    if(isset($_SESSION['username'])){
+        header('Location: index.php');
+    }
+?>
+
 <!DOCTYPE html>
 
 <html >
 <head>
-    <?php require("common/header.php"); ?>
+    <?php require("common/header.html"); ?>
 </head>
 
 <body>
@@ -41,8 +49,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="gender">Gender</label><br>
-                                <input required checked type="radio" name="gender" value="male" style="width: 0%">Male<br>
-                                <input required type="radio" name="gender" value="female" style="width: 0%">Female<br>
+                                <input required checked type="radio" name="gender" value="male" >Male<br>
+                                <input required type="radio" name="gender" value="female" >Female<br>
                             </div>
                             <div class="form-group">
                                 <label for="birthDate">Birth date</label>
@@ -51,6 +59,10 @@
                             <div class="form-group">
                                 <label for="birthCity">Birth city</label>
                                 <input required type="text" class="form-control" name="birthCity" onchange="searchCity(value)">
+                            </div>
+                            <div class="form-group">
+                                <label for="fiscalCode">Fiscal Code</label>
+                                <input required type="text" class="form-control" name="fiscalCode" pattern="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
@@ -100,8 +112,8 @@
     </div>
 
     <?php
-      require("common/footer.php");
-      require("common/scripts.php");
+      require("common/footer.html");
+      require("common/scripts.html");
     ?>
 
     <script>

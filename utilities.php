@@ -1,4 +1,10 @@
 <?php
+
+  /*
+  * utilities.php contiene tutte le funzioni di utilità generiche 
+  */
+
+  // Calcolo del codice fiscale: utilizza una funzione presa online
   function getFiscalCode($name, $surname, $genderNumber, $birthDate, $birthCity){
     $fiscalCode = "";
 
@@ -139,12 +145,6 @@
         return true;
   }
 
-  function dontHackMySite(){
-    echo "<center><h2>Don't hack my site!</h2><br>";
-    echo  "<img src=\"img/kickass.png\"><br><br><br>";
-    echo  "<input type=\"button\" value=\"Login\" onclick=\"history.back(-1)\"></center>";
-  }
-
   function getCode($birthCity){
     $json = file_get_contents('https://raw.githubusercontent.com/matteocontrini/comuni-json/master/comuni.json');
     $obj = json_decode($json);
@@ -184,6 +184,9 @@
     }
   }
 
+  /**
+   * A partire da un username e una password mi permette di vedere se è presente in rows
+   */
   function findUser($rows, $username, $password){
     foreach ($rows as $row => $data) {
       if(substr($data, 0, 1) == "#")

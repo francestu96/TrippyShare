@@ -1,11 +1,3 @@
-<?php 
-    // Se l'utente è già loggato ritorna ad index.html
-    session_start();
-    if(isset($_SESSION['username'])){
-        header('Location: index.php');
-    }
-?>
-
 <!DOCTYPE html>
 
 <html >
@@ -15,7 +7,12 @@
 
 <body>
 
-    <?php require("common/navbar.php"); ?>
+    <?php
+      require("common/navbar.php");
+      if(isset($_SESSION['username'])){
+          header('Location: index.php');
+      }
+    ?>
 
     <!-- Inizio dell'hader contenente un'immagine e una scritta -->
     <div id="tooltip" class="page-head">
@@ -49,8 +46,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="gender">Gender</label><br>
-                                <input required checked type="radio" name="gender" value="male" >Male<br>
-                                <input required type="radio" name="gender" value="female" >Female<br>
+                                <input required checked type="radio" name="gender" value="male" style="width: 0%">Male<br>
+                                <input required type="radio" name="gender" value="female" style="width: 0%">Female<br>
                             </div>
                             <div class="form-group">
                                 <label for="birthDate">Birth date</label>

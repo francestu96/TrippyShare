@@ -25,10 +25,10 @@
 
   // getFiscalCode è una funzione che si trova in utilities.php
   $fiscalCode = getFiscalCode($name, $surname, $gender == MALE ? 0 : 40, $birthDate, $birthCity);
-  if($fiscalCode === $_POST['fiscalCode']){
+  if($fiscalCode === strtoupper($_POST['fiscalCode'])){
     echo "Registrazione avvenuta con successo, purtroppo non puoi ancora loggare con questi dati perché manca il database";
   } else {
-    echo "Il codice fiscale dovrebbe essere: ".$fiscalCode." invece hai inserito: ".$_POST['fiscalCode'];
+    echo "Il codice fiscale dovrebbe essere: ".$fiscalCode." invece hai inserito: ".strtoupper($_POST['fiscalCode']);
   }
-  
+
 ?>

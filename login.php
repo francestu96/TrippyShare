@@ -46,8 +46,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="gender">Gender</label><br>
-                                <input required checked type="radio" name="gender" value="male" style="width: 0%">Male<br>
-                                <input required type="radio" name="gender" value="female" style="width: 0%">Female<br>
+                                <input required type="radio" name="gender" value="male" style="width: 10%">Male<br>
+                                <input required type="radio" name="gender" value="female" style="width: 10%">Female<br>
                             </div>
                             <div class="form-group">
                                 <label for="birthDate">Birth date</label>

@@ -18,25 +18,48 @@
   $username = trim($_POST['username']);
   $password = sha1($_POST['password_signin']);
 
+  $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
 
-  // Check se l'username esiste
-  $txt_file = file_get_contents('myusers.txt');
-  $rows = explode("\n", $txt_file);
-  array_shift($rows);
-
-  // findUser è nel file utitlities.php
-  $name = findUser($rows, $username, $password);
-  
-  if(!empty($name)){
-    session_start();
-    $_SESSION['username'] = $username;
-    header('Location: index.php');
-    // echo "<center><h2>Congratulations $name, you are logged in!</h2>";
-    // echo "<input type=\"button\" value=\"Home\" onclick=\"document.location.href='index.html'\"></center>";
-  }
-  else{
-    echo "<center><h2>Login failed!</h2>";
-    echo "<input type=\"button\" value=\"Login\" onclick=\"history.back(-1)\"></center>";
+  /* check connection */
+  if (mysqli_connect_errno()) {
+      printf("Connect failed: %s\n", mysqli_connect_error());
+      exit();
   }
 
+  $query = "SELECT * FROM users WHERE email=? AND password=?";
+
+  $stmt = $conn->prepare($query);
+  // if ( !$stmt ) {
+  //     printf('errno: %d, error: %s', $conn->errno, $conn->error);
+  //     die;
+  // }
+  if ($stmt = $conn->prepare($query)) {
+    /* bind parameters for markers */
+    $stmt->bind_param("ss", $username, $password);
+
+    /* execute query */
+    $stmt->execute();
+
+    /* get the statement result */
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+    // output data of each row
+      while($row = $result->fetch_assoc()) {
+        session_start();
+        
+        $_SESSION['name'] = $row["name"];
+        header('Location: index.php');
+      }
+    }
+    else {
+      echo "<center><h2>Login failed!</h2>";
+      echo "<input type=\"button\" value=\"Login\" onclick=\"history.back(-1)\"></center>";
+    }
+
+    /* close statement */
+    $stmt->close();
+  }
+
+  $conn->close();
 ?>

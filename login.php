@@ -3,7 +3,7 @@
 <html >
 <head>
   <title>SAW | Login</title>
-  <?php require("common/header.php"); ?>
+  <?php require("common/header.html"); ?>
 </head>
 
 <body>
@@ -29,18 +29,26 @@
                 <div class="box-for overflow">
                     <div class="col-md-12 col-xs-12 register-blocks">
                         <h2>Sign up</h2>
-                        <form action="#" id="login-form" method="post" onsubmit="return validateForm()">
+                        <form action="checkRegistration.php" id="login-form" method="post" onsubmit="return validateForm()">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input required type="text" class="form-control" id="name" onchange="jsonRequest(id, value)">
+                                <input required type="text" class="form-control" name="name" onchange="jsonRequest(id, value)">
+                            </div>
+                            <div class="form-group">
+                                <label for="surname">Surname</label>
+                                <input required type="text" class="form-control" name="surname"\>
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input required type="email" class="form-control" id="email" onchange="jsonRequest(id, value)">
+                                <input required type="email" class="form-control" name="email" onchange="jsonRequest(id, value)">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input required type="password" class="form-control" id="password" minlength="6">
+                                <input required type="password" class="form-control" name="password" minlength="6">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Confirm Password</label>
+                                <input required type="password" class="form-control" name="password_confirm" minlength="6">
                                 <div>
                                   Your password must be at least 6 characters
                                 </div>
@@ -57,14 +65,14 @@
                 <div class="box-for overflow">
                     <div class="col-md-12 col-xs-12 login-blocks">
                         <h2>Login</h2>
-                        <form action="#" method="post">
+                        <form action="checkLogin.php" method="post">
                             <div class="form-group">
                                 <label for="email_signin">Email</label>
-                                <input type="text" class="form-control" id="email_signin">
+                                <input type="text" class="form-control" name="email_signin">
                             </div>
                             <div class="form-group">
                                 <label for="password_signin">Password</label>
-                                <input type="password" class="form-control" id="password_signin">
+                                <input type="password" class="form-control" name="password_signin">
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="navbar-btn nav-button login"> Log in</button>
@@ -82,15 +90,9 @@
     </div>
 
     <?php
-      require("common/footer.php");
-      require("common/scripts.php");
+      require("common/footer.html");
+      require("common/scripts.html");
     ?>
-
-    <!--_______________________________________Controlli Ajax_______________________________-->
-    <script type="text/javascript" src="assets/js/ownJs/inputChecks.js"></script>
-    <script type="text/javascript" src="assets/js/ownJs/weatherAPI.js"></script>
-
-
 </body>
 
 </html>

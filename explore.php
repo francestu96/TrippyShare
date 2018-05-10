@@ -8,7 +8,7 @@
 
 <head>
   <title>SAW | Explore</title>
-  <?php require("common/header.php"); ?>
+  <?php require("common/header.html"); ?>
 </head>
 
 <body>
@@ -455,8 +455,8 @@
     </div>
 
   <?php
-    require("common/footer.php");
-    require("common/scripts.php");
+    require("common/footer.html");
+    require("common/scripts.html");
   ?>
 </body>
 

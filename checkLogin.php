@@ -4,17 +4,16 @@
   /**
    * Permette di far loggare un utente registrato su myusers.txt
    */
-  $required = array('email_signin', 'password_signin');
+  require "utilities.php";
+  $required = array('username', 'password_signin');
 
   foreach($required as $field) {
-    if (empty($_POST[$field])) {
-      echo "Il campo: ".$field." e' obbligatorio.";
-      return;
-    }
+    if (empty($_POST[$field]))
+      header('Location: error.html');
   }
 
   // Get dei parametri
-  $email = trim($_POST['email_signin']);
+  $username = trim($_POST['username']);
   $password = sha1($_POST['password_signin']);
 
   $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
@@ -27,9 +26,10 @@
 
   $query = "SELECT * FROM users WHERE email=? AND password=?";
 
+  $stmt = $conn->prepare($query);
   if ($stmt = $conn->prepare($query)) {
     /* bind parameters for markers */
-    $stmt->bind_param("ss", $email, $password);
+    $stmt->bind_param("ss", $username, $password);
 
     /* execute query */
     $stmt->execute();
@@ -47,13 +47,12 @@
       }
     }
     else {
-      echo "<center><h2>Login failed!</h2>";
-      echo "<input type=\"button\" value=\"Login\" onclick=\"history.back(-1)\"></center>";
+      header('Location: error.html');
     }
 
     /* close statement */
     $stmt->close();
   }
-
   $conn->close();
+  header('Location: error.html');
 ?>

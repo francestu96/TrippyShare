@@ -29,10 +29,10 @@
                 <div class="box-for overflow">
                     <div class="col-md-12 col-xs-12 register-blocks">
                         <h2>Sign up</h2>
-                        <form action="checkRegistration.php" id="login-form" method="post" onsubmit="return validateForm()">
+                        <form action="checkRegistration.php" id="login-form" method="post">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input required type="text" class="form-control" name="name" onchange="jsonRequest(id, value)">
+                                <input required type="text" class="form-control" name="name">
                             </div>
                             <div class="form-group">
                                 <label for="surname">Surname</label>
@@ -40,15 +40,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input required type="email" class="form-control" name="email" onchange="jsonRequest(id, value)">
+                                <input required type="email" class="form-control" id="email" name="email" onchange="checkEmail()">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input required type="password" class="form-control" name="password" minlength="6">
+                                <input required type="password" class="form-control" id="password" name="password" minlength="6" onchange="checkPassword()">
                             </div>
                             <div class="form-group">
                                 <label for="password">Confirm Password</label>
-                                <input required type="password" class="form-control" name="password_confirm" minlength="6">
+                                <input required type="password" class="form-control" id="password_confirm" onchange="checkPassword()">
                                 <div>
                                   Your password must be at least 6 characters
                                 </div>
@@ -93,6 +93,7 @@
       require("common/footer.html");
       require("common/scripts.html");
     ?>
+    <script src="assets/js/myJs/checkInput.js"></script>
 </body>
 
 </html>

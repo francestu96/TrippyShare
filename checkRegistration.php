@@ -11,11 +11,21 @@
   $required = array('name', 'surname', 'email', 'password');
 
   foreach($required as $field) {
-    if (empty($_POST[$field])) {
-      echo "Il campo: ".$field." e' obbligatorio.";
-      return;
-    }
+    if (empty($_POST[$field]))
+      header('Location: error.html');
   }
+  switch ($_POST['gender']) {
+    case MALE:
+      break;
+    case FEMALE:
+      break;
+    case OTHER:
+      break;
+    default:
+      header('Location: error.html');
+      return;
+  }
+
   // Uso la trim per evitare che ci siano spazi non voluti
   $name = $_POST['name'];
   $surname = $_POST['surname'];
@@ -29,6 +39,16 @@
   // Check connection
   if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
+  }
+
+  $query="SELECT * FROM users";
+
+  $result=$conn->query($query)
+  	or die ($conn->error);
+
+  for($i=0; $row=$result->fetch_assoc(); $i++){
+  	if($email == $row['email'])
+      header('Location: error.html');
   }
 
   $query = "INSERT INTO users (name, surname, gender, birthdate, email, password) VALUES (?, ?, ?, ?, ?, ?)";
@@ -48,15 +68,12 @@
       header('Location: index.php');
     }
     else {
-      echo "<center><h2>Something went wrong during the insert</h2>";
-      echo "<input type=\"button\" value=\"Login\" onclick=\"history.back(-1)\"></center>";
+      header('Location: error.html');
     }
 
     /* close statement */
     $stmt->close();
   }
-  echo "<center><h2>You submit bad inputs!</h2>";
-  echo "<input type=\"button\" value=\"Login\" onclick=\"history.back(-1)\"></center>";
-
   $conn->close();
+  header('Location: error.html');
 ?>

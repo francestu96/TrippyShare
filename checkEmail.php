@@ -1,5 +1,10 @@
 <?php
-//Stampa in json tutte le mail nel database
+//Stampa "ok" se la mail non è presente e "ko" se la mail esiste già
+if(!isset($_GET['email']))
+	header('Location: error.html');
+
+$to_check = $_GET['email'];
+
 $mysqli = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
 
 /* check connection */
@@ -18,7 +23,10 @@ $emails = array();
 for($i=0; $row=$result->fetch_assoc(); $i++)//mysql_fetch_array($sql)
 	$emails[$i]=$row['email'];
 
-echo json_encode($emails);
-
 $mysqli->close();
+
+if(in_array($to_check, $emails))
+	echo "ko";
+else
+	echo "ok";
 ?>

@@ -24,18 +24,23 @@ function checkEmail(){
 
   $.ajax({
         type: "GET",
-        url: "json.php", //json.php chiede al database tutte le mail e le stampa in jason
-        dataType: "json",
+        url: "checkEmail.php?email=" + email.value, //json.php chiede al database tutte le mail e le stampa in jason
+        dataType: "text",
         success: function(response){
-            for(var i=0; i<response.length; i++){
-              if(email.value == response[i]){
-                email.style="border:1px solid red";
-                email.setCustomValidity("Email already used!");
-                return;
-              }
+            alert(response);
+            if(response === "ok"){
+              email.style="border:1px solid green";
+              email.setCustomValidity("");
+              return;
             }
-            email.style="border:1px solid green";
-            email.setCustomValidity("");
+            else if(response === "ko"){
+              email.style="border:1px solid red";
+              email.setCustomValidity("Email already used!");
+              return
+            }
+            else{
+              window.location.replace("error.hml");
+            }
         }
     });
 }

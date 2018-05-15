@@ -27,7 +27,6 @@ function checkEmail(){
         url: "checkEmail.php?email=" + email.value, //json.php chiede al database tutte le mail e le stampa in jason
         dataType: "text",
         success: function(response){
-            alert(response);
             if(response === "ok"){
               email.style="border:1px solid green";
               email.setCustomValidity("");

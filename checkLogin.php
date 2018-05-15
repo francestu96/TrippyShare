@@ -4,8 +4,7 @@
   /**
    * Permette di far loggare un utente registrato su myusers.txt
    */
-  require "utilities.php";
-  $required = array('username', 'password_signin');
+  $required = array('email_signin', 'password_signin');
 
   foreach($required as $field) {
     if (empty($_POST[$field]))
@@ -13,7 +12,7 @@
   }
 
   // Get dei parametri
-  $username = trim($_POST['username']);
+  $email = trim($_POST['email_signin']);
   $password = sha1($_POST['password_signin']);
 
   $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
@@ -29,7 +28,7 @@
   $stmt = $conn->prepare($query);
   if ($stmt = $conn->prepare($query)) {
     /* bind parameters for markers */
-    $stmt->bind_param("ss", $username, $password);
+    $stmt->bind_param("ss", $email, $password);
 
     /* execute query */
     $stmt->execute();
@@ -47,12 +46,11 @@
       }
     }
     else {
-      header('Location: error.html');
+      header('Location: login.php');
     }
 
     /* close statement */
     $stmt->close();
   }
   $conn->close();
-  header('Location: error.html');
 ?>

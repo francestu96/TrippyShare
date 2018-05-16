@@ -98,10 +98,7 @@
                           <div class="form-group text-center">
                             <progress value="100" max="100" id="progress" style="width:250px;"></progress>
                           </div>
-                          <input type="hidden" name="duration" value="">
-                          <input type="hidden" name="days" value="">
-                          <input type="hidden" name="type" value="">
-                          <input type="hidden" name="description" value="">
+                          <input type="hidden" name="stages" value="">
                           <div class="text-center">
                             <button type="button" class="navbar-btn nav-button" style='margin-right:5px' onclick="prevStage()">...Prev Stage</button>
                             <button type="submit" class="navbar-btn nav-button login">Finish</button>

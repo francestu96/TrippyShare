@@ -18,9 +18,8 @@
   $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
 
   /* check connection */
-  if (mysqli_connect_errno()) {
-      printf("Connect failed: %s\n", mysqli_connect_error());
-      exit();
+  if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
   }
 
   $query = "SELECT * FROM users WHERE email=? AND password=?";

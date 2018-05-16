@@ -66,7 +66,7 @@
                           </div>
                           <div class="form-group">
                             <label for="days">Days of stay</label>
-                            <input required type="number" class="form-control" id="days">
+                            <input required type="number" class="form-control" id="days" value="1">
                           </div>
                           <div class="form-group">
                             <label for="type">Type</label><br>
@@ -95,13 +95,17 @@
                             <label for="description">Description</label>
                             <textarea required class="form-control" id="description" rows="5" cols="40"></textarea>
                           </div>
+                          <div class="form-group text-center">
+                            <progress value="100" max="100" id="progress" style="width:250px;"></progress>
+                          </div>
                           <input type="hidden" name="duration" value="">
                           <input type="hidden" name="days" value="">
                           <input type="hidden" name="type" value="">
                           <input type="hidden" name="description" value="">
                           <div class="text-center">
-                              <button type="submit" class="navbar-btn nav-button login">Finish</button>
-                              <button type="button" class="navbar-btn nav-button" onclick="addStage()">Next Stage...</button>
+                            <button type="button" class="navbar-btn nav-button" style='margin-right:5px' onclick="prevStage()">...Prev Stage</button>
+                            <button type="submit" class="navbar-btn nav-button login">Finish</button>
+                            <button type="button" class="navbar-btn nav-button" onclick="addStage()">Next Stage...</button>
                           </div>
                         </div>
                     </div>
@@ -115,7 +119,7 @@
       require("common/footer.html");
       require("common/scripts.html");
     ?>
-    <script src="assets/js/myJs/manageTrip.js"></script>
+    <script src="assets/js/myJs/manageStages.js"></script>
 </body>
 
 </html>

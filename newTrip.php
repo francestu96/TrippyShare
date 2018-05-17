@@ -28,7 +28,7 @@
 
 
     <!-- Area di login -->
-    <form action="#" id="login-form" method="post">
+    <form action="checkTrip.php" id="login-form" method="post">
       <div class="register-area" style="background-color: rgb(249, 249, 249);">
 
           <div class="container">
@@ -56,9 +56,9 @@
                 </div>
             </div>
 
-            <div class="col-md-6" id="animate">
+            <div class="col-md-6">
                 <div class="box-for overflow">
-                    <div class="col-md-12 col-xs-12 login-blocks">
+                    <div class="col-md-12 col-xs-12 login-blocks" id="animate">
                         <h2>Stages</h2>
                           <div class="form-group">
                             <label for="place">Place</label>
@@ -98,10 +98,10 @@
                           <div class="form-group text-center">
                             <progress value="100" max="100" id="progress" style="width:250px;"></progress>
                           </div>
-                          <input type="hidden" name="stages" value="">
+                          <input type="hidden" id="stages" name="stages" value="">
                           <div class="text-center">
                             <button type="button" class="navbar-btn nav-button" style='margin-right:5px' onclick="prevStage()">...Prev Stage</button>
-                            <button type="submit" class="navbar-btn nav-button login">Finish</button>
+                            <button type="submit" class="navbar-btn nav-button login" onclick="setStages()">Finish</button>
                             <button type="button" class="navbar-btn nav-button" onclick="addStage()">Next Stage...</button>
                           </div>
                         </div>

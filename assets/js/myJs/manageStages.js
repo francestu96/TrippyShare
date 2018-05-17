@@ -6,14 +6,25 @@ var index = 0;
 //aggiunge una tappa all'array stages
 //si potrebbe fare che se è tutto vuoto la tappa viene eliminata, visto che un bottone in più non saprei dove metterlo
 function addStage(){
+  var required = new Array("place", "days", "type", "description");
+
+  for(var i=0; i < required.length; i++) {
+    if (document.getElementById(required[i]).value == "" || document.getElementById(required[i]).value == "undefined"){
+      document.getElementById(required[i]).setCustomValidity("Please fill out this field");
+      document.getElementById(required[i]).reportValidity();
+      return;
+    }
+  }
+
   var stage = {
     place : document.getElementById("place").value,
-    day : document.getElementById("days").value,
+    days : document.getElementById("days").value,
     type : document.getElementById("type").value,
     description : document.getElementById("description").value
   }
 
   stages[index] = stage;
+
   //se si è in fondo all'array, i prossimi campi verranno visualizzati vuoti
   if(!stages[index+1]){
     document.getElementById("place").value='';
@@ -33,9 +44,6 @@ function addStage(){
 
   index++;
   document.getElementById("progress").value=(index/stages.length)*100;
-
-  //assegno all'input nascosto nel form l'array con tutte le tappe da inviare in POST
-  document.getElementById("stages").value = stages;
 }
 
 //si guardano le tappe inserite precedentemente nel caso si volesse modificare qualcosa
@@ -43,11 +51,9 @@ function prevStage(){
   if(index == 0)
     return;
 
-  var right = $(window).width() - ($('#animate').offset().left + $('#animate').outerWidth());
+    $("#animate").css('left', function(){ return -$(this).offset().left; })
+               .animate({"left":"0px"}, "slow");
 
-  //dovrebbe essere la funzione per l'animazione verso destra ma non funziona DIOCANE
-  $("#animate").css({right:right})
-             .animate({"right":"0px"}, "slow");
 
   index--;
 
@@ -58,4 +64,18 @@ function prevStage(){
   document.getElementById("description").value = stages[index].description;
 
   document.getElementById("progress").value=(index/stages.length)*100;
+}
+
+//aggiorna stages() e lo assegna all'input nascosto "stages"
+function setStages(){
+  var stage = {
+    place : document.getElementById("place").value,
+    days : document.getElementById("days").value,
+    type : document.getElementById("type").value,
+    description : document.getElementById("description").value
+  }
+
+  stages[index] = stage;
+
+  document.getElementById("stages").value = JSON.stringify(stages);
 }

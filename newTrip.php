@@ -28,7 +28,7 @@
 
 
     <!-- Area di login -->
-    <form action="checkTrip.php" id="login-form" method="post">
+    <form action="checkTrip.php" enctype="multipart/form-data" id="login-form" method="post">
       <div class="register-area" style="background-color: rgb(249, 249, 249);">
 
           <div class="container">

@@ -1,41 +1,29 @@
 <?php
-
-  // ESERCIZIO 2
-  /**
-   * Permette di far loggare un utente registrato su myusers.txt
-   */
-  require "utilities.php";
-  $required = array('username', 'password_signin');
+  echo "TEST";
+  $required = array('email_signin', 'password_signin');
 
   foreach($required as $field) {
-    if (empty($_POST[$field])) {
-      echo "Il campo: ".$field." e' obbligatorio.";
-      return;
-    }
+    if (empty($_POST[$field]))
+      header('Location: error.html');
   }
 
   // Get dei parametri
-  $username = trim($_POST['username']);
+  $email = trim($_POST['email_signin']);
   $password = sha1($_POST['password_signin']);
 
   $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
 
   /* check connection */
-  if (mysqli_connect_errno()) {
-      printf("Connect failed: %s\n", mysqli_connect_error());
-      exit();
+  if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
   }
 
   $query = "SELECT * FROM users WHERE email=? AND password=?";
 
   $stmt = $conn->prepare($query);
-  // if ( !$stmt ) {
-  //     printf('errno: %d, error: %s', $conn->errno, $conn->error);
-  //     die;
-  // }
   if ($stmt = $conn->prepare($query)) {
     /* bind parameters for markers */
-    $stmt->bind_param("ss", $username, $password);
+    $stmt->bind_param("ss", $email, $password);
 
     /* execute query */
     $stmt->execute();
@@ -47,19 +35,17 @@
     // output data of each row
       while($row = $result->fetch_assoc()) {
         session_start();
-        
+
         $_SESSION['name'] = $row["name"];
         header('Location: index.php');
       }
     }
     else {
-      echo "<center><h2>Login failed!</h2>";
-      echo "<input type=\"button\" value=\"Login\" onclick=\"history.back(-1)\"></center>";
+      header('Location: login.php');
     }
 
     /* close statement */
     $stmt->close();
   }
-
   $conn->close();
 ?>

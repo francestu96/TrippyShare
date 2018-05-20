@@ -2,25 +2,19 @@
 
 <html >
 <head>
-    <?php require("common/header.html"); ?>
+  <title>SAW | Login</title>
+  <?php require("common/header.html"); ?>
 </head>
 
 <body>
-
-    <?php
-      require("common/navbar.php");
-      if(isset($_SESSION['username'])){
-          header('Location: index.php');
-      }
-    ?>
+    <?php require("common/navbar.php"); ?>
 
     <!-- Inizio dell'hader contenente un'immagine e una scritta -->
-    <div id="tooltip" class="page-head">
-        <span class="tooltiptext"></span>
+    <div class="page-head">
         <div class="container">
             <div class="row">
                 <div class="page-head-content">
-                    <h1 class="page-title" style="font-weight:900"> Sign up / Login </h1>
+                    <h1 class="page-title"> Sign up / Login </h1>
                 </div>
             </div>
         </div>
@@ -35,45 +29,32 @@
                 <div class="box-for overflow">
                     <div class="col-md-12 col-xs-12 register-blocks">
                         <h2>Sign up</h2>
-                        <form action="checkdata.php" id="login-form" method="post">
+                        <form action="checkRegistration.php" id="login-form" method="post">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input required type="text" class="form-control" name="name"\>
+                                <input required type="text" class="form-control" name="name">
                             </div>
                             <div class="form-group">
                                 <label for="surname">Surname</label>
                                 <input required type="text" class="form-control" name="surname"\>
                             </div>
                             <div class="form-group">
-                                <label for="gender">Gender</label><br>
-                                <input required type="radio" name="gender" value="male" style="width: 10%">Male<br>
-                                <input required type="radio" name="gender" value="female" style="width: 10%">Female<br>
-                            </div>
-                            <div class="form-group">
-                                <label for="birthDate">Birth date</label>
-                                <input required type="date" class="form-control" name="birthDate"\>
-                            </div>
-                            <div class="form-group">
-                                <label for="birthCity">Birth city</label>
-                                <input required type="text" class="form-control" name="birthCity" onchange="searchCity(value)">
-                            </div>
-                            <div class="form-group">
-                                <label for="fiscalCode">Fiscal Code</label>
-                                <input required type="text" class="form-control" name="fiscalCode" pattern="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$">
-                            </div>
-                            <div class="form-group">
                                 <label for="email">Email</label>
-                                <input required type="email" class="form-control" name="email">
+                                <input required type="email" class="form-control" id="email" name="email" onchange="checkEmail()">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input required type="password" class="form-control" name="password" minlength="6">
+                                <input required type="password" class="form-control" id="password" name="password" minlength="6" onchange="checkPassword()">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Confirm Password</label>
+                                <input required type="password" class="form-control" id="password_confirm" onchange="checkPassword()">
                                 <div>
                                   Your password must be at least 6 characters
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="navbar-btn nav-button wow bounceInRight login">Register</button>
+                                <button type="submit" class="navbar-btn nav-button login">Register</button>
                             </div>
                         </form>
                     </div>
@@ -86,15 +67,15 @@
                         <h2>Login</h2>
                         <form action="checkLogin.php" method="post">
                             <div class="form-group">
-                                <label for="email_signin">Username</label>
-                                <input required type="text" class="form-control" name="username">
+                                <label for="email_signin">Email</label>
+                                <input type="text" class="form-control" name="email_signin">
                             </div>
                             <div class="form-group">
                                 <label for="password_signin">Password</label>
-                                <input required type="password" class="form-control" name="password_signin">
+                                <input type="password" class="form-control" name="password_signin">
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="navbar-btn nav-button wow bounceInRight login"> Log in</button>
+                                <button type="submit" class="navbar-btn nav-button login"> Log in</button>
                             </div>
                         </form>
                         <br>
@@ -112,28 +93,7 @@
       require("common/footer.html");
       require("common/scripts.html");
     ?>
-
-    <script>
-      function searchCity(city){
-        el = document.getElementsByName("birthCity")[0];
-
-        $.ajax({
-          url: "https://raw.githubusercontent.com/matteocontrini/comuni-json/master/comuni.json",
-          type : 'GET',
-          dataType:'json',
-          success: function(result){
-            for(i=0; i < result.length; i++){
-              if(city.toLowerCase() == result[i].nome.toLowerCase()){
-                el.style="border:1px solid green";
-                el.setCustomValidity("");
-                return;
-              }
-            }
-            el.style="border:1px solid red";
-            el.setCustomValidity("Invalid city");
-          }});
-      }
-    </script>
+    <script src="assets/js/myJs/checkInput.js"></script>
 </body>
 
 </html>

@@ -1,8 +1,13 @@
 <?php
 session_start();
 
+if(!isset($_SESSION['name'])){
+  header('Location: error.html');
+  return;
+}
+
 session_unset();
 session_destroy();
 
-header('Location: ' . $_SERVER['HTTP_REFERER']);
+header('Location: index.php');
 ?>

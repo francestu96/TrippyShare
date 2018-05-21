@@ -1,16 +1,20 @@
 <?php
-  echo "TEST";
+  session_start();
+
   $required = array('email_signin', 'password_signin');
 
   foreach($required as $field) {
-    if (empty($_POST[$field]))
-      header('Location: error.html');
-  }
+    if ($_POST[$field] === "" || empty($_POST[$field])){
+      $_SESSION['login_message'] = "Errore, compila tutti i campi";
+      header('Location: login.php');
+    }
+}
 
   // Get dei parametri
   $email = trim($_POST['email_signin']);
-  $password = sha1($_POST['password_signin']);
+  $password = sha1(trim($_POST['password_signin']));
 
+  // <TODO:> Inserisci qui il tuo nome utente e password</TODO:>
   $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
 
   /* check connection */
@@ -34,13 +38,13 @@
     if ($result->num_rows === 1) {
     // output data of each row
       while($row = $result->fetch_assoc()) {
-        session_start();
 
         $_SESSION['name'] = $row["name"];
         header('Location: index.php');
       }
     }
     else {
+      $_SESSION['login_message'] = "Username o password errati";
       header('Location: login.php');
     }
 

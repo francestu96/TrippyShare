@@ -7,6 +7,7 @@
     if ($_POST[$field] === "" || empty($_POST[$field])){
       $_SESSION['login_message'] = "Errore, compila tutti i campi";
       header('Location: login.php');
+      exit();
     }
 }
 
@@ -18,7 +19,9 @@
 
   /* check connection */
   if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
+    header('Location: login.php');
+    exit();
+
   }
 
   $query = "SELECT * FROM users WHERE email=? AND password=?";
@@ -45,6 +48,7 @@
     else {
       $_SESSION['login_message'] = "Username o password errati";
       header('Location: login.php');
+      exit();
     }
 
     /* close statement */

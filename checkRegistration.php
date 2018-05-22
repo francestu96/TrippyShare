@@ -11,7 +11,7 @@
 
   foreach($required as $field) {
     if ($_POST[$field] === "" || empty($_POST[$field])){
-      $_SESSION['registration_message'] = "Errore durante la registrazione, compila tutti i campi";
+      $_SESSION['registration_message'] = "Errore durante la registrazione, verifica i campi";
       header('Location: login.php');
     }
   }
@@ -22,13 +22,22 @@
   $email = trim($_POST['email']);
   $password = sha1(trim($_POST['password']));
 
+  // Verifico che abbiano inserito solo il nome e non altre schifezze
+  if(!preg_match("/^[a-zA-Z'-]+$/", $name) || !preg_match("/^[a-zA-Z'-]+$/", $surname) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
+    // Un cracker :D
+    $_SESSION['registration_message'] = "Errore durante la registrazione, verifica i campi";
+    header('Location: login.php');
+    exit();
+  }
+
   // Create connection
-  // <TODO:> Inserisci qui il tuo nome utente e password</TODO:>
   $conn = new mysqli($host, $db_user, $db_pass, $db_name);
 
   // Check connection
   if ($conn->connect_error) {
-      header('Location: login.html');
+    $_SESSION['registration_message'] = "Errore durante la registrazione";
+    header('Location: login.php');
+    exit();
   }
 
   $query = "INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, ?)";
@@ -45,7 +54,8 @@
     } else {
       // La mail era già rpesente o si è verificato qualche errore
       $_SESSION['registration_message'] = "Errore durante la registrazione, i tuoi dati potrebbero essere errati o hai già un account registrato";
-      header('Location: login.html');
+      header('Location: login.php');
+      exit();
     }
 
     /* close statement */

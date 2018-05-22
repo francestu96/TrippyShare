@@ -1,5 +1,6 @@
 <?php
   session_start();
+  include('db/mysql_credentials.php');
 
  /* Il seguente script prende i dati in input dal form di registrazione
   *  Controlla che tutti i dati siano stati inseriti e prova ad inserirli.
@@ -23,7 +24,7 @@
 
   // Create connection
   // <TODO:> Inserisci qui il tuo nome utente e password</TODO:>
-  $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
+  $conn = new mysqli($host, $db_user, $db_pass, $db_name);
 
   // Check connection
   if ($conn->connect_error) {

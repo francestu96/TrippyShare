@@ -1,6 +1,6 @@
 <?php
   session_start();
-
+  include('db/mysql_credentials.php');
   $required = array('email_signin', 'password_signin');
 
   foreach($required as $field) {
@@ -14,8 +14,7 @@
   $email = trim($_POST['email_signin']);
   $password = sha1(trim($_POST['password_signin']));
 
-  // <TODO:> Inserisci qui il tuo nome utente e password</TODO:>
-  $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
+  $conn = new mysqli($host, $db_user, $db_pass, $db_name);
 
   /* check connection */
   if ($conn->connect_error) {

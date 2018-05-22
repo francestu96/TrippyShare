@@ -22,7 +22,11 @@
                 </li>
 
 <?php
-    session_start();
+    if(!isset($_SESSION)) 
+    { 
+      session_start(); 
+    } 
+    
 
     // Se l'utente non è loggato mostra il pulsante di login
     if(!isset($_SESSION['name'])){

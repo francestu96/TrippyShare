@@ -1,4 +1,6 @@
 <?php
+include('db/mysql_credentials.php');
+
 // Stampa "ok" se la mail non è presente e "ko" se la mail esiste già
 // Se lo script ha dei problemi risponde con ok
 
@@ -7,8 +9,7 @@ if(!isset($_GET['email']))
 
 $to_check = $_GET['email'];
 
-// <TODO:> Inserisci qui il tuo nome utente e password</TODO:>
-$mysqli = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
+$mysqli = new mysqli($host, $db_user, $db_pass, $db_name);
 
 /* check connection */
 if (mysqli_connect_errno()) {

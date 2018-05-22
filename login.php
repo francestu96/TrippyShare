@@ -1,5 +1,14 @@
 <!DOCTYPE html>
-<?php session_start() ?>
+<?php     
+  if(!isset($_SESSION)) 
+  { 
+      session_start(); 
+  }
+  if(isset($_SESSION['name'])){
+    header('index.php');
+  }
+      
+  ?>
 <html >
 <head>
   <title>SAW | Login</title>

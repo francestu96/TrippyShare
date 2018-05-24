@@ -55,16 +55,16 @@ function prevStage(){
     return;
 
   var required = new Array("place", "days", "type", "description");
-
-  for(var i=0; i < required.length; i++) {
-    if (document.getElementById(required[i]).value == "" || document.getElementById(required[i]).value == "undefined"){
-      document.getElementById(required[i]).setCustomValidity("Please fill out this field");
-      document.getElementById(required[i]).reportValidity();
-      return;
-    }
-    else
-      document.getElementById(required[i]).setCustomValidity("");
-  }
+  var addStage = true;
+  // for(var i=0; i < required.length; i++) {
+  //   if (document.getElementById(required[i]).value == "" || document.getElementById(required[i]).value == "undefined"){
+  //     document.getElementById(required[i]).setCustomValidity("Please fill out this field");
+  //     document.getElementById(required[i]).reportValidity();
+  //     return;
+  //   }
+  //   else
+  //     document.getElementById(required[i]).setCustomValidity("");
+  // }
 
   var stage = {
     place : document.getElementById("place").value,
@@ -73,7 +73,12 @@ function prevStage(){
     description : document.getElementById("description").value
   }
 
-  stages[index] = stage;
+  for(var i=0; i < required.length; i++)
+    if (document.getElementById(required[i]).value == "" || document.getElementById(required[i]).value == "undefined")
+      addStage = false;
+
+  if(addStage)
+    stages[index] = stage;
 
   $("#animate").css('left', function(){ return -$(this).offset().left; })
              .animate({"left":"0px"}, "slow");
@@ -97,8 +102,22 @@ function setStages(){
     type : document.getElementById("type").value,
     description : document.getElementById("description").value
   }
+  var required = new Array("place", "days", "type", "description");
+  var addStage = true;
 
-  stages[index] = stage;
+  for(var i=0; i < required.length; i++)
+    if (document.getElementById(required[i]).value == "" || document.getElementById(required[i]).value == "undefined"){
+      if(stages.length === 0){
+        document.getElementById(required[i]).setCustomValidity("Please fill out this field");
+        document.getElementById(required[i]).reportValidity();
+        return;
+      }
+      else
+        addStage = false;
+    }
+
+  if(addStage)
+    stages[index] = stage;
 
   document.getElementById("stages").value = JSON.stringify(stages);
 }

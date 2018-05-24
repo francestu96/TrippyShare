@@ -50,7 +50,7 @@
                         </div>
                         <div class="form-group">
                           <label for="image">Picture</label>
-                          <input type="file" class="form-control" name="image">
+                          <input type="file" accept=".jpg, .jpeg, .gif, .png" class="form-control" name="image">
                         </div>
                     </div>
                 </div>
@@ -62,11 +62,11 @@
                         <h2>Stages</h2>
                           <div class="form-group">
                             <label for="place">Place</label>
-                            <input required type="text" class="form-control" id="place">
+                            <input type="text" class="form-control" id="place">
                           </div>
                           <div class="form-group">
                             <label for="days">Days of stay</label>
-                            <input required type="number" class="form-control" id="days" value="1">
+                            <input type="number" class="form-control" id="days" value="1">
                           </div>
                           <div class="form-group">
                             <label for="type">Type</label><br>
@@ -93,7 +93,7 @@
                           </div>
                           <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea required class="form-control" id="description" rows="5" cols="40"></textarea>
+                            <textarea class="form-control" id="description" rows="5" cols="40"></textarea>
                           </div>
                           <div class="form-group text-center">
                             <progress value="100" max="100" id="progress" style="width:250px;"></progress>

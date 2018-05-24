@@ -38,6 +38,7 @@
       session_start();
 
       $_SESSION['name'] = $name;
+      $_SESSION['email'] = $email;
       header('Location: index.php');
     }
     else {

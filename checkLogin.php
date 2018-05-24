@@ -40,6 +40,7 @@
       while($row = $result->fetch_assoc()) {
         session_start();
 
+        $_SESSION['email'] = $row["email"];
         $_SESSION['name'] = $row["name"];
         header('Location: index.php');
       }

@@ -4,33 +4,53 @@
   $required = array('departure', 'arrival', 'price', 'stages');
 
   foreach($required as $field) {
-    if (empty($_POST[$field]))
+    if (empty($_POST[$field])){
       header('Location: error.html');
+      die();
+    }
   }
 
   $stages = json_decode($_POST["stages"]);
 
-  $targetFolder = 'assets/img/uploaded/'; // Relative to the root
-  $tempFile = $_FILES['image']['tmp_name'];
-  //$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+  $required = array('days', 'place', 'type', 'description');
 
-  $myhash = md5_file($_FILES['image']['tmp_name']);
-  $temp = explode(".", $_FILES['image']['name']);
-  $extension = end($temp);
-
-  $targetFile = rtrim($targetFolder,'/') . '/' .$myhash.'.'.$extension;
-  if(file_exists($targetFile))
-      header('Location: imageExistsError.html');
-
-
-  // Validate the file type
-  $fileTypes = array('jpg','jpeg','gif','png'); // File extensions
-  $fileParts = pathinfo($_FILES['image']['name']);
-  if (in_array($fileParts['extension'],$fileTypes)) {
-      move_uploaded_file($tempFile,$targetFile);
+  foreach($stages as $stage) {
+    foreach ($required as $field) {
+      if (empty($stage->$field)){
+        header('Location: error.html');
+        die();
+      }
+    }
   }
-  else
-      header('Location: error.html');
+
+  $fileName = "empty.png"; //immagine non caricata e viene assegnata un immagine vuota
+
+  if(is_uploaded_file($_FILES['image']['tmp_name'])){
+    $targetFolder = 'assets/img/uploaded/'; // Relative to the root
+    $tempFile = $_FILES['image']['tmp_name'];
+
+    $myhash = md5_file($_FILES['image']['tmp_name']);
+    $temp = explode(".", $_FILES['image']['name']);
+    $extension = end($temp);
+    $fileName = $myhash.'.'.$extension;
+
+    $targetFile = rtrim($targetFolder,'/') . '/' .$myhash.'.'.$extension;
+    if(file_exists($targetFile)){
+        header('Location: imageExistsError.html');
+        die();
+    }
+
+    // Validate the file type
+    $fileTypes = array('jpg','jpeg','gif','png'); // File extensions
+    $fileParts = pathinfo($_FILES['image']['name']);
+    if (in_array($fileParts['extension'],$fileTypes)) {
+        move_uploaded_file($tempFile,$targetFile);
+    }
+    else{
+        header('Location: error.html');
+        die();
+    }
+  }
 
   // Create connection
   $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
@@ -40,21 +60,45 @@
   }
 
   $query = "INSERT INTO plannings (author, departure_date, arrival_date, price, image_path)
-            VALUES ((SELECT id FROM users WHERE name LIKE ?), ?, ?, ?, ?)";
+            VALUES ((SELECT id FROM users WHERE email LIKE ?), ?, ?, ?, ?)";
 
   if ($stmt = $conn->prepare($query)) {
     /* bind parameters for markers */
-    $stmt->bind_param("sssss", $_SESSION['name'], $_POST['departure'], $_POST['arrival'], $_POST['price'], $tempFile);
+    $stmt->bind_param("sssss", $_SESSION['email'], $_POST['departure'], $_POST['arrival'], $_POST['price'], $fileName);
 
     /* execute query */
     $stmt->execute();
-    printf("Error: %s.\n", $stmt->error);
+
     /* close statement */
     $stmt->close();
   }
   else{
-    echo "Dio cane";
+    header('Location: error.html');
+    die();
   }
+
+  $query = "INSERT INTO stages (author, trip_type, place, description, duration)
+            VALUES ((SELECT id FROM users WHERE email LIKE ?), ?, ?, ?, ?)";
+
+  foreach($stages as $stage){
+    if ($stmt = $conn->prepare($query)) {
+      /* bind parameters for markers */
+      $stmt->bind_param("sssss", $_SESSION['email'], $stage->type, $stage->place, $stage->description, $stage->days);
+
+      /* execute query */
+      $stmt->execute();
+
+      /* close statement */
+      $stmt->close();
+    }
+    else{
+      header('Location: error.html');
+      die();
+    }
+
+    $conn->query("INSERT INTO plannings_stages (planning_id, stage) VALUES ((SELECT MAX(id) FROM plannings), (SELECT MAX(id) FROM stages));");
+  }
+
   $conn->close();
 
   echo "</p>";

@@ -1,5 +1,9 @@
 <?php
-  session_start();
+  // Se non è ancora inizializzat la sessione la inizializzo
+  if(!isset($_SESSION)) 
+  { 
+      session_start(); 
+  }
   include('db/mysql_credentials.php');
   $required = array('email_signin', 'password_signin');
 

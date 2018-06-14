@@ -26,8 +26,6 @@
         </div>
     </div>
 
-
-    <!-- Area di login -->
     <form action="checkTrip.php" enctype="multipart/form-data" id="login-form" method="post">
       <div class="register-area" style="background-color: rgb(249, 249, 249);">
 
@@ -49,6 +47,10 @@
                           <input required type="number" class="form-control" name="price">
                         </div>
                         <div class="form-group">
+                          <label for="tripDescription">Description</label>
+                          <textarea class="form-control" name="tripDescription" rows="5" cols="40"></textarea>
+                        </div>
+                        <div class="form-group">
                           <label for="image">Picture</label>
                           <input type="file" accept=".jpg, .jpeg, .gif, .png" class="form-control" name="image">
                         </div>
@@ -62,7 +64,10 @@
                         <h2>Stages</h2>
                           <div class="form-group">
                             <label for="place">Place</label>
-                            <input type="text" class="form-control" id="place">
+                            <input type="text" class="form-control" id="place" onchange="addMarker(this.value);">
+                          </div>
+                          <div class="form-group">
+                            <div id="map" style="height: 50%; width: 100%"></div>
                           </div>
                           <div class="form-group">
                             <label for="days">Days of stay</label>
@@ -116,6 +121,7 @@
       require("common/footer.html");
       require("common/scripts.html");
     ?>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8-kAUPVmM33rORirYxG2KhKkLnFH89-w&callback=initMap" type="text/javascript"></script>
     <script src="assets/js/myJs/manageStages.js"></script>
 </body>
 

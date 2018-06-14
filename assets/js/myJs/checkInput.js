@@ -35,7 +35,7 @@ function checkEmail(){
             else if(response === "ko"){
               email.style="border:1px solid red";
               email.setCustomValidity("Email already used!");
-              return
+              return;
             }
             else{
               window.location.replace("error.hml");

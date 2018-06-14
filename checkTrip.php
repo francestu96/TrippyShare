@@ -1,6 +1,9 @@
 <?php
   session_start();
 
+  if(empty($_POST['tripDescription']))
+    $_POST['tripDescription'] = "No description";
+
   $required = array('departure', 'arrival', 'price', 'stages');
 
   foreach($required as $field) {
@@ -23,6 +26,15 @@
     }
   }
 
+  //controllo se i luoghi sono esistenti
+  foreach($stages as $stage){
+    $resp = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address=" . $stage->place . "&key=AIzaSyB8-kAUPVmM33rORirYxG2KhKkLnFH89-w"));
+    if($resp->status !== "OK"){
+      header('Location: error.html');
+      die();
+    }
+  }
+
   $fileName = "empty.png"; //immagine non caricata e viene assegnata un immagine vuota
 
   // Create connection
@@ -37,12 +49,12 @@
 
   try{
     //PRIMA QUERY PER INSERIRE IL PLANNING
-    $query = "INSERT INTO plannings (author, departure_date, arrival_date, price, image_path)
-              VALUES ((SELECT id FROM users WHERE email LIKE ?), ?, ?, ?, ?)";
+    $query = "INSERT INTO plannings (author, departure_date, arrival_date, price, image_path, description)
+              VALUES ((SELECT id FROM users WHERE email LIKE ?), ?, ?, ?, ?, ?)";
 
     if ($stmt = $conn->prepare($query)) {
       /* bind parameters for markers */
-      $stmt->bind_param("sssss", $_SESSION['email'], $_POST['departure'], $_POST['arrival'], $_POST['price'], $fileName);
+      $stmt->bind_param("ssssss", $_SESSION['email'], $_POST['departure'], $_POST['arrival'], $_POST['price'], $fileName, $_POST['tripDescription']);
 
       /* execute query */
       $stmt->execute();

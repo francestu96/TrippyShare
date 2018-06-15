@@ -4,7 +4,7 @@
   if(empty($_POST['tripDescription']))
     $_POST['tripDescription'] = "No description";
 
-  $required = array('departure', 'arrival', 'price', 'stages');
+  $required = array('tripPlace', 'departure', 'arrival', 'price', 'stages');
 
   foreach($required as $field) {
     if (empty($_POST[$field])){
@@ -49,12 +49,12 @@
 
   try{
     //PRIMA QUERY PER INSERIRE IL PLANNING
-    $query = "INSERT INTO plannings (author, departure_date, arrival_date, price, image_path, description)
-              VALUES ((SELECT id FROM users WHERE email LIKE ?), ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO plannings (author, place, departure_date, arrival_date, price, image_path, description)
+              VALUES ((SELECT id FROM users WHERE email LIKE ?), ?, ?, ?, ?, ?, ?)";
 
     if ($stmt = $conn->prepare($query)) {
       /* bind parameters for markers */
-      $stmt->bind_param("ssssss", $_SESSION['email'], $_POST['departure'], $_POST['arrival'], $_POST['price'], $fileName, $_POST['tripDescription']);
+      $stmt->bind_param("sssssss", $_SESSION['email'], $_POST['tripPlace'], $_POST['departure'], $_POST['arrival'], $_POST['price'], $fileName, $_POST['tripDescription']);
 
       /* execute query */
       $stmt->execute();
@@ -126,17 +126,5 @@
 
   $conn->close();
 
-  echo "</p>";
-  echo '<pre>';
-  echo 'Here is some more debugging info:';
-  print_r($_FILES);
-  print "</pre>";
-
-  echo "Stages:<br>";
-  foreach($stages as $stage){
-    echo "Place: " . $stage->place . "<br>";
-    echo "Days: " . $stage->days . "<br>";
-    echo "Type: " . $stage->type . "<br>";
-    echo "Description: " . $stage->description . "<br><br>";
-  }
+  header('Location: index.php?action=1');
 ?>

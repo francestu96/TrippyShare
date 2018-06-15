@@ -35,6 +35,10 @@
                     <div class="col-md-12 col-xs-12 register-blocks">
                         <h2>Trip</h2>
                         <div class="form-group">
+                          <label for="place">Where</label>
+                          <input required type="text" class="form-control" name="tripPlace">
+                        </div>
+                        <div class="form-group">
                             <label for="departure">Departure date</label>
                             <input required type="date" class="form-control" name="departure">
                         </div>

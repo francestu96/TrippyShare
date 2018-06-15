@@ -391,9 +391,53 @@
         </div>
     </div>
 
+    <!-- popup handle -->
+    <?php
+      define('REGISTRATION_ACTION', 2);
+      define('INSERT_TRIP_ACTION', 1);
+
+      $message = "";
+      $show_popup = false;
+
+      if(!empty($_GET['ACTION'])){
+        switch($_GET['ACTION']){
+          case(REGISTRATION_ACTION):
+            $message = "Successful registration!<br>Now you are part of us, share, join and live a new adventure!";
+            $show_popup = true;
+            break;
+          case(INSERT_TRIP_ACTION):
+            $message = "Congratulations!<br>You've added a new Trip, now people from all over the world can join you";
+            $show_popup = true;
+            break;
+        }
+      }
+    ?>
+
+    <!-- popup code -->
+    <div class="modal fade success-popup" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <h4 class="modal-title" id="myModalLabel">Thank You !</h4>
+          </div>
+          <div class="modal-body text-center">
+             <img src="assets/img/blue-check.png" style="width:50px; height:50px">
+              <p class="lead"><?php echo $message ?></p>
+              <!-- <a href="index.php" class="rd_more btn btn-default">Go Home</a> -->
+              <button type="button" class="rd_more btn btn-default" data-dismiss="modal" aria-label="Close">Continue</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
     <?php
       require("common/footer.html");
       require("common/scripts.html");
+
+      if($show_popup)
+        echo "<script> $('#myModal').modal('show');</script>";
     ?>
 </body>
 

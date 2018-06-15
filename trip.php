@@ -43,7 +43,7 @@
 </head>
 
 <body>
-
+    <?php echo "devo mostrare le informazioni riguardo il trip con id ".$_POST['trip']; ?>
     <nav class="navbar navbar-default ">
         <div class="container">
             <!-- Barra in alto -->
@@ -95,7 +95,7 @@
 
     </div>
 
-   
+
     <!-- > Script </-->
     <script src="assets/js/modernizr-2.6.2.min.js"></script>
 

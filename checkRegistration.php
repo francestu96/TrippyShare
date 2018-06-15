@@ -39,7 +39,7 @@
 
       $_SESSION['name'] = $name;
       $_SESSION['email'] = $email;
-      header('Location: index.php');
+      header('Location: index.php?action=0');
     }
     else {
       header('Location: error.html');

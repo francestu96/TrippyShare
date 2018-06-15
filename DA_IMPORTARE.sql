@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 14, 2018 at 10:44 PM
+-- Generation Time: Jun 15, 2018 at 01:34 PM
 -- Server version: 5.7.22-0ubuntu0.17.10.1
 -- PHP Version: 7.1.17-0ubuntu0.17.10.1
 
@@ -42,6 +42,7 @@ CREATE TABLE `messages` (
 
 CREATE TABLE `plannings` (
   `id` int(11) NOT NULL,
+  `place` varchar(30) NOT NULL,
   `author` int(11) NOT NULL,
   `departure_date` datetime NOT NULL,
   `arrival_date` datetime NOT NULL,
@@ -54,11 +55,14 @@ CREATE TABLE `plannings` (
 -- Dumping data for table `plannings`
 --
 
-INSERT INTO `plannings` (`id`, `author`, `departure_date`, `arrival_date`, `price`, `image_path`, `description`) VALUES
-(1, 7, '1111-11-11 00:00:00', '1111-11-11 00:00:00', 321, 'empty.png', ''),
-(2, 7, '1111-11-11 00:00:00', '0111-11-11 00:00:00', 213, 'empty.png', ''),
-(3, 7, '0013-11-11 00:00:00', '0021-03-22 00:00:00', 321, 'empty.png', ''),
-(4, 7, '0011-11-11 00:00:00', '0003-03-22 00:00:00', 321, 'empty.png', '');
+INSERT INTO `plannings` (`id`, `place`, `author`, `departure_date`, `arrival_date`, `price`, `image_path`, `description`) VALUES
+(1, '', 7, '1111-11-11 00:00:00', '1111-11-11 00:00:00', 321, 'empty.png', ''),
+(2, '', 7, '1111-11-11 00:00:00', '0111-11-11 00:00:00', 213, 'empty.png', ''),
+(3, '', 7, '0013-11-11 00:00:00', '0021-03-22 00:00:00', 321, 'empty.png', ''),
+(4, '', 7, '0011-11-11 00:00:00', '0003-03-22 00:00:00', 321, 'empty.png', ''),
+(5, '', 7, '0003-03-31 00:00:00', '0222-02-02 00:00:00', 321, 'empty.png', '321'),
+(6, '', 7, '0003-03-31 00:00:00', '0222-02-02 00:00:00', 321, 'empty.png', '321'),
+(7, '', 7, '0022-02-22 00:00:00', '0002-02-22 00:00:00', 432432, 'empty.png', '43');
 
 -- --------------------------------------------------------
 
@@ -83,7 +87,12 @@ INSERT INTO `plannings_stages` (`id`, `planning_id`, `stage`) VALUES
 (4, 2, 4),
 (5, 3, 5),
 (6, 3, 6),
-(7, 4, 7);
+(7, 4, 7),
+(8, 5, 8),
+(9, 5, 9),
+(10, 6, 10),
+(11, 6, 11),
+(12, 7, 12);
 
 -- --------------------------------------------------------
 
@@ -125,7 +134,12 @@ INSERT INTO `stages` (`id`, `trip_type`, `author`, `place`, `description`, `dura
 (4, 'relax', 7, 'ciaon', 'wq', '1'),
 (5, 'relax', 7, 'ewq', 'ewq', '1'),
 (6, 'relax', 7, 'eqw', 'eqw', '1'),
-(7, 'relax', 7, '123', '312', '1');
+(7, 'relax', 7, '123', '312', '1'),
+(8, 'relax', 7, 'cmalta', 'few', '1'),
+(9, 'relax', 7, 'sicilia', 'eqw', '1'),
+(10, 'relax', 7, 'cmalta', 'few', '1'),
+(11, 'relax', 7, 'sicilia', 'eqw', '1'),
+(12, 'relax', 7, 'ahah', 'few', '1');
 
 -- --------------------------------------------------------
 
@@ -171,7 +185,8 @@ INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `birthdate`, 
 (5, 'ciaoen', 'porcodio', 'fradqwe@fdwe', '382410e305c98367e39b0c35849d814313fab4e3', '2018-05-23 00:00:00', NULL, 'male', NULL),
 (6, 'silvia', 'sciutto', 'sciva.silvia@gmai.com', '382410e305c98367e39b0c35849d814313fab4e3', NULL, NULL, NULL, NULL),
 (7, 'francesco', 'stucci', 'francestu96@gmail.com', '382410e305c98367e39b0c35849d814313fab4e3', NULL, NULL, NULL, NULL),
-(8, 'ciao', 'ciaone', 'ciao@gmail.com', '382410e305c98367e39b0c35849d814313fab4e3', NULL, NULL, NULL, NULL);
+(8, 'ciao', 'ciaone', 'ciao@gmail.com', '382410e305c98367e39b0c35849d814313fab4e3', NULL, NULL, NULL, NULL),
+(9, 'francesco', 'stucci', 'bio@fn.ok', 'b4b1d459b4c680c82535a5ece826f5aae4eda250', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -262,12 +277,12 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `plannings`
 --
 ALTER TABLE `plannings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `plannings_stages`
 --
 ALTER TABLE `plannings_stages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `ratings`
 --
@@ -277,12 +292,12 @@ ALTER TABLE `ratings`
 -- AUTO_INCREMENT for table `stages`
 --
 ALTER TABLE `stages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `users_plannings`
 --

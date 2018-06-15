@@ -132,11 +132,6 @@ function initMap(){
   }
 
   map = new google.maps.Map(document.getElementById("map"), options);
-
-  // var marker = new google.maps.Marker({
-  //   position : {lat:42, lng: -70},
-  //   map: map
-  // });
 }
 
 //aggiunge i marker (o li sostituisce se sempre nella stessa tappa) con AJAX

@@ -58,116 +58,48 @@
 
             <div class="row">
                 <div class="proerty-th">
+                    <form id="myForm" action="trip.php" method="post">
+                      <?php
+                        $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
+
+                        /* check connection */
+                        if ($conn->connect_error) {
+                            die("Connection failed: " . $conn->connect_error);
+                        }
+
+                        $query = "SELECT id, image_path, departure_date, price, place FROM plannings ORDER BY departure_date LIMIT 7";
+
+                        $result=$conn->query($query)
+                          or die ($conn->error);
+
+                        while($row = $result->fetch_assoc()) {
+                          echo '<div class="col-sm-6 col-md-3 p0" name="tripContainer">
+                                  <div id="id" value="' . $row['id']. '"></div>
+                                  <div class="box-two proerty-item">
+                                      <div class="item-thumb">
+                                          <img src="assets/img/uploaded/' . $row['image_path']. '">
+                                      </div>
+                                      <div class="item-entry overflow">
+                                          <h5>' . $row['place'] . '</h5>
+                                          <div class="dot-hr"></div>
+                                          <span class="pull-left"><b>Departure :</b> ' . date('d/m/Y', strtotime($row['departure_date'])) . ' </span>
+                                          <span class="proerty-price pull-right">€' . $row['price']. '</span>
+                                      </div>
+                                  </div>
+                              </div>';
+                        }
+                        $conn->close();
+                      ?>
+                    </form>
                     <div class="col-sm-6 col-md-3 p0">
-                        <div class="box-two proerty-item">
-                            <div class="item-thumb">
-                                <a href="property-1.html" ><img src="assets/img/demo/property-1.jpg"></a>
-                            </div>
-                            <div class="item-entry overflow">
-                                <h5><a href="property-1.html" >Super nice place </a></h5>
-                                <div class="dot-hr"></div>
-                                <span class="pull-left"><b>People :</b> 3 </span>
-                                <span class="proerty-price pull-right">$ 300,000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-3 p0">
-                        <div class="box-two proerty-item">
-                            <div class="item-thumb">
-                                <a href="property-2.html" ><img src="assets/img/demo/property-2.jpg"></a>
-                            </div>
-                            <div class="item-entry overflow">
-                                <h5><a href="property-2.html" >Super nice place </a></h5>
-                                <div class="dot-hr"></div>
-                                <span class="pull-left"><b>People :</b> 3 </span>
-                                <span class="proerty-price pull-right">$ 300,000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-3 p0">
-                        <div class="box-two proerty-item">
-                            <div class="item-thumb">
-                                <a href="property-3.html" ><img src="assets/img/demo/property-3.jpg"></a>
-
-                            </div>
-                            <div class="item-entry overflow">
-                                <h5><a href="property-3.html" >Super nice place </a></h5>
-                                <div class="dot-hr"></div>
-                                <span class="pull-left"><b>People :</b> 3 </span>
-                                <span class="proerty-price pull-right">$ 300,000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-3 p0">
-                        <div class="box-two proerty-item">
-                            <div class="item-thumb">
-                                <a href="property-1.html" ><img src="assets/img/demo/property-4.jpg"></a>
-
-                            </div>
-                            <div class="item-entry overflow">
-                                <h5><a href="property-1.html" >Super nice place </a></h5>
-                                <div class="dot-hr"></div>
-                                <span class="pull-left"><b>People :</b> 3 </span>
-                                <span class="proerty-price pull-right">$ 300,000</span>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-sm-6 col-md-3 p0">
-                        <div class="box-two proerty-item">
-                            <div class="item-thumb">
-                                <a href="property-3.html" ><img src="assets/img/demo/property-2.jpg"></a>
-                            </div>
-                            <div class="item-entry overflow">
-                                <h5><a href="property-3.html" >Super nice place </a></h5>
-                                <div class="dot-hr"></div>
-                                <span class="pull-left"><b>People :</b> 3 </span>
-                                <span class="proerty-price pull-right">$ 300,000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-3 p0">
-                        <div class="box-two proerty-item">
-                            <div class="item-thumb">
-                                <a href="property-2.html" ><img src="assets/img/demo/property-4.jpg"></a>
-                            </div>
-                            <div class="item-entry overflow">
-                                <h5><a href="property-2.html" >Super nice place </a></h5>
-                                <div class="dot-hr"></div>
-                                <span class="pull-left"><b>People :</b> 3 </span>
-                                <span class="proerty-price pull-right">$ 300,000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-3 p0">
-                        <div class="box-two proerty-item">
-                            <div class="item-thumb">
-                                <a href="property-1.html" ><img src="assets/img/demo/property-3.jpg"></a>
-                            </div>
-                            <div class="item-entry overflow">
-                                <h5><a href="property-1.html" >Super nice place </a></h5>
-                                <div class="dot-hr"></div>
-                                <span class="pull-left"><b>People :</b> 3 </span>
-                                <span class="proerty-price pull-right">$ 300,000</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-3 p0">
-                        <div class="box-tree more-proerty text-center">
+                        <div class="box-tree more-proerty text-center" onclick="location.href='explore.php'">
                             <div class="item-tree-icon">
                                 <i class="fa fa-th"></i>
                             </div>
                             <div class="more-entry overflow">
-                                <h5><a href="property-1.html" >CAN'T DECIDE ? </a></h5>
+                                <h5><a href="explore.php" >CAN'T DECIDE ? </a></h5>
                                 <h5 class="tree-sub-ttl">Show all properties</h5>
-                                <button class="btn border-btn more-black" value="All properties">All properties</button>
+                                <button class="btn border-btn more-black" value="All properties" onclick="location.href='explore.php';">All properties</button>
                             </div>
                         </div>
                     </div>
@@ -439,6 +371,7 @@
       if($show_popup)
         echo "<script> $('#myModal').modal('show');</script>";
     ?>
+    <script type="text/javascript" src="assets/js/myJs/submitDataToTrip.js"></script>
 </body>
 
 </html>

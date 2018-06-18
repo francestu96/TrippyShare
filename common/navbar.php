@@ -1,3 +1,6 @@
+<div id="preloader">
+    <div id="status">&nbsp;</div>
+</div>
 <nav class="navbar navbar-default ">
     <div class="container">
         <!-- Barra in alto -->
@@ -20,13 +23,13 @@
                 <li>
                     <a class="" href="index.php">Home</a>
                 </li>
+                <li>
+                    <a class="" href="explore.php">Explore</a>
+                </li>
 
 <?php
-    if(!isset($_SESSION)) 
-    { 
-      session_start(); 
-    } 
-    
+    if(!isset($_SESSION))
+        session_start();
 
     // Se l'utente non è loggato mostra il pulsante di login
     if(!isset($_SESSION['name'])){
@@ -42,6 +45,9 @@
             '<li class="dropdown ymm-sw" data-wow-delay="0.1s">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">' . $_SESSION['name'] . '</a>
                 <ul class="dropdown-menu navbar-nav" style="text-align: center">
+                    <li>
+                        <a href="newTrip.php">New Trip</a>
+                    </li>
                     <li>
                         <a href="logout.php">Logout</a>
                     </li>

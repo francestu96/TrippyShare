@@ -1,18 +1,5 @@
 <!DOCTYPE html>
-<?php     
-  // Se non è ancora inizializzat la sessione la inizializzo
-  if(!isset($_SESSION)) 
-  { 
-      session_start(); 
-  }
 
-  // Se l'utente è già loggato allora non ha senso che l'utente arrivi in questa pagina.
-  if(isset($_SESSION['name'])){
-    header('index.php');
-    exit();
-  }
-      
-  ?>
 <html >
 <head>
   <title>SAW | Login</title>
@@ -34,19 +21,14 @@
     </div>
 
 
+    <!-- Area di login -->
     <div class="register-area" style="background-color: rgb(249, 249, 249);">
         <div class="container">
-            <!-- Area di registrazione -->
+
             <div class="col-md-6">
                 <div class="box-for overflow">
                     <div class="col-md-12 col-xs-12 register-blocks">
                         <h2>Sign up</h2>
-                        <?php 
-                            if(isset($_SESSION["registration_message"])){
-                                echo '<br/><label style="color: red;">'.$_SESSION["registration_message"].'</label>';
-                                unset($_SESSION["registration_message"]);
-                            }
-                        ?>
                         <form action="checkRegistration.php" id="login-form" method="post">
                             <div class="form-group">
                                 <label for="name">Name</label>
@@ -79,17 +61,10 @@
                 </div>
             </div>
 
-            <!-- Area di Login -->
             <div class="col-md-6">
                 <div class="box-for overflow">
                     <div class="col-md-12 col-xs-12 login-blocks">
                         <h2>Login</h2>
-                        <?php 
-                            if(isset($_SESSION["login_message"])){
-                                echo '<br/><label style="color: red;">'.$_SESSION["login_message"].'</label>';
-                                unset($_SESSION["login_message"]);
-                            }
-                        ?>
                         <form action="checkLogin.php" method="post">
                             <div class="form-group">
                                 <label for="email_signin">Email</label>

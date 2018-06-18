@@ -8,7 +8,8 @@
 
   foreach($required as $field) {
     if (empty($_POST[$field])){
-      header('Location: error.html');
+      echo "manva vcampoi";
+      //header('Location: error.html');
       die();
     }
   }
@@ -28,7 +29,8 @@
 
   //controllo se i luoghi sono esistenti
   foreach($stages as $stage){
-    $resp = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address=" . $stage->place . "&key=AIzaSyB8-kAUPVmM33rORirYxG2KhKkLnFH89-w"));
+    $place = str_replace(" ", "&",  $stage->place);
+    $resp = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address=" . $place . "&key=AIzaSyB8-kAUPVmM33rORirYxG2KhKkLnFH89-w"));
     if($resp->status !== "OK"){
       header('Location: error.html');
       die();
@@ -86,7 +88,7 @@
       }
 
       //TERZA QUERY PER INSERIRE I DATI NELLA TABELLA MOLTI A MOLTI plannings_stages
-      $conn->query("INSERT INTO plannings_stages (planning_id, stage) VALUES ((SELECT MAX(id) FROM plannings), (SELECT MAX(id) FROM stages));");
+      $conn->query("INSERT INTO plannings_stages (planning_id, stage_id) VALUES ((SELECT MAX(id) FROM plannings), (SELECT MAX(id) FROM stages));");
     }
 
     //MEMORIZZAZIONE DEL FILE IN POST SE PRESENTE

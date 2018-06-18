@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 15, 2018 at 01:34 PM
+-- Generation Time: Jun 18, 2018 at 02:19 PM
 -- Server version: 5.7.22-0ubuntu0.17.10.1
 -- PHP Version: 7.1.17-0ubuntu0.17.10.1
 
@@ -62,7 +62,10 @@ INSERT INTO `plannings` (`id`, `place`, `author`, `departure_date`, `arrival_dat
 (4, '', 7, '0011-11-11 00:00:00', '0003-03-22 00:00:00', 321, 'empty.png', ''),
 (5, '', 7, '0003-03-31 00:00:00', '0222-02-02 00:00:00', 321, 'empty.png', '321'),
 (6, '', 7, '0003-03-31 00:00:00', '0222-02-02 00:00:00', 321, 'empty.png', '321'),
-(7, '', 7, '0022-02-22 00:00:00', '0002-02-22 00:00:00', 432432, 'empty.png', '43');
+(7, '', 7, '0022-02-22 00:00:00', '0002-02-22 00:00:00', 432432, 'empty.png', '43'),
+(8, 'Italy', 7, '0033-03-03 00:00:00', '0033-03-01 00:00:00', 1500, 'empty.png', 'dasd'),
+(9, 'dwq', 7, '0011-02-01 00:00:00', '0111-01-01 00:00:00', 123, 'empty.png', 'ewq'),
+(10, 'ewq', 7, '0011-11-11 00:00:00', '0011-11-11 00:00:00', 213, 'empty.png', '3ewq');
 
 -- --------------------------------------------------------
 
@@ -71,28 +74,18 @@ INSERT INTO `plannings` (`id`, `place`, `author`, `departure_date`, `arrival_dat
 --
 
 CREATE TABLE `plannings_stages` (
-  `id` int(11) NOT NULL,
   `planning_id` int(11) NOT NULL,
-  `stage` int(11) NOT NULL
+  `stage_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `plannings_stages`
 --
 
-INSERT INTO `plannings_stages` (`id`, `planning_id`, `stage`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 1, 3),
-(4, 2, 4),
-(5, 3, 5),
-(6, 3, 6),
-(7, 4, 7),
-(8, 5, 8),
-(9, 5, 9),
-(10, 6, 10),
-(11, 6, 11),
-(12, 7, 12);
+INSERT INTO `plannings_stages` (`planning_id`, `stage_id`) VALUES
+(9, 16),
+(10, 17),
+(10, 18);
 
 -- --------------------------------------------------------
 
@@ -139,7 +132,13 @@ INSERT INTO `stages` (`id`, `trip_type`, `author`, `place`, `description`, `dura
 (9, 'relax', 7, 'sicilia', 'eqw', '1'),
 (10, 'relax', 7, 'cmalta', 'few', '1'),
 (11, 'relax', 7, 'sicilia', 'eqw', '1'),
-(12, 'relax', 7, 'ahah', 'few', '1');
+(12, 'relax', 7, 'ahah', 'few', '1'),
+(13, 'relax', 7, 'rome', 'dwq', '1'),
+(14, 'relax', 7, 'genoa', 'few', '1'),
+(15, 'relax', 7, 'grosseto', 'few', '1'),
+(16, 'relax', 7, 'rome', 'rew', '1'),
+(17, 'relax', 7, 'turin', 'rewrwe', '1'),
+(18, 'relax', 7, 'genoa', '432', '1');
 
 -- --------------------------------------------------------
 
@@ -195,7 +194,6 @@ INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `birthdate`, 
 --
 
 CREATE TABLE `users_plannings` (
-  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `planning_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -223,9 +221,8 @@ ALTER TABLE `plannings`
 -- Indexes for table `plannings_stages`
 --
 ALTER TABLE `plannings_stages`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `plannings_stages_fk0` (`planning_id`),
-  ADD KEY `plannings_stages_fk1` (`stage`);
+  ADD PRIMARY KEY (`planning_id`,`stage_id`),
+  ADD KEY `stage_id` (`stage_id`);
 
 --
 -- Indexes for table `ratings`
@@ -260,9 +257,8 @@ ALTER TABLE `users`
 -- Indexes for table `users_plannings`
 --
 ALTER TABLE `users_plannings`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `users_plannings_fk0` (`user_id`),
-  ADD KEY `users_plannings_fk1` (`planning_id`);
+  ADD PRIMARY KEY (`user_id`,`planning_id`),
+  ADD KEY `planning_id` (`planning_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -277,12 +273,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `plannings`
 --
 ALTER TABLE `plannings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT for table `plannings_stages`
---
-ALTER TABLE `plannings_stages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `ratings`
 --
@@ -292,17 +283,12 @@ ALTER TABLE `ratings`
 -- AUTO_INCREMENT for table `stages`
 --
 ALTER TABLE `stages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
---
--- AUTO_INCREMENT for table `users_plannings`
---
-ALTER TABLE `users_plannings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Constraints for dumped tables
 --
@@ -324,8 +310,8 @@ ALTER TABLE `plannings`
 -- Constraints for table `plannings_stages`
 --
 ALTER TABLE `plannings_stages`
-  ADD CONSTRAINT `plannings_stages_fk0` FOREIGN KEY (`planning_id`) REFERENCES `plannings` (`id`),
-  ADD CONSTRAINT `plannings_stages_fk1` FOREIGN KEY (`stage`) REFERENCES `stages` (`id`);
+  ADD CONSTRAINT `plannings_stages_ibfk_1` FOREIGN KEY (`planning_id`) REFERENCES `plannings` (`id`),
+  ADD CONSTRAINT `plannings_stages_ibfk_2` FOREIGN KEY (`stage_id`) REFERENCES `stages` (`id`);
 
 --
 -- Constraints for table `ratings`
@@ -345,8 +331,8 @@ ALTER TABLE `stages`
 -- Constraints for table `users_plannings`
 --
 ALTER TABLE `users_plannings`
-  ADD CONSTRAINT `users_plannings_fk0` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `users_plannings_fk1` FOREIGN KEY (`planning_id`) REFERENCES `plannings` (`id`);
+  ADD CONSTRAINT `users_plannings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `users_plannings_ibfk_2` FOREIGN KEY (`planning_id`) REFERENCES `plannings` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

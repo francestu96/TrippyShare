@@ -3,118 +3,218 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SAW | triè</title>
-    <meta name="description" content="Saw project">
-    <meta name="author" content="Sciolla Luigi - Stucci Francesco">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Icona della scheda -->
-    <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/x-icon">
-    <link rel="icon" href="./assets/img/favicon.png" type="image/x-icon">
-
-    <!-- Stili per i font, almeno non se li perde -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
-
-    <link rel="stylesheet" href="assets/css/normalize.css">
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/fontello.css">
-    <link href="assets/fonts/icon-7-stroke/css/pe-icon-7-stroke.css" rel="stylesheet">
-    <link href="assets/fonts/icon-7-stroke/css/helper.css" rel="stylesheet">
-    <link href="assets/css/animate.css" rel="stylesheet" media="screen">
-
-
-    <!-- Bootstrap & co -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/icheck.min_all.css">
-    <link rel="stylesheet" href="assets/css/price-range.css">
-    <link rel="stylesheet" href="assets/css/owl.carousel.css">
-    <link rel="stylesheet" href="assets/css/owl.theme.css">
-    <link rel="stylesheet" href="assets/css/owl.transitions.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
-
-
-
+    <title>SAW | trip</title>
+    <?php require("common/header.html"); ?>
+    <link rel="stylesheet" href="assets/css/lightslider.min.css">
 </head>
 
 <body>
-    <?php echo "devo mostrare le informazioni riguardo il trip con id ".$_POST['trip']; ?>
-    <nav class="navbar navbar-default ">
-        <div class="container">
-            <!-- Barra in alto -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">
-                    <img src="./assets/img/logo.png" alt="">
-                </a>
-            </div>
+  <?php require("common/navbar.php"); ?>
+  <?php
+    if(empty($_POST['trip'])){
+      header('Location: error.html');
+      die();
+    }
+    $trip_id=$_POST['trip'];
+    $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
 
-            <!-- Pulsanti in alto a destra -->
-            <div class="collapse navbar-collapse yamm" id="navigation">
-                <ul class="main-nav nav navbar-nav navbar-right">
+    /* check connection */
+    if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+    }
 
-                    <li >
-                        <a class="" href="index.html">Home</a>
-                    </li>
-                    <li >
-                        <a class="" href="explore.html">Explore</a>
-                    </li>
-                    <li >
-                        <a class="" href="login.html">Sign in</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    $query = "SELECT * FROM plannings where id=?";
 
-    Trip page
+    $stmt = $conn->prepare($query);
+    if ($stmt = $conn->prepare($query)) {
+      /* bind parameters for markers */
+      $stmt->bind_param("i", $trip_id);
 
+      /* execute query */
+      $stmt->execute();
 
-    <!-- Footer-->
-    <div class="footer-area navbar-fixed-bottom">
+      /* get the statement result */
+      $result = $stmt->get_result();
 
-        <div class="footer-copy text-center">
-            <div class="container">
-                <div class="row">
-                    <div class="pull-center">
-                        <span> (C) Sciolla - Stucci , All rights reserved 2018 </span>
+      if ($result->num_rows === 1) {
+      // output data of each row
+        while($row = $result->fetch_assoc()) {
+          $trip_place=$row['place'];
+          $trip_author=$row['author'];
+          $trip_departure=$row['departure_date'];
+          $trip_arrival=$row['arrival_date'];
+          $trip_price=$row['price'];
+          $trip_description=$row['description'];
+          $trip_imagePath=$row['image_path'];
+        }
+      }
+      else {
+        header('Location: error.html');
+      }
+
+      /* close statement */
+      $stmt->close();
+    }
+
+  empty($_SESSION['name']) ? $canUjoin = false : $canUjoin = true;
+
+  $page_header = '<div class="page-head">
+                    <div class="container">
+                        <div class="row">
+                            <div class="page-head-content">
+                                <h1 class="page-title"> '. $trip_place . '</h1>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                <!-- End page header -->';
 
-    </div>
+  $trip_info = '<div class="content-area single-property" style="background-color: #FCFCFC;">&nbsp;
+                      <div class="container">
+
+                          <div class="clearfix padding-top-40" >
+
+                              <div class="col-md-8 single-property-content prp-style-1 ">
+                                  <div class="row">
+                                    <img src="assets/img/uploaded/'. $trip_imagePath . '" style="width:100%"/>
+                                  </div>
+                                  <div class="single-property-header">
+                                      <h1 class="property-title pull-left">'. $trip_place . '</h1>
+                                      <span class="property-price pull-right">€'. $trip_price . '</span>
+                                  </div>
+
+                                  <div class="col-1">
+                                    Click on markers to look at details
+                                    <div id="map" style="height: 500px; width: 100%"></div>
+                                  </div>
+                                  <!-- .property-meta -->
+
+                                  <div class="section">
+                                      <h4 class="s-property-title">Description</h4>
+                                      <div class="s-property-content">
+                                          <p>'. $trip_description . '</p>
+                                      </div>
+                                  </div>
+                                  <div class="section" style="text-align:center">
+                                    <button style="width:100%" type="button" class="navbar-btn nav-button '. ($canUjoin ? 'login' : '') .'">Join!</button>
+                                  </div>
+                                  <!-- End description area  -->
+                              </div>';
 
 
-    <!-- > Script </-->
-    <script src="assets/js/modernizr-2.6.2.min.js"></script>
+    $user_info = '            <div class="col-md-4 p0">
+                                  <aside class="sidebar sidebar-property blog-asside-right">
+                                      <div class="dealer-widget">
+                                          <div class="dealer-content">
+                                              <div class="inner-wrapper">
 
-    <script src="assets/js/jquery-1.10.2.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bootstrap-select.min.js"></script>
-    <script src="assets/js/bootstrap-hover-dropdown.js"></script>
+                                                  <div class="clear">
+                                                      <div class="col-xs-4 col-sm-4 dealer-face">
+                                                          <a href="">
+                                                              <img src="assets/img/client-face1.png" class="img-circle">
+                                                          </a>
+                                                      </div>
+                                                      <div class="col-xs-8 col-sm-8 ">
+                                                          <h3 class="dealer-name">
+                                                              <a href="">Nathan James</a>
+                                                              <span>Real Estate Agent</span>
+                                                          </h3>
+                                                          <div class="dealer-social-media">
+                                                              <a class="twitter" target="_blank" href="">
+                                                                  <i class="fa fa-twitter"></i>
+                                                              </a>
+                                                              <a class="facebook" target="_blank" href="">
+                                                                  <i class="fa fa-facebook"></i>
+                                                              </a>
+                                                              <a class="gplus" target="_blank" href="">
+                                                                  <i class="fa fa-google-plus"></i>
+                                                              </a>
+                                                              <a class="linkedin" target="_blank" href="">
+                                                                  <i class="fa fa-linkedin"></i>
+                                                              </a>
+                                                              <a class="instagram" target="_blank" href="">
+                                                                  <i class="fa fa-instagram"></i>
+                                                              </a>
+                                                          </div>
 
-    <script src="assets/js/easypiechart.min.js"></script>
-    <script src="assets/js/jquery.easypiechart.min.js"></script>
+                                                      </div>
+                                                  </div>
 
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/wow.js"></script>
+                                                  <div class="clear">
+                                                      <ul class="dealer-contacts">
+                                                          <li><i class="pe-7s-map-marker strong"> </i> 9089 your adress her</li>
+                                                          <li><i class="pe-7s-mail strong"> </i> email@yourcompany.com</li>
+                                                          <li><i class="pe-7s-call strong"> </i> +1 908 967 5906</li>
+                                                      </ul>
+                                                      <p>Duis mollis  blandit tempus porttitor curabiturDuis mollis  blandit tempus porttitor curabitur , est non…</p>
+                                                  </div>
 
-    <script src="assets/js/icheck.min.js"></script>
-    <script src="assets/js/price-range.js"></script>
+                                              </div>
+                                          </div>
+                                      </div>';
 
-    <script src="assets/js/main.js"></script>
+    $query = "SELECT id, image_path, price, place FROM plannings LIMIT 7";
 
+    $result=$conn->query($query)
+      or die ($conn->error);
+
+    $properties = '';
+    while($row = $result->fetch_assoc()) {
+      $properties .= '<div class="panel-body recent-property-widget" name="tripContainer">
+                        <div id="id" value="' . $row['id']. '"></div>
+                        <ul>
+                          <li>
+                              <div class="col-md-3 col-sm-3 col-xs-3 blg-thumb p0">
+                                  <a href=""><img src="assets/img/uploaded/' . $row['image_path'] . '"></a>
+                              </div>
+                              <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
+                                  <h6>'. $row['place'] . '</h6>
+                                  <span class="property-price">€' . $row['price'] . '</span>
+                              </div>
+                          </li>
+                        </ul>
+                    </div>';
+    }
+
+    $query = "SELECT *
+              FROM plannings JOIN plannings_stages ON planning_id
+                             JOIN stages ON stages.id
+              WHERE plannings.id=plannings_stages.planning_id
+                    AND plannings_stages.stage_id=stages.id ";
+
+    $result=$conn->query($query)
+      or die ($conn->error);
+
+    while($row = $result->fetch_assoc())
+      echo '<div name="stages" place="'. $row['place'] .'" description="'. $row['description'] .'" trip_type="'. $row['trip_type'] .'" duration="'. $row['duration'] .'"></div>', PHP_EOL;
+
+    $conn->close();
+
+    $other_trips = '                  <div class="panel panel-default sidebar-menu similar-property-wdg wow fadeInRight animated">
+                                          <div class="panel-heading">
+                                              <h3 class="panel-title">Similar Trips</h3>
+                                          </div>
+                                          <form id="myForm" action="trip.php" method="post">
+                                            ' . $properties . '
+                                          </form>
+                                      </div>
+                                  </aside>
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>';
+
+    $html = $page_header . $trip_info . $user_info . $other_trips;
+    echo $html;
+
+    require("common/footer.html");
+    require("common/scripts.html");
+  ?>
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8-kAUPVmM33rORirYxG2KhKkLnFH89-w&callback=initMap" type="text/javascript"></script>
+  <script type="text/javascript" src="assets/js/myJs/submitDataToTrip.js"></script>
+  <script type="text/javascript" src="assets/js/myJs/showMap.js"></script>
 </body>
 
 </html>

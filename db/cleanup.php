@@ -2,14 +2,14 @@
 
 include("./mysql_credentials.php");
 
-$conn = new mysqli($host, $db_user, $db_pass, $db_name);
+$conn = new mysqli($mysql_server, $mysql_user, $mysql_pass, $mysql_db);
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 } 
 
 // Create database
-$sql = "DROP DATABASE $db_name";
+$sql = "DROP DATABASE $mysql_db";
 if ($conn->query($sql) === TRUE) {
   echo "Database dopped";
 } else {

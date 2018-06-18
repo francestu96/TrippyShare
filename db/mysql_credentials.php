@@ -1,8 +1,8 @@
 <?php
-$host = "localhost";
-$db_user = "S4166252";
-$db_pass = "]-vqPx]QhpU4tn";
-$db_name = "S4166252";
+$mysql_server = "localhost";
+$mysql_user = "S4166252";
+$mysql_pass = "]-vqPx]QhpU4tn";
+$mysql_db = "S4166252";
 
 
 ?>

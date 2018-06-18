@@ -9,7 +9,7 @@ if(!isset($_GET['email']))
 
 $to_check = $_GET['email'];
 
-$mysqli = new mysqli($host, $db_user, $db_pass, $db_name);
+$mysqli = new mysqli($mysql_server, $mysql_user, $mysql_pass, $mysql_db);
 
 /* check connection */
 if (mysqli_connect_errno()) {

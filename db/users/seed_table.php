@@ -1,7 +1,7 @@
 <?php
     include("./mysql_credentials.php");
 
-    $conn = new mysqli($host, $db_user, $db_pass, $db_name);
+    $conn = new mysqli($mysql_server, $mysql_user, $mysql_pass, $mysql_db);
   
     /* check connection */
     if ($conn->connect_error) {

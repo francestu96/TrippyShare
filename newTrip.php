@@ -4,7 +4,9 @@
   <?php
     require("common/header.html");
 
-    session_start();
+    if(!isset($_SESSION))
+        session_start();
+
     if(!isset($_SESSION['name'])){
       header('Location: error.html');
       return;
@@ -13,7 +15,12 @@
 </head>
 
 <body>
-    <?php require("common/navbar.php"); ?>
+    <?php
+      require("common/costants.php");
+      require("common/navbar.php");
+
+      preloader();
+    ?>
 
     <!-- Inizio dell'hader contenente un'immagine e una scritta -->
     <div class="page-head">
@@ -82,21 +89,39 @@
                             <select id="type">
                               <?php
                                 $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
-                                if ($conn->connect_error)
-                                    die("Connection failed: " . $conn->connect_error);
+
+                                if ($conn->connect_error) {
+                                  error("Connection failed: " . $conn->connect_error, null);
+                                }
 
                                 $query = "SELECT type FROM trip_types";
-                                $stmt = $conn->prepare($query);
-                                if ($stmt = $conn->prepare($query)) {
-                                  /* execute query */
-                                  $stmt->execute();
-                                  /* get the statement result */
-                                  $result = $stmt->get_result();
-                                  while($row = $result->fetch_assoc())
-                                    echo "<option value=" . $row["type"] . ">" . $row["type"] . "</option>";
-                                  $stmt->close();
+
+                                try{
+                                  if ($stmt = $conn->prepare($query)) {
+                                    /* execute query */
+                                    if(!$stmt->execute())
+                                      throw new Exception($stmt->error);
+
+                                    /* get the statement result */
+                                    $result = $stmt->get_result();
+
+                                    while($row = $result->fetch_assoc())
+                                      echo "<option value=" . $row["type"] . ">" . $row["type"] . "</option>";
+
+                                    if(!$stmt->close())
+                                      throw new Exception($stmt->error);
+                                  }
+                                  else {
+                                    throw new Exception($stmt->error);
+                                  }
                                 }
-                                $conn->close();
+                                catch(Exception $error_message){
+                                  error($error_message, $conn);
+                                }
+
+                                if(!$conn->close()){
+                                  error($conn->error, null);
+                                }
                               ?>
                           </select>
                           </div>

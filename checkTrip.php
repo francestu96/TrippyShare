@@ -1,5 +1,7 @@
 <?php
-  session_start();
+  require("common/costants.php");
+  if(!isset($_SESSION))
+      session_start();
 
   if(empty($_POST['tripDescription']))
     $_POST['tripDescription'] = "No description";
@@ -8,8 +10,7 @@
 
   foreach($required as $field) {
     if (empty($_POST[$field])){
-      echo "manva vcampoi";
-      //header('Location: error.html');
+      header('Location: error.html');
       die();
     }
   }
@@ -27,7 +28,7 @@
     }
   }
 
-  //controllo se i luoghi sono esistenti
+  //check if places are valid
   foreach($stages as $stage){
     $place = str_replace(" ", "&",  $stage->place);
     $resp = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address=" . $place . "&key=AIzaSyB8-kAUPVmM33rORirYxG2KhKkLnFH89-w"));
@@ -37,61 +38,69 @@
     }
   }
 
-  $fileName = "empty.png"; //immagine non caricata e viene assegnata un immagine vuota
+  //image not loaded, we use the default one
+  $fileName = "empty.png";
 
   // Create connection
   $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
   // Check connection
   if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
+      error("Connection failed: " . $conn->connect_error, null);
   }
 
-  //inizia la transazione
-  $conn->begin_transaction();
+  if(!$conn->begin_transaction())
+    error("Begin transaction failed: " . $conn->error, null);
 
   try{
-    //PRIMA QUERY PER INSERIRE IL PLANNING
+    //QUERY 1) insert planning
     $query = "INSERT INTO plannings (author, place, departure_date, arrival_date, price, image_name, description)
               VALUES ((SELECT id FROM users WHERE email LIKE ?), ?, ?, ?, ?, ?, ?)";
 
     if ($stmt = $conn->prepare($query)) {
       /* bind parameters for markers */
-      $stmt->bind_param("sssssss", $_SESSION['email'], $_POST['tripPlace'], $_POST['departure'], $_POST['arrival'], $_POST['price'], $fileName, $_POST['tripDescription']);
+      if(!($stmt->bind_param("sssssss", $_SESSION['email'], $_POST['tripPlace'], $_POST['departure'], $_POST['arrival'], $_POST['price'], $fileName, $_POST['tripDescription'])))
+        throw new Exception($stmt->error);
 
       /* execute query */
-      $stmt->execute();
+      if(!$stmt->execute())
+        throw new Exception($stmt->error);
 
       /* close statement */
-      $stmt->close();
+      if(!$stmt->close())
+        throw new Exception($stmt->error);
     }
     else{
-      throw new Exception();
+      throw new Exception($stmt->error);
     }
 
-    //SECONDA QUERY PER INSERIRE LE TAPPE
+    //QUERY 2) insert stages
     $query = "INSERT INTO stages (author, trip_type, place, description, duration)
               VALUES ((SELECT id FROM users WHERE email LIKE ?), ?, ?, ?, ?)";
 
     foreach($stages as $stage){
       if ($stmt = $conn->prepare($query)) {
         /* bind parameters for markers */
-        $stmt->bind_param("sssss", $_SESSION['email'], $stage->type, $stage->place, $stage->description, $stage->days);
+        if(!$stmt->bind_param("sssss", $_SESSION['email'], $stage->type, $stage->place, $stage->description, $stage->days))
+          throw new Exception($stmt->error);
 
         /* execute query */
-        $stmt->execute();
+        if(!$stmt->execute())
+          throw new Exception($stmt->error);
 
         /* close statement */
-        $stmt->close();
+        if(!$stmt->close())
+          throw new Exception($stmt->error);
       }
       else{
-        throw new Exception();
+        throw new Exception($stmt->error);
       }
 
-      //TERZA QUERY PER INSERIRE I DATI NELLA TABELLA MOLTI A MOLTI plannings_stages
-      $conn->query("INSERT INTO plannings_stages (planning_id, stage_id) VALUES ((SELECT MAX(id) FROM plannings), (SELECT MAX(id) FROM stages));");
+      //QUERY 3) insert the last planning_id and the last stage_id in the N to N table plannings_stages
+      if(!$conn->query("INSERT INTO plannings_stages (planning_id, stage_id) VALUES ((SELECT MAX(id) FROM plannings), (SELECT MAX(id) FROM stages));"))
+        error($conn->error, $conn);
     }
 
-    //MEMORIZZAZIONE DEL FILE IN POST SE PRESENTE
+    //Process to store file
     if(is_uploaded_file($_FILES['image']['tmp_name'])){
       $targetFolder = 'assets/img/uploaded/'; // Relative to the root
       $tempFile = $_FILES['image']['tmp_name'];
@@ -108,25 +117,29 @@
       // Validate the file type
       $fileTypes = array('jpg','jpeg','gif','png'); // File extensions
       $fileParts = pathinfo($_FILES['image']['name']);
+
       if (in_array($fileParts['extension'],$fileTypes)) {
           move_uploaded_file($tempFile,$targetFile);
       }
       else{
-          throw new Exception();
+          throw new Exception("File corrupted");
       }
     }
 
-    //TUTTO ANDATO A BUON FINE E FACCIO LA COMMIT
+    //everything fine
     $conn->commit();
   }
-  catch(Exception $e){
-    $conn->rollback();
-    $conn->close();
-    header('Location: error.html');
-    die();
+  catch(Exception $error_message){
+    //if something goes wrong, need to rollback
+    if(!$conn->rollback())
+      error($conn->error, $conn);
+
+    error($error_message, $conn);
   }
 
-  $conn->close();
+  if(!$conn->close()){
+    error($conn->error, null);
+  }
 
   header('Location: index.php?action=1');
 ?>

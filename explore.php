@@ -12,7 +12,12 @@
 </head>
 
 <body>
-  <?php require("common/navbar.php"); ?>
+  <?php
+    require("common/costants.php");
+    require("common/navbar.php");
+
+    preloader();
+  ?>
 
   <div class="page-head">
       <div class="container">
@@ -235,17 +240,19 @@
 
                             /* check connection */
                             if ($conn->connect_error) {
-                                die("Connection failed: " . $conn->connect_error);
+                              error("Connection failed: " . $conn->connect_error, null);
                             }
 
                             if(!empty($_GET['sort']))
                               if($_GET['sort'] === "price")
                                 $orderBy = "price";
 
+                            //select the necessary info about plannings
                             $query = "SELECT id, image_name, departure_date, arrival_date, price, description, place FROM plannings ORDER BY $orderBy";
 
-                            $result=$conn->query($query)
-                            	or die ($conn->error);
+                            if(!($result=$conn->query($query))){
+                              error($conn->error, $conn);
+                            }
 
                             while($row = $result->fetch_assoc()) {
                               echo '<div class="col-sm-6 col-md-4 p0" name="tripContainer">
@@ -270,7 +277,9 @@
                                       </div>
                                   </div>';
                             }
-                            $conn->close();
+                            if(!$conn->close()){
+                              error($conn->error, null);
+                            }
                           ?>
                         </form>
                       </div>
@@ -283,6 +292,7 @@
   <?php
     require("common/footer.html");
     require("common/scripts.html");
+
     $toActive = "dateSort";
     $notToActive = "priceSort";
 

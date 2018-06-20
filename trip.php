@@ -9,7 +9,12 @@
 </head>
 
 <body>
-  <?php require("common/navbar.php"); ?>
+  <?php
+    require("common/costants.php");
+    require("common/navbar.php");
+
+    preloader();
+  ?>
   <?php
     if(!isset($_SESSION))
         session_start();
@@ -28,40 +33,45 @@
 
     /* check connection */
     if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
+      error("Connection failed: " . $conn->connect_error, null);
     }
 
     //QUERY 1) select all info about POSTed planning
     $query = "SELECT * FROM plannings where id=?";
 
-    $stmt = $conn->prepare($query);
-    if ($stmt = $conn->prepare($query)) {
-      /* bind parameters for markers */
-      $stmt->bind_param("i", $trip_id);
+    try{
+      if ($stmt = $conn->prepare($query)) {
+        /* bind parameters for markers */
+        if(!$stmt->bind_param("i", $trip_id))
+          throw new Exception($stmt->error);
 
-      /* execute query */
-      $stmt->execute();
+        /* execute query */
+        if(!$stmt->execute())
+          throw new Exception($stmt->error);
 
-      /* get the statement result */
-      $result = $stmt->get_result();
+        /* get the statement result */
+        $result = $stmt->get_result();
 
-      $row = $result->fetch_assoc();
+        if(!$stmt->close())
+          throw new Exception($stmt->error);
 
-      $trip_place=$row['place'];
-      $trip_author=$row['author'];
-      $trip_departure=$row['departure_date'];
-      $trip_arrival=$row['arrival_date'];
-      $trip_price=$row['price'];
-      $trip_description=$row['description'];
-      $trip_imagePath=$row['image_name'];
+        $row = $result->fetch_assoc();
+
+        $trip_place=$row['place'];
+        $trip_author=$row['author'];
+        $trip_departure=$row['departure_date'];
+        $trip_arrival=$row['arrival_date'];
+        $trip_price=$row['price'];
+        $trip_description=$row['description'];
+        $trip_imagePath=$row['image_name'];
+      }
+      else {
+        throw new Exception($stmt->error);
+      }
     }
-    else {
-      header('Location: error.html');
-      $stmt->close();
-      $conn->close();
-      die();
+    catch(Exception $error_message){
+      error($error_message, $conn);
     }
-    $stmt->close();
 
     //use info just retrived to fill out HTML with the requested trip
     $page_header = '<div class="page-head">
@@ -78,32 +88,37 @@
     //QUERY 2) select the name of partecipants
     $query = "SELECT name FROM users_plannings JOIN users ON id = user_id WHERE planning_id = ?";
 
-    $stmt = $conn->prepare($query);
-    if ($stmt = $conn->prepare($query)) {
-      /* bind parameters for markers */
-      $stmt->bind_param("i", $trip_id);
+    try{
+      if ($stmt = $conn->prepare($query)) {
+        /* bind parameters for markers */
+        if(!$stmt->bind_param("i", $trip_id))
+          throw new Exception($stmt->error);
 
-      /* execute query */
-      $stmt->execute();
+        /* execute query */
+        if(!$stmt->execute())
+          throw new Exception($stmt->error);
 
-      /* get the statement result */
-      $result = $stmt->get_result();
+        /* get the statement result */
+        $result = $stmt->get_result();
 
-      //display the name of all partecipants, if any
-      $partecipants = '';
-      if($result->num_rows === 0)
-        $partecipants = 'No partecipants. Be the first one to join!';
-      else
-        while($row = $result->fetch_assoc())
-          $partecipants .= '<li><a href="properties.html">'. $row['name'] .'</a></li>' . PHP_EOL;
+        if(!$stmt->close())
+          throw new Exception($stmt->error);
+
+        //display the name of all partecipants, if any
+        $partecipants = '';
+        if($result->num_rows === 0)
+          $partecipants = 'No partecipants. Be the first one to join!';
+        else
+          while($row = $result->fetch_assoc())
+            $partecipants .= '<li><a href="properties.html">'. $row['name'] .'</a></li>' . PHP_EOL;
+      }
+      else {
+        throw new Exception($stmt->error);
+      }
     }
-    else {
-      header('Location: error.html');
-      $stmt->close();
-      $conn->close();
-      die();
+    catch(Exception $error_message){
+      error($error_message, $conn);
     }
-    $stmt->close();
 
     $trip_info = '<div class="row">
                       <img src="assets/img/uploaded/'. $trip_imagePath . '" style="width:100%"/>
@@ -146,28 +161,19 @@
     $query = "SELECT DISTINCT name, surname, address, email, phone, users.image_name, users.description FROM plannings, users WHERE users.id = " . $trip_author;
 
     if(!($result=$conn->query($query))){
-      header('Location: error.html');
-      $conn->close();
-      die();
+      error($conn->error, $conn);
     }
 
-    if ($result->num_rows === 1) {
-      // output data of each row
-      $row = $result->fetch_assoc();
+    // output data of the only row. It must be alone because in the WHERE clause we are matching the primary key of the table
+    $row = $result->fetch_assoc();
 
-      $user_name=$row['name'];
-      $user_surname=$row['surname'];
-      $user_address=$row['address'];
-      $user_email=$row['email'];
-      $user_phone=$row['phone'];
-      $user_description=$row['description'];
-      $user_imageName=$row['image_name'];
-    }
-    else {
-      header('Location: error.html');
-      $conn->close();
-      die();
-    }
+    $user_name=$row['name'];
+    $user_surname=$row['surname'];
+    $user_address=$row['address'];
+    $user_email=$row['email'];
+    $user_phone=$row['phone'];
+    $user_description=$row['description'];
+    $user_imageName=$row['image_name'];
 
     //use info just retrived to fill out html with the user who entered the trip
     $user_info = '<div class="dealer-widget">
@@ -222,9 +228,7 @@
     $query = "SELECT id, image_name, price, place FROM plannings LIMIT 7";
 
     if(!($result=$conn->query($query))){
-      header('Location: error.html');
-      $conn->close();
-      die();
+      error($conn->error, $conn);
     }
 
     //fetch the result and fill out html with trips info
@@ -251,30 +255,35 @@
               FROM plannings_stages JOIN stages ON stages.id = plannings_stages.stage_id
               WHERE plannings_stages.planning_id = ?";
 
-    $stmt = $conn->prepare($query);
-    if ($stmt = $conn->prepare($query)) {
-      /* bind parameters for markers */
-      $stmt->bind_param("i", $trip_id);
+    try{
+      if ($stmt = $conn->prepare($query)) {
+        /* bind parameters for markers */
+        $stmt->bind_param("i", $trip_id);
 
-      /* execute query */
-      $stmt->execute();
+        /* execute query */
+        $stmt->execute();
 
-      /* get the statement result */
-      $result = $stmt->get_result();
+        /* get the statement result */
+        $result = $stmt->get_result();
 
-      //creste a different <div> for each stage. These <div> will be managed by "showMap.js" script
-      $stages = '';
-      while($row = $result->fetch_assoc())
-        $stages .= '<div name="stages" place="'. $row['place'] .'" description="'. $row['description'] .'" trip_type="'. $row['trip_type'] .'" duration="'. $row['duration'] .'"></div>' . PHP_EOL;
+        $stmt->close();
+
+        //creste a different <div> for each stage. These <div> will be managed by "showMap.js" script
+        $stages = '';
+        while($row = $result->fetch_assoc())
+          $stages .= '<div name="stages" place="'. $row['place'] .'" description="'. $row['description'] .'" trip_type="'. $row['trip_type'] .'" duration="'. $row['duration'] .'"></div>' . PHP_EOL;
+      }
+      else {
+        throw new Exception($stmt->error);
+      }
     }
-    else {
-      header('Location: error.html');
-      $stmt->close();
-      $conn->close();
-      die();
+    catch(Exception $error_message){
+      error($error_message, $conn);
     }
-    $stmt->close();
-    $conn->close();
+
+    if(!$conn->close()){
+      error($conn->error, null);
+    }
 
     //finally a lot of HTML matriosk
     $other_trips = '<div class="panel panel-default sidebar-menu similar-property-wdg wow fadeInRight animated">

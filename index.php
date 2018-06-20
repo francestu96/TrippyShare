@@ -12,7 +12,12 @@
 </head>
 
 <body>
-    <?php require("common/navbar.php"); ?>
+    <?php
+      require("common/costants.php");
+      require("common/navbar.php");
+
+      preloader();
+    ?>
 
     <!-- Area centrale con immagine e corpo -->
     <div class="slider-area">
@@ -64,13 +69,14 @@
 
                         /* check connection */
                         if ($conn->connect_error) {
-                            die("Connection failed: " . $conn->connect_error);
+                          error("Connection failed: " . $conn->connect_error, null);
                         }
 
                         $query = "SELECT id, image_name, departure_date, price, place FROM plannings ORDER BY departure_date LIMIT 7";
 
-                        $result=$conn->query($query)
-                          or die ($conn->error);
+                        if(!($result=$conn->query($query))){
+                          error($conn->error, $conn);
+                        }
 
                         while($row = $result->fetch_assoc()) {
                           echo '<div class="col-sm-6 col-md-3 p0" name="tripContainer">
@@ -88,7 +94,9 @@
                                   </div>
                               </div>';
                         }
-                        $conn->close();
+                        if(!$conn->close()){
+                          error($conn->error, null);
+                        }
                       ?>
                     </form>
                     <div class="col-sm-6 col-md-3 p0">

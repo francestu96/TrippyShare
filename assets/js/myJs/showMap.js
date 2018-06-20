@@ -1,4 +1,6 @@
-//In Trip.php mostra la mappa con tutte le tappe
+//In Trip.php display all the stages in the map
+var infoWindows = new Array();
+
 $(document).ready(function(){
   var stages = document.getElementsByName("stages");
 
@@ -33,15 +35,20 @@ function addMarker(place, duration, type, description){
           });
 
           var infoWindow = new google.maps.InfoWindow({
-            content: '<h1>Place:'+ description +
-                         'Duration:'+ duration +
-                         'Type: '+ type +
-                         'Description: ' +description+
-                     '</h1>'
+            content: '<h3><b>Place: </b>'+ description +
+                         '<br><br><b>Duration: </b>'+ duration + ' days' +
+                         '<br><br><b>Type: </b>'+ type +
+                         '<br><br><b>Description: </b>' +description+
+                     '</h3>'
           });
 
           marker.addListener('click', function(){
+            for(var i=0; i<infoWindows.length; i++)
+              if(infoWindows[i])
+                infoWindows[i].close();
+
             infoWindow.open(map, marker);
+            infoWindows.push(infoWindow);
           });
 
           bounds.extend(marker.getPosition());

@@ -242,7 +242,7 @@
                               if($_GET['sort'] === "price")
                                 $orderBy = "price";
 
-                            $query = "SELECT id, image_path, departure_date, arrival_date, price, description, place FROM plannings ORDER BY $orderBy";
+                            $query = "SELECT id, image_name, departure_date, arrival_date, price, description, place FROM plannings ORDER BY $orderBy";
 
                             $result=$conn->query($query)
                             	or die ($conn->error);
@@ -252,7 +252,7 @@
                                       <div id="id" value="' . $row['id']. '"></div>
                                       <div class="box-two proerty-item">
                                           <div class="item-thumb">
-                                              <img src="assets/img/uploaded/' . $row['image_path']. '">
+                                              <img src="assets/img/uploaded/' . $row['image_name']. '">
                                           </div>
                                           <div class="item-entry overflow">
                                               <h5>' . $row['place'] . '</h5>

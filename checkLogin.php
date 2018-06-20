@@ -1,8 +1,8 @@
 <?php
   // Se non è ancora inizializzat la sessione la inizializzo
-  if(!isset($_SESSION)) 
-  { 
-      session_start(); 
+  if(!isset($_SESSION))
+  {
+      session_start();
   }
   include('db/mysql_credentials.php');
   $required = array('email_signin', 'password_signin');
@@ -46,6 +46,7 @@
       while($row = $result->fetch_assoc()) {
 
         $_SESSION['name'] = $row["name"];
+        $_SESSION['email'] = $row["email"];
         header('Location: index.php');
       }
     }

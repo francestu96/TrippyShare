@@ -67,7 +67,7 @@
                             die("Connection failed: " . $conn->connect_error);
                         }
 
-                        $query = "SELECT id, image_path, departure_date, price, place FROM plannings ORDER BY departure_date LIMIT 7";
+                        $query = "SELECT id, image_name, departure_date, price, place FROM plannings ORDER BY departure_date LIMIT 7";
 
                         $result=$conn->query($query)
                           or die ($conn->error);
@@ -77,7 +77,7 @@
                                   <div id="id" value="' . $row['id']. '"></div>
                                   <div class="box-two proerty-item">
                                       <div class="item-thumb">
-                                          <img src="assets/img/uploaded/' . $row['image_path']. '">
+                                          <img src="assets/img/uploaded/' . $row['image_name']. '">
                                       </div>
                                       <div class="item-entry overflow">
                                           <h5>' . $row['place'] . '</h5>

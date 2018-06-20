@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 18, 2018 at 02:19 PM
+-- Generation Time: Jun 20, 2018 at 12:01 PM
 -- Server version: 5.7.22-0ubuntu0.17.10.1
 -- PHP Version: 7.1.17-0ubuntu0.17.10.1
 
@@ -47,7 +47,7 @@ CREATE TABLE `plannings` (
   `departure_date` datetime NOT NULL,
   `arrival_date` datetime NOT NULL,
   `price` int(11) NOT NULL,
-  `image_path` varchar(40) NOT NULL,
+  `image_name` varchar(40) NOT NULL,
   `description` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -55,7 +55,7 @@ CREATE TABLE `plannings` (
 -- Dumping data for table `plannings`
 --
 
-INSERT INTO `plannings` (`id`, `place`, `author`, `departure_date`, `arrival_date`, `price`, `image_path`, `description`) VALUES
+INSERT INTO `plannings` (`id`, `place`, `author`, `departure_date`, `arrival_date`, `price`, `image_name`, `description`) VALUES
 (1, '', 7, '1111-11-11 00:00:00', '1111-11-11 00:00:00', 321, 'empty.png', ''),
 (2, '', 7, '1111-11-11 00:00:00', '0111-11-11 00:00:00', 213, 'empty.png', ''),
 (3, '', 7, '0013-11-11 00:00:00', '0021-03-22 00:00:00', 321, 'empty.png', ''),
@@ -172,20 +172,23 @@ CREATE TABLE `users` (
   `birthdate` datetime DEFAULT NULL,
   `description` text,
   `gender` enum('male','female','other') DEFAULT NULL,
-  `nationality` varchar(30) DEFAULT NULL
+  `nationality` varchar(30) DEFAULT NULL,
+  `address` varchar(30) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `image_name` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `birthdate`, `description`, `gender`, `nationality`) VALUES
-(4, 'test', 'test', 'test', 'test', '2017-03-02 00:00:00', NULL, 'male', NULL),
-(5, 'ciaoen', 'porcodio', 'fradqwe@fdwe', '382410e305c98367e39b0c35849d814313fab4e3', '2018-05-23 00:00:00', NULL, 'male', NULL),
-(6, 'silvia', 'sciutto', 'sciva.silvia@gmai.com', '382410e305c98367e39b0c35849d814313fab4e3', NULL, NULL, NULL, NULL),
-(7, 'francesco', 'stucci', 'francestu96@gmail.com', '382410e305c98367e39b0c35849d814313fab4e3', NULL, NULL, NULL, NULL),
-(8, 'ciao', 'ciaone', 'ciao@gmail.com', '382410e305c98367e39b0c35849d814313fab4e3', NULL, NULL, NULL, NULL),
-(9, 'francesco', 'stucci', 'bio@fn.ok', 'b4b1d459b4c680c82535a5ece826f5aae4eda250', NULL, NULL, NULL, NULL);
+INSERT INTO `users` (`id`, `name`, `surname`, `email`, `password`, `birthdate`, `description`, `gender`, `nationality`, `address`, `phone`, `image_name`) VALUES
+(4, 'test', 'test', 'test', 'test', '2017-03-02 00:00:00', NULL, 'male', NULL, '', '', ''),
+(5, 'ciaoen', 'porcodio', 'fradqwe@fdwe', '382410e305c98367e39b0c35849d814313fab4e3', '2018-05-23 00:00:00', NULL, 'male', NULL, '', '', ''),
+(6, 'silvia', 'sciutto', 'sciva.silvia@gmai.com', '382410e305c98367e39b0c35849d814313fab4e3', NULL, NULL, NULL, NULL, '', '', ''),
+(7, 'francesco', 'stucci', 'francestu96@gmail.com', '382410e305c98367e39b0c35849d814313fab4e3', NULL, NULL, NULL, NULL, '', '', ''),
+(8, 'ciao', 'ciaone', 'ciao@gmail.com', '382410e305c98367e39b0c35849d814313fab4e3', NULL, NULL, NULL, NULL, '', '', ''),
+(9, 'francesco', 'stucci', 'bio@fn.ok', 'b4b1d459b4c680c82535a5ece826f5aae4eda250', NULL, NULL, NULL, NULL, '', '', '');
 
 -- --------------------------------------------------------
 

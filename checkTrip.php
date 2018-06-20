@@ -51,7 +51,7 @@
 
   try{
     //PRIMA QUERY PER INSERIRE IL PLANNING
-    $query = "INSERT INTO plannings (author, place, departure_date, arrival_date, price, image_path, description)
+    $query = "INSERT INTO plannings (author, place, departure_date, arrival_date, price, image_name, description)
               VALUES ((SELECT id FROM users WHERE email LIKE ?), ?, ?, ?, ?, ?, ?)";
 
     if ($stmt = $conn->prepare($query)) {

@@ -38,9 +38,6 @@
     }
   }
 
-  //image not loaded, we use the default one
-  $fileName = "empty.png";
-
   // Create connection
   $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
   // Check connection
@@ -52,6 +49,33 @@
     error("Begin transaction failed: " . $conn->error, null);
 
   try{
+    //Process to store file
+    if(is_uploaded_file($_FILES['image']['tmp_name'])){
+      $targetFolder = 'assets/img/uploaded/'; // Relative to the root
+      $tempFile = $_FILES['image']['tmp_name'];
+
+      $myhash = md5_file($_FILES['image']['tmp_name']);
+      $temp = explode(".", $_FILES['image']['name']);
+      $extension = end($temp);
+      $fileName = $myhash.'.'.$extension;
+
+      $targetFile = rtrim($targetFolder,'/') . '/' .$myhash.'.'.$extension;
+      for($i = 1; file_exists($targetFile); $i++)
+          $targetFile = rtrim($targetFolder,'/') . '/' .$myhash + $i.'.'.$extension;
+
+      // Validate the file type
+      $fileTypes = array('jpg','jpeg','gif','png'); // File extensions
+      $fileParts = pathinfo($_FILES['image']['name']);
+
+      if (in_array($fileParts['extension'],$fileTypes)) {
+          move_uploaded_file($tempFile,$targetFile);
+          $fileName = $targetFile;
+      }
+      else{
+          throw new Exception("File corrupted");
+      }
+    }
+
     //QUERY 1) insert planning
     $query = "INSERT INTO plannings (author, place, departure_date, arrival_date, price, image_name, description)
               VALUES ((SELECT id FROM users WHERE email LIKE ?), ?, ?, ?, ?, ?, ?)";
@@ -98,32 +122,6 @@
       //QUERY 3) insert the last planning_id and the last stage_id in the N to N table plannings_stages
       if(!$conn->query("INSERT INTO plannings_stages (planning_id, stage_id) VALUES ((SELECT MAX(id) FROM plannings), (SELECT MAX(id) FROM stages));"))
         error($conn->error, $conn);
-    }
-
-    //Process to store file
-    if(is_uploaded_file($_FILES['image']['tmp_name'])){
-      $targetFolder = 'assets/img/uploaded/'; // Relative to the root
-      $tempFile = $_FILES['image']['tmp_name'];
-
-      $myhash = md5_file($_FILES['image']['tmp_name']);
-      $temp = explode(".", $_FILES['image']['name']);
-      $extension = end($temp);
-      $fileName = $myhash.'.'.$extension;
-
-      $targetFile = rtrim($targetFolder,'/') . '/' .$myhash.'.'.$extension;
-      for($i = 1; file_exists($targetFile); $i++)
-          $targetFile = rtrim($targetFolder,'/') . '/' .$myhash + $i.'.'.$extension;
-
-      // Validate the file type
-      $fileTypes = array('jpg','jpeg','gif','png'); // File extensions
-      $fileParts = pathinfo($_FILES['image']['name']);
-
-      if (in_array($fileParts['extension'],$fileTypes)) {
-          move_uploaded_file($tempFile,$targetFile);
-      }
-      else{
-          throw new Exception("File corrupted");
-      }
     }
 
     //everything fine

@@ -217,4 +217,40 @@
 
     return "";
   }
+
+  /**
+   * Mi permette di lasciare null facendo il trim di una stringa null
+   */
+  function trimIfString($value) {
+    return is_string($value) ? trim($value) : $value;
+  }
+
+  /**
+   * Restituisce un id a partire da una mail
+   */
+  function findId($mail){
+    $id = null;
+    $query = "SELECT id FROM users 
+            WHERE email = ?";
+
+    if ($stmt = $conn->prepare($query)) {
+      /* bind parameters for markers */
+      $stmt->bind_param("s", $mail);
+
+      // Prova ad effettuare la SELECT
+      /* get the statement result */
+      $result = $stmt->get_result();
+
+      if ($result->num_rows === 1) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+      
+          $id = htmlspecialchars($raw['id']);
+        }
+      }
+    }
+    return $id;
+  }
+
+
 ?>

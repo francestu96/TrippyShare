@@ -50,6 +50,7 @@
     if ($stmt->execute()) {
       // L'ho inserito con successo
       $_SESSION['name'] = $name;
+      $_SESSION['email'] = $email;
       header('Location: index.php');
     } else {
       // La mail era già rpesente o si è verificato qualche errore

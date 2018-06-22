@@ -1,4 +1,18 @@
 <!DOCTYPE html>
+<?php     
+  // Se non è ancora inizializzat la sessione la inizializzo
+  if(!isset($_SESSION)) 
+  { 
+      session_start(); 
+  }
+
+  // Se l'utente è già loggato allora non ha senso che l'utente arrivi in questa pagina.
+  if(isset($_SESSION['name'])){
+    header('index.php');
+    exit();
+  }
+      
+?>
 
 <html >
 <head>

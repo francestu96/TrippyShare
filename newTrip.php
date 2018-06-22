@@ -1,3 +1,17 @@
+<?php     
+  // Se non è ancora inizializzat la sessione la inizializzo
+  if(!isset($_SESSION)) 
+  { 
+      session_start(); 
+  }
+
+  // Se l'utente non è loggato allora non ha senso che l'utente arrivi in questa pagina.
+  if(!isset($_SESSION['name'])){
+    header('index.php');
+    exit();
+  }
+      
+?>
 <html>
 <head>
   <title>SAW | NewTrip</title>

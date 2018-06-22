@@ -3,157 +3,103 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
+<?php     
+
+  // Se non è ancora inizializzat la sessione la inizializzo
+  if(!isset($_SESSION)) 
+  { 
+      session_start(); 
+  }
+
+  // Devo essere loggato per accedere a questa pagina
+  if(!isset($_SESSION['name'])){
+    header('login.php');
+    exit();
+  }
+
+?>
 <html class="no-js">
 <!--<![endif]-->
 
 <head>
-  <title>SAW | Profile</title>
-  <?php require("common/header.html"); ?>
+    <title>SAW | Profile</title>
+    <?php require_once("common/header.html"); ?>
 </head>
 
 <body>
-  <?php
-    require("common/costants.php");
-    require("common/navbar.php");
+    <?php
+        require_once("common/costants.php");
+        require_once("common/navbar.php");
 
-    preloader();
-  ?>
+        preloader();
+    ?>
 
-  <div class="page-head">
-      <div class="container">
-          <div class="row">
-              <div class="page-head-content">
-                  <h1 class="page-title">Profile</h1>
-              </div>
-          </div>
-      </div>
-  </div>
-
-  <div class="content-area user-profiel" style="background-color: #FCFCFC;">&nbsp;
-            <div class="container">   
+        <div class="page-head">
+            <div class="container">
                 <div class="row">
-                    <div class="col-sm-10 col-sm-offset-1 profiel-container">
-
-                        <form action="" method="">
-                            <div class="profiel-header">
-                                <h3>
-                                    <b>BUILD</b> YOUR PROFILE <br>
-                                    <small>This information will let us know more about you.</small>
-                                </h3>
-                                <hr>
-                            </div>
-
-                            <div class="clear">
-                                <div class="col-sm-3 col-sm-offset-1">
-                                    <div class="picture-container">
-                                        <div class="picture">
-                                            <img src="assets/img/avatar.png" class="picture-src" id="wizardPicturePreview" title="">
-                                            <input type="file" id="wizard-picture">
-                                        </div>
-                                        <h6>Choose Picture</h6>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-3 padding-top-25">
-
-                                    <div class="form-group">
-                                        <label>First Name <small>(required)</small></label>
-                                        <input name="firstname" type="text" class="form-control" placeholder="Andrew...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Last Name <small>(required)</small></label>
-                                        <input name="lastname" type="text" class="form-control" placeholder="Smith...">
-                                    </div> 
-                                    <div class="form-group">
-                                        <label>Email <small>(required)</small></label>
-                                        <input name="email" type="email" class="form-control" placeholder="mail@email@email.com.com">
-                                    </div> 
-                                </div>
-                                <div class="col-sm-3 padding-top-25">
-                                    <div class="form-group">
-                                        <label>Gender <small></small></label><br>
-                                        <input name="gender" type="radio" class="form-control" value="male"> Male<br>
-                                        <input name="gender" type="radio" class="form-control" value="female"> Female<br>
-                                    </div> 
-
-                                    <div class="form-group">
-                                        <label>Password <small>(required)</small></label>
-                                        <input name="Password" type="password" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Confirm password : <small>(required)</small></label>
-                                        <input type="password" class="form-control">
-                                    </div>
-                                </div>  
-
-                            </div>
-
-                            <div class="clear">
-                                <br>
-                                <hr>
-                                <br>
-                                <div class="col-sm-5 col-sm-offset-1">
-                                    <div class="form-group">
-                                        <label>Nazionality :</label>
-                                        <input name="Nationality" type="text" class="form-control" >
-                                    </div>
-                                    <div class="form-group">
-                                        <label>City :</label>
-                                        <input name="website" type="text" class="form-control" >
-                                    </div>
-                                    
-                                </div>  
-
-                                <div class="col-sm-5">
-                                    <div class="form-group">
-                                        <label>Phone :</label>
-                                        <input name="Phone" type="text" class="form-control" placeholder="+1 9090909090">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Birthday :</label>
-                                        <input name="Birthday" type="text" class="form-control" >
-                                    </div>
-                                </div>
-                                <br>
-                                <hr>
-                                <br>
-                                <div class="col-sm-10 col-sm-offset-1">
-                                    <div class="form-group">
-                                        <label>Description about yourself :</label>
-                                        <textarea name="Description" rows="10" maxlength="500" class="form-control" ></textarea>
-                                    </div>
-                                </div>
- 
-                            </div>
-                    
-                            <div class="col-sm-5 col-sm-offset-1">
-                                <br>
-                                <input type="button" class="btn btn-finish btn-primary" name="finish" value="Finish">
-                            </div>
-                            <br>
-                    </form>
-
+                    <div class="page-head-content">
+                        <h1 class="page-title">Profile</h1>
+                    </div>
                 </div>
-            </div><!-- end row -->
-
+            </div>
         </div>
-    </div>
 
-  <?php
-    require("common/footer.html");
-    require("common/scripts.html");
+        <div class="content-area user-profiel" style="background-color: #FCFCFC;">&nbsp;
 
-    $toActive = "dateSort";
-    $notToActive = "priceSort";
+            <?php
+            require_once("utilities.php");
 
-    if($orderBy === "price"){
-      $toActive = "priceSort";
-      $notToActive = "dateSort";
-    }
+            // Controllo se devo modificare il mio profilo o voglio visualizzarne uno di un utente
+            if($isset($_GET['id']) && !empty($_GET['id'])){
+                $query = "SELECT * FROM users WHERE id = ".$_GET['id'];
+            } else{
+                $query = "SELECT * FROM users WHERE email = '".$_SESSION['email']."'";
 
-    echo "<script type='text/javascript'>document.getElementById('$toActive').classList.add('active'); document.getElementById('$notToActive').classList.remove('active')</script>";
-  ?>
-  <script type="text/javascript" src="assets/js/myJs/submitDataToTrip.js"></script>
+            }
+
+            // Cerco i dati di questo profilo
+
+            if ($stmt = $conn->prepare($query)) {
+                /* bind parameters for markers */
+                $stmt->bind_param("s", $id);
+
+                // Prova ad effettuare la SELECT
+                /* get the statement result */
+                $result = $stmt->get_result();
+
+                if ($result->num_rows === 1) {
+                // output data of each row
+                while($row = $result->fetch_assoc()) {
+                    
+                    $name = htmlspecialchars($raw['name']);
+                    $surname = htmlspecialchars($raw['surname']);
+                    $email = htmlspecialchars($raw['email']);
+                    $birthday = $raw['birthday'];
+                    $description = htmlspecialchars($raw['description']);
+                    $gender = $raw['gender'];
+                    $nationality = htmlspecialchars($raw['nationality']);
+                    $address = htmlspecialchars($raw['address']);
+                    $phone = htmlspecialchars($raw['phone']);
+                    $fileName = htmlspecialchars($raw['phone']);
+                }
+                }
+                else {
+                header('Location: index.php');
+                exit();
+                }
+                
+            }
+
+            if($isset($_GET['id']) && !empty($_GET['id'])){
+                // voglio visualizzare il profilo di un utente
+                require_once("viewProfile.php");
+            } else{
+                // Voglio modificare il mio profilo
+                require_once("changeProfile.php");
+            }
+        
+            ?>
+        </div>
 </body>
 
 </html>

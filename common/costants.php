@@ -5,7 +5,7 @@
   //qui mettiamo le costanti che possiamo usare per i vari messaggi di successo/fallimento di qualcosa
   //potremmo mettere valori inventati per dare professionalità alla cosa e passarli semplicemente in GET.
   //Per esempio:
-  define("REGISTRATION_SUCCESS_example", "3dasdefFdwj)oji)£dwoue");
+  define("REGISTRATION_SUCCESS", "Registrazione effettuata con successo");
 
 
 

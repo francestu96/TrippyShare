@@ -4,9 +4,9 @@
 
                 <div class="profiel-header">
                     <h3>
-                        <b>BUILD</b> YOUR PROFILE
+                        <b><?= $name?></b> profile
                         <br>
-                        <small>This information will let us know more about you.</small>
+                        <small></small>
                     </h3>
                     <hr>
                 </div>
@@ -15,7 +15,7 @@
                     <div class="col-sm-3 col-sm-offset-1">
                         <div class="picture-container">
                             <div class="picture">
-                                <img src="assets/img/users/<?= $fileName?>" class="picture-src" id="wizardPicturePreview" title="">
+                                <img src="assets/img/users/<?= $fileName?>" height="220" width="330" class="picture-src" id="wizardPicturePreview" title="">
                             </div>
                         </div>
                     </div>
@@ -27,11 +27,7 @@
                             </label>
                             <input name="firstname" type="text" class="form-control" readonly value="<?= $name?>">
                         </div>
-                        <div class="form-group">
-                            <label>Last Name
-                            </label>
-                            <input name="lastname" type="text" class="form-control" readonly value="<?= $surname?>">
-                        </div>
+                        
                         <div class="form-group">
                             <label>Email
                             </label>
@@ -40,14 +36,15 @@
                     </div>
                     <div class="col-sm-3 padding-top-25">
                         <div class="form-group">
+                            <label>Last Name
+                            </label>
+                            <input name="lastname" type="text" class="form-control" readonly value="<?= $surname?>">
+                        </div>
+                        <div class="form-group">
                             <label>Gender
                                 <small></small>
                             </label>
-                            <br>
-                            <input name="gender" type="radio" class="form-control" value="male"> Male
-                            <br>
-                            <input name="gender" type="radio" class="form-control" value="female"> Female
-                            <br>
+                            <input name="gender" type="text" class="form-control" readonly value="<?= $gender?>">
                         </div>
                     </div>
 
@@ -59,8 +56,8 @@
                     <br>
                     <div class="col-sm-5 col-sm-offset-1">
                         <div class="form-group">
-                            <label>Nazionality :</label>
-                            <input name="nationality" type="text" readonly class="form-control" value="<?= $nazionality?>">
+                            <label>Nationality :</label>
+                            <input name="nationality" type="text" readonly class="form-control" value="<?= $nationality?>">
                         </div>
                         <div class="form-group">
                             <label>City :</label>
@@ -85,7 +82,7 @@
                     <div class="col-sm-10 col-sm-offset-1">
                         <div class="form-group">
                             <label>Description :</label>
-                            <textarea name="description" rows="10" maxlength="500" readonly class="form-control" value="<?= $description?>"></textarea>
+                            <textarea name="description" rows="10" maxlength="500" readonly class="form-control" ><?= $description?></textarea>
                         </div>
                     </div>
 

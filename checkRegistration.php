@@ -44,7 +44,7 @@
 
   if ($stmt = $conn->prepare($query)) {
     /* bind parameters for markers */
-    $stmt->bind_param("ssss", $name, $surname, $email, $password);
+    $stmt->bind_param("ssss", ucfirst($name), ucfirst($surname), $email, $password);
 
     // Prova ad effettuare la insert
     if ($stmt->execute()) {

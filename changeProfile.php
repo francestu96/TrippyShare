@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1 profiel-container">
 
-            <form action="updateprofile.php" method="POST">
+            <form action="updateProfile.php" method="POST">
                 <div class="profiel-header">
                     <h3>
                         <b>BUILD</b> YOUR PROFILE
@@ -16,7 +16,7 @@
                     <div class="col-sm-3 col-sm-offset-1">
                         <div class="picture-container">
                             <div class="picture">
-                                <img src="assets/img/users/<?= $fileName?>" class="picture-src" id="wizardPicturePreview" title="">
+                                <img src="assets/img/users/<?= $fileName?>" height="220" width="330" class="picture-src" id="wizardPicturePreview" title="">
                                 <input type="file" accept=".jpg, .jpeg, .gif, .png" class="form-control" name="profile-image">
                             </div>
                             <h6>Choose Picture</h6>
@@ -66,7 +66,7 @@
                             <label>Confirm password :
                                 <small></small>
                             </label>
-                            <input type="password" required id="password_confirm" onchange="checkPassword()" class="form-control">
+                            <input type="password" id="password_confirm" onchange="checkPassword()" class="form-control">
                         </div>
                     </div>
 
@@ -78,8 +78,8 @@
                     <br>
                     <div class="col-sm-5 col-sm-offset-1">
                         <div class="form-group">
-                            <label>Nazionality :</label>
-                            <input name="nationality" type="text" class="form-control" value="<?= $nazionality?>">
+                            <label>Nationality :</label>
+                            <input name="nationality" type="text" class="form-control" value="<?= $nationality?>">
                         </div>
                         <div class="form-group">
                             <label>City :</label>
@@ -104,7 +104,7 @@
                     <div class="col-sm-10 col-sm-offset-1">
                         <div class="form-group">
                             <label>Description about yourself :</label>
-                            <textarea name="description" rows="10" maxlength="500" class="form-control" value="<?= $description?>"></textarea>
+                            <textarea name="description" rows="10" maxlength="500" class="form-control"><?= $description?></textarea>
                         </div>
                     </div>
 
@@ -112,7 +112,7 @@
 
                 <div class="col-sm-5 col-sm-offset-1">
                     <br>
-                    <input type="button" class="btn btn-finish btn-primary" name="finish" value="Finish">
+                    <input type="submit" type="button" class="btn btn-finish btn-primary" name="finish" value="Finish">
                 </div>
                 <br>
             </form>

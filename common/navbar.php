@@ -42,7 +42,10 @@
             '<li class="dropdown ymm-sw" data-wow-delay="0.1s">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">' . $_SESSION['name'] . '</a>
                 <ul class="dropdown-menu navbar-nav" style="text-align: center">
-                    <li>
+                <li>
+                        <a href="profile.php">Profile</a>
+                </li>    
+                <li>
                         <a href="newTrip.php">New Trip</a>
                     </li>
                     <li>

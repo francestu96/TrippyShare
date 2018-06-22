@@ -2,6 +2,7 @@
   require("common/costants.php");
   if(!isset($_SESSION))
       session_start();
+  }
 
   if(empty($_POST['tripDescription']))
     $_POST['tripDescription'] = "No description";
@@ -49,10 +50,12 @@
     error("Begin transaction failed: " . $conn->error, null);
 
   try{
+    //if no file uploaded, use the default one
+    $fileName = "empty.png";
     //Process to store file
     if(is_uploaded_file($_FILES['image']['tmp_name'])){
       $targetFolder = 'assets/img/uploaded/'; // Relative to the root
-      $tempFile = $_FILES['image']['tmp_name'];
+      $tempFile = trim($_FILES['image']['tmp_name']);
 
       $myhash = md5_file($_FILES['image']['tmp_name']);
       $temp = explode(".", $_FILES['image']['name']);
@@ -104,7 +107,7 @@
     foreach($stages as $stage){
       if ($stmt = $conn->prepare($query)) {
         /* bind parameters for markers */
-        if(!$stmt->bind_param("sssss", $_SESSION['email'], $stage->type, $stage->place, $stage->description, $stage->days))
+        if(!$stmt->bind_param("ssssi", $_SESSION['email'], $stage->type, $stage->place, $stage->description, $stage->days))
           throw new Exception($stmt->error);
 
         /* execute query */

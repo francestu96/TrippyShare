@@ -12,14 +12,13 @@
   <?php
     require("common/header.html");
 
-    // if(!isset($_SESSION))
-    //     session_start();
-    //
-    // if(!isset($_SESSION['name'])){
-    //   header('Location: error.html');
-    //   return;
-    // }
-    $_SESSION['userid'] = 7;
+    if(!isset($_SESSION))
+        session_start();
+
+    if(!isset($_SESSION['name'])){
+      header('Location: error.html');
+      return;
+    }
   ?>
 </head>
 
@@ -30,6 +29,9 @@
 
       preloader();
 
+      //structures to manage conversations and messages
+      require("conversationStructures.php");
+
       $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
 
       /* check connection */
@@ -37,83 +39,124 @@
         error("Connection failed: " . $conn->connect_error, null);
       }
 
-      //QUERY 1) get all unread messages
-      $query = "SELECT * FROM messages JOIN users ON receiver=users.id WHERE message_read = 'no' AND users.id=".$_SESSION['userid'];
-      if(!($unread_messages=$conn->query($query))){
+      //select the id of the user from the emal
+      $query = 'SELECT id FROM users WHERE email="'.$_SESSION['email'].'"';
+      if(!($result=$conn->query($query))){
         error($conn->error, $conn);
       }
+      $id = ($result->fetch_array())[0];
+      $query = "SELECT sender, receiver, nameSender, surnameSender, nameReceiver, surnameReceiver, imageSender, imageReceiver, message, date
+                  FROM messages
+                  LEFT OUTER JOIN (SELECT image_name as imageSender, name as nameSender, surname as surnameSender, id FROM users WHERE id!=6) as senderTable ON sender=senderTable.id
+                  LEFT OUTER JOIN (SELECT image_name as imageReceiver, name as nameReceiver, surname as surnameReceiver, id FROM users WHERE id!=6) as receiverTable ON receiver=receiverTable.id
+                  WHERE sender=6 OR receiver=6
+                  ORDER BY date";
 
-      //QUERY 2) get all read messages
-      $query = "SELECT * FROM messages JOIN users ON receiver=users.id WHERE message_read = 'yes' AND users.id=".$_SESSION['userid'];
-      if(!($read_messages=$conn->query($query))){
-        error($conn->error, $conn);
-      }
-
-      if($unread_messages->num_rows > 0){
-        //QUERY 3) select the sender user and the messages necessary info for UNREAD messages
-        $query = "SELECT name, surname, image_name, object, date, message FROM messages JOIN users ON sender=users.id WHERE message_read = 'no'";
-        if(!($result=$conn->query($query))){
-          error($conn->error, $conn);
-        }
-
-        $unread_messages_container = '';
-        while($row = $result->fetch_assoc())
-          $unread_messages_container .= '<div class="row comment">
-              <div class="col-sm-3 col-md-2 text-center-xs">
-                  <p>
-                      <img style ="width:55%" src="assets/img/users/'. htmlspecialchars($row['image_name']) .'" class="img-responsive img-circle" alt="">
-                  </p>
-              </div>
-              <div class="col-sm-9 col-md-10">
-                  <h5 class="text-uppercase">'. htmlspecialchars($row['name']) .' '. htmlspecialchars($row['surname']) .' - '. htmlspecialchars($row['object']) .'</h5>
-                  <p class="posted"><i class="fa fa-clock-o"></i> '. htmlspecialchars(date('F d, Y \a\t h:i a', strtotime($row['date']))) .'</p>
-                  <p>'. htmlspecialchars($row['message']) .'</p>
-                  <p class="reply"><a href="#"><i class="fa fa-reply"></i> Reply</a>
-                  </p>
-              </div>
-          </div>';
-      }
-
-      //QUERY 4) select the sender user and the messages necessary info for READ messages
-      $query = "SELECT name, surname, image_name, object, date, message FROM messages JOIN users ON sender=users.id WHERE message_read = 'yes'";
       if(!($result=$conn->query($query))){
         error($conn->error, $conn);
       }
 
-      $read_messages_container = '';
-      while($row = $result->fetch_assoc())
-        $read_messages_container .= '<div class="row comment">
-            <div class="col-sm-3 col-md-2 text-center-xs">
-                <p>
-                    <img style ="width:55%" src="assets/img/users/'. htmlspecialchars($row['image_name']) .'" class="img-responsive img-circle" alt="">
-                </p>
-            </div>
-            <div class="col-sm-9 col-md-10">
-                <h5 class="text-uppercase">'. htmlspecialchars($row['name']) .' '. htmlspecialchars($row['surname']) .' - '. htmlspecialchars($row['object']) .'</h5>
-                <p class="posted"><i class="fa fa-clock-o"></i> '. htmlspecialchars(date('F d, Y \a\t h:i a', strtotime($row['date']))) .'</p>
-                <p>'. htmlspecialchars($row['message']) .'</p>
-                <p class="reply"><a href="#"><i class="fa fa-reply"></i> Reply</a>
-                </p>
-            </div>
-        </div>';
+      //$conversations = array();
+      while($row = $result->fetch_assoc()){
+        $found = false;
 
-      //if unread messages are 0, don't diplay their container
-      $container = '<div class="container">
-                      <div class="row">'.
-                        ($unread_messages->num_rows > 0 ?
-                          '<section id="comments" class="comments wow fadeInRight animated">
-                              <h4 class="text-uppercase wow fadeInLeft animated">Unread messages</h4>
-                              '.$unread_messages_container.'
-                          </section>' : '').
+        if(empty($conversations)){
+          $message = new Message($row['nameSender'], $row['nameReceiver'], $row['message'], $row['date']);
+          $conversation = new Conversation($row, $message, $id);
 
-                        '<section id="comments" class="comments wow fadeInRight animated">
-                            <h4 class="text-uppercase wow fadeInLeft animated">Read messages</h4>
-                            '.$read_messages_container.'
-                        </section>
+          $conversations = new ConversationList($conversation);
+          continue;
+        }
+
+        if($conversations->isPresent($conversation, $row['sender'], $row['receiver'])){
+          $conversations->addMessage($conversation, new Message($row['nameSender'], $row['nameReceiver'], $row['message'], $row['date']));
+        }
+        else{
+          $message = new Message($row['nameSender'], $row['nameReceiver'], $row['message'], $row['date']);
+          $conversation = new Conversation($row, $message, $id);
+
+          $conversations->add($conversation);
+        }
+      }
+
+      $conversations_container = '';
+      foreach($conversations->conversations as $conversation){
+        $conversations_container .= '<div class="media conversation">
+              <div class="row comment">
+                  <div class="col-sm-3 col-md-3 text-center-xs">
+                      <p>
+                          <img style ="width:90%" src="assets/img/users/'. htmlspecialchars($conversation->image) .'" class="img-responsive img-circle" alt="">
+                      </p>
+                  </div>
+                  <div class="col-sm-9 col-md-8">
+                      <h5 class="text-uppercase" style="font-weight:bold">'. htmlspecialchars($conversation->name) .' '. htmlspecialchars($conversation->surname).'</h5>
+                      <h5>LAST MESSAGE:</5>
+                      <p>'. htmlspecialchars($conversation->messages[count($conversation->messages)-1]->message) .'</p>
+                      <p class="posted"><i class="fa fa-clock-o"></i> '. htmlspecialchars(date('F d, Y \a\t h:i a', strtotime($conversation->messages[0]->timestamp))) .'</p>
+                  </div>
+              </div>
+            </div>';
+      }
+
+      $messages_container = '';
+      foreach($conversations->conversations as $conversation){
+        foreach($conversation->messages as $message){
+          if(empty($message->nameSender)){
+            $nameSender = 'You';
+            $style = 'style="ackground-color:green; background: rgba(66, 244, 146, 0.2)"';
+          }
+          else{
+            $nameSender = $message->nameSender;
+            $style = 'style="ackground-color:light blue; background: rgba(255, 0, 0, 0.1);"';
+          }
+
+          $messages_container .= '<div class="media msg" '. $style .'>
+              <div class="media-body">
+                  <small class="pull-right time" style="color:black;"><i class="fa fa-clock-o"></i>'. htmlspecialchars($message->timestamp) .'</small>
+                  <h5 class="media-heading"">'. htmlspecialchars($nameSender) .'</h5>
+                  <small class="col-lg-10" style="color:black;">'. htmlspecialchars($message->message) .'</small>
+              </div>
+          </div>';
+        }
+      }
+
+      $container = '<div class="container" style="width:90%">
+                      <div class="row">
+                          <div class="col-lg-3">
+                              <div class="btn-panel btn-panel-conversation">
+                                  <a href="" class="btn  col-lg-6 send-message-btn " role="button"><i class="fa fa-search"></i> Search</a>
+                                  <a href="" class="btn  col-lg-6  send-message-btn pull-right" role="button"><i class="fa fa-plus"></i> New Message</a>
+                              </div>
+                          </div>
+
+                          <div class="col-lg-offset-1 col-lg-7">
+                              <div class="btn-panel btn-panel-msg">
+
+                                  <a href="" class="btn  col-lg-3  send-message-btn pull-right" role="button"><i class="fa fa-gears"></i> Settings</a>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                        <div class="conversation-wrap col-lg-4">
+                          '.$conversations_container.'
+                        </div>
+                        <div class="message-wrap col-lg-8">
+                          <div class="msg-wrap">
+                            '.$messages_container.'
+                          </div>
+                          <div class="send-wrap ">
+                              <textarea class="form-control send-message" rows="3" placeholder="Write a reply..."></textarea>
+                          </div>
+                          <div class="btn-panel">
+                              <a href="" class=" col-lg-3 btn   send-message-btn " role="button"><i class="fa fa-cloud-upload"></i> Add Files</a>
+                              <a href="" class=" col-lg-4 text-right btn   send-message-btn pull-right" role="button"><i class="fa fa-plus"></i> Send Message</a>
+                          </div>
+                        </div>
                       </div>
                     </div>';
 
       echo $container;
+
       require("common/footer.html");
       require("common/scripts.html");
     ?>

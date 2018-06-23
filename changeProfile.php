@@ -60,7 +60,7 @@
                             <label>Change password
                                 <small></small>
                             </label>
-                            <input name="password" id="password" name="password" minlength="6" onchange="checkPassword()" class="form-control">
+                            <input type="password" name="password" id="password" name="password" minlength="6" onchange="checkPassword()" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Confirm password :

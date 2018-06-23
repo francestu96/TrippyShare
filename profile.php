@@ -54,14 +54,14 @@
             if(isset($_GET['id']) && !empty($_GET['id'])){
                 $query = "SELECT * FROM users WHERE id = ".$_GET['id'];
             } else{
-                $query = "SELECT * FROM users WHERE email = '".$_SESSION['email']."'";
+                $query = "SELECT * FROM users WHERE email = ?";
             }            
 
             // Cerco i dati di questo profilo
 
             if ($stmt = $conn->prepare($query)) {
                 /* bind parameters for markers */
-                $stmt->bind_param("s", $id);
+                $stmt->bind_param("s", $_SESSION['email']);
 
                 if ($stmt->execute()) {
                     $result = $stmt->get_result();

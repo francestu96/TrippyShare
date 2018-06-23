@@ -8,7 +8,7 @@
         die("Connection failed: " . $conn->connect_error);
     }
   
-    $query = "INSERT INTO `S4166252`.`users` (`id`, `name`, `surname`, `email`, `password`, `birthdate`, `description`) VALUES (NULL, 'Mario', 'Rossi', 'mario@rossi.it', 'd8a35e56b27694deda71223a47a98fc7bb96a94a', '2018-05-01 00:00:00', NULL);";
+    $query = "INSERT INTO `S4166252`.`users` (`id`, `name`, `surname`, `email`, `password`, `birthdate`, `description`) VALUES (NULL, 'Mario', 'Rossi', 'mario@rossi.it', 'd8a35e56b27694deda71223a47a98fc7bb96a94a', '2018-05-01', NULL);";
   
     if ($conn->query($query) === TRUE) {
       echo "Table users successfully created.<br/>";

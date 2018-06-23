@@ -9,16 +9,21 @@
   }
 
   $query = "
-    CREATE TABLE `users` (
-      `id` INT NOT NULL AUTO_INCREMENT,
-      `name` varchar(20) NOT NULL,
-      `surname` varchar(20) NOT NULL,
-      `email` varchar(30) NOT NULL UNIQUE,
-      `password` varchar(40) NOT NULL,
-      `birthdate` DATETIME NOT NULL,
-      `description` TEXT,
-      PRIMARY KEY (`id`)
-    );
+  CREATE TABLE `users` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name` varchar(20) NOT NULL,
+    `surname` varchar(20) NOT NULL,
+    `email` varchar(30) NOT NULL,
+    `password` varchar(40) NOT NULL,
+    `birthdate` date DEFAULT NULL,
+    `description` text,
+    `gender` enum('male','female','other') DEFAULT NULL,
+    `nationality` varchar(30) DEFAULT NULL,
+    `address` varchar(30) NOT NULL,
+    `phone` varchar(20) NOT NULL,
+    `image_name` varchar(40) NOT NULL,
+    PRIMARY KEY (`id`)
+  );
   ";
 
   if ($conn->query($query) === TRUE) {

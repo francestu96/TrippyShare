@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1 profiel-container">
 
-            <form action="updateProfile.php" method="POST">
+            <form action="updateProfile.php" method="POST" enctype="multipart/form-data" >
                 <div class="profiel-header">
                     <h3>
                         <b>BUILD</b> YOUR PROFILE
@@ -50,9 +50,9 @@
                                 <small></small>
                             </label>
                             <br>
-                            <input name="gender" type="radio" class="form-control" value="male"> Male
+                            <input name="gender" type="radio"  value="male" style="width: 10%" <?php echo ($gender== 'male') ?  "checked" : "" ;  ?>> Male
                             <br>
-                            <input name="gender" type="radio" class="form-control" value="female"> Female
+                            <input name="gender" type="radio"  value="female" style="width: 10%" <?php echo ($gender== 'female') ?  "checked" : "" ;  ?>> Female
                             <br>
                         </div>
 

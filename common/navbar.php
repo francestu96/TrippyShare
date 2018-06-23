@@ -31,7 +31,7 @@
     // Se l'utente non è loggato mostra il pulsante di login
     if(!isset($_SESSION['name'])){
         echo
-            '<li class="wow fadeInDown animated" data-wow-delay="0.2s">
+            '<li class="wow " >
                 <a class="" href="login.php">Sign in</a>
             </li>';
     }
@@ -39,7 +39,7 @@
     // Se l'utente è loggato mostra il suo nome
     else{
         echo
-            '<li class="dropdown ymm-sw" data-wow-delay="0.1s">
+            '<li class=" ymm-sw" >
                 <a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">' . $_SESSION['name'] . '</a>
                 <ul class="dropdown-menu navbar-nav" style="text-align: center">
                 <li>

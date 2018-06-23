@@ -13,7 +13,7 @@
 
   // Devo essere loggato per accedere a questa pagina
   if(!isset($_SESSION['name'])){
-    header('login.php');
+    header('Location: login.php');
     exit();
   }
 
@@ -111,6 +111,10 @@
             $conn->close();
             ?>
         </div>
+    <?php
+      require("common/footer.html");
+      require("common/scripts.html");
+    ?>
 </body>
 
 </html>

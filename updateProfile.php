@@ -35,13 +35,11 @@
   $address = trimIfString($_POST['address']);
   $phone = trimIfString($_POST['phone']);
   $fileName = "no-photo.jpg";
-  
 
   //Process to store file
   if(is_uploaded_file($_FILES['profile-image']['tmp_name'])){
     $targetFolder = 'assets/img/users/'; // Relative to the root
     $tempFile = $_FILES['profile-image']['tmp_name'];
-  
     $myhash = md5_file($_FILES['profile-image']['tmp_name']);
     $temp = explode(".", $_FILES['profile-image']['name']);
     $extension = end($temp);
@@ -51,10 +49,11 @@
     for($i = 1; file_exists($targetFile); $i++){
       $targetFile = rtrim($targetFolder,'/') . '/' .$myhash + $i.'.'.$extension;
     }
-  
+    
+
     // Validate the file type
     $fileTypes = array('jpg','jpeg','gif','png'); // File extensions
-    $fileParts = pathinfo($_FILES['image']['name']);
+    $fileParts = pathinfo($_FILES['profile-image']['name']);
   
     if (in_array($fileParts['extension'],$fileTypes)) {
       move_uploaded_file($tempFile,$targetFile);

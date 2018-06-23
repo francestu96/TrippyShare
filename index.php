@@ -57,7 +57,7 @@
                 <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
                     <!-- /.feature title -->
                     <h2>Last trip uploaded</h2>
-                    <p>Nulla quis dapibus nisl. Suspendisse ultricies commodo arcu nec pretium. Nullam sed arcu ultricies . </p>
+                    <p>Look at the very last trips uploaded and start to travel. </p>
                 </div>
             </div>
 
@@ -188,7 +188,7 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
                     <!-- /.feature title -->
-                    <h2>Our Customers Said  </h2>
+                    <h2>Our Users Said  </h2>
                 </div>
             </div>
 
@@ -198,8 +198,8 @@
                         <div id="testimonial-slider">
                             <div class="item">
                                 <div class="client-text">
-                                    <p>Nulla quis dapibus nisl. Suspendisse llam sed arcu ultried arcu ultricies !</p>
-                                    <h4><strong>Ohidul Islam, </strong><i>Web Designer</i></h4>
+                                    <p>I've found my place!</p>
+                                    <h4><strong>Ohidul Alam </strong></h4>
                                 </div>
                                 <div class="client-face wow fadeInRight" data-wow-delay=".9s">
                                     <img src="assets/img/client-face1.png" alt="">
@@ -207,8 +207,8 @@
                             </div>
                             <div class="item">
                                 <div class="client-text">
-                                    <p>Nulla quis dapibus nisl. Suspendisse llam sed arcu ultried arcu ultricies !</p>
-                                    <h4><strong>Ohidul Islam, </strong><i>Web Designer</i></h4>
+                                    <p>I love Trippyshare !</p>
+                                    <h4><strong>Andrea Alam </strong></h4>
                                 </div>
                                 <div class="client-face">
                                     <img src="assets/img/client-face2.png" alt="">
@@ -216,8 +216,8 @@
                             </div>
                             <div class="item">
                                 <div class="client-text">
-                                    <p>Nulla quis dapibus nisl. Suspendisse llam sed arcu ultried arcu ultricies !</p>
-                                    <h4><strong>Ohidul Islam, </strong><i>Web Designer</i></h4>
+                                    <p>I've found my wife in trip using trippy share</p>
+                                    <h4><strong>Andrea Balam </strong></h4>
                                 </div>
                                 <div class="client-face">
                                     <img src="assets/img/client-face1.png" alt="">
@@ -225,8 +225,8 @@
                             </div>
                             <div class="item">
                                 <div class="client-text">
-                                    <p>Nulla quis dapibus nisl. Suspendisse llam sed arcu ultried arcu ultricies !</p>
-                                    <h4><strong>Ohidul Islam, </strong><i>Web Designer</i></h4>
+                                    <p>Best way to make friends</p>
+                                    <h4><strong>Marco Asam </strong></h4>
                                 </div>
                                 <div class="client-face">
                                     <img src="assets/img/client-face2.png" alt="">
@@ -259,7 +259,7 @@
                                 </div>
                                 <div class="chart" data-percent="5000">
                                     <h2 class="percent" id="counter">0</h2>
-                                    <h5>HAPPY CUSTOMER </h5>
+                                    <h5>USERS </h5>
                                 </div>
                             </div>
                         </div>
@@ -270,7 +270,7 @@
                                 </div>
                                 <div class="chart" data-percent="12000">
                                     <h2 class="percent" id="counter1">0</h2>
-                                    <h5>Trips in stock</h5>
+                                    <h5>Trips</h5>
                                 </div>
                             </div>
                         </div>
@@ -286,46 +286,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- boy-sale area -->
-    <div class="boy-sale-area">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-md-6 col-sm-10 col-sm-offset-1 col-md-offset-0 col-xs-12">
-                    <div class="asks-first">
-                        <div class="asks-first-circle">
-                            <span class="fa fa-search"></span>
-                        </div>
-                        <div class="asks-first-info">
-                            <h2>ARE YOU LOOKING FOR A Trip?</h2>
-                            <p> varius od lio eget conseq uat blandit, lorem auglue comm lodo nisl no us nibh mas lsa</p>
-                        </div>
-                        <div class="asks-first-arrow">
-                            <a href="properties.html"><span class="fa fa-angle-right"></span></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-10 col-sm-offset-1 col-xs-12 col-md-offset-0">
-                    <div  class="asks-first">
-                        <div class="asks-first-circle">
-                            <span class="fa fa-usd"></span>
-                        </div>
-                        <div class="asks-first-info">
-                            <h2>DO YOU WANT TO PROPOSE A Trip?</h2>
-                            <p> varius od lio eget conseq uat blandit, lorem auglue comm lodo nisl no us nibh mas lsa</p>
-                        </div>
-                        <div class="asks-first-arrow">
-                            <a href="properties.html"><span class="fa fa-angle-right"></span></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12">
-                    <p  class="asks-call">QUESTIONS? CALL US  : <span class="strong"> + 3-123- 424-5700</span></p>
                 </div>
             </div>
         </div>

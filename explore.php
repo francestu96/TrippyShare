@@ -32,152 +32,7 @@
   <div class="properties-area recent-property" style="background-color: #FFF;">
         <div class="container">
             <div class="row">
-              <!-- search area -->
-              <div class="col-md-3 p0 padding-top-40">
-                  <div class="blog-asside-right pr0">
-                      <div class="panel panel-default sidebar-menu wow fadeInRight animated" >
-                          <div class="panel-heading">
-                              <h3 class="panel-title">Smart search</h3>
-                          </div>
-                          <div class="panel-body search-widget">
-                              <form action="" class=" form-inline">
-                                  <fieldset>
-                                      <div class="row">
-                                          <div class="col-xs-12">
-                                              <input type="text" class="form-control" placeholder="Key word">
-                                          </div>
-                                      </div>
-                                  </fieldset>
-
-                                  <fieldset class="padding-5">
-                                      <div class="row">
-                                          <div class="col-xs-6">
-                                              <label for="price-range">Price range ($):</label>
-                                              <input type="text" class="span2" value="" data-slider-min="0"
-                                                     data-slider-max="600" data-slider-step="5"
-                                                     data-slider-value="[0,450]" id="price-range" ><br />
-                                              <b class="pull-left color">2000$</b>
-                                              <b class="pull-right color">100000$</b>
-                                          </div>
-                                          <div class="col-xs-6">
-                                              <label for="property-geo">Property geo (m2) :</label>
-                                              <input type="text" class="span2" value="" data-slider-min="0"
-                                                     data-slider-max="600" data-slider-step="5"
-                                                     data-slider-value="[50,450]" id="property-geo" ><br />
-                                              <b class="pull-left color">40m</b>
-                                              <b class="pull-right color">12000m</b>
-                                          </div>
-                                      </div>
-                                  </fieldset>
-
-                                  <fieldset class="padding-5">
-                                      <div class="row">
-                                          <div class="col-xs-6">
-                                              <label for="price-range">Min baths :</label>
-                                              <input type="text" class="span2" value="" data-slider-min="0"
-                                                     data-slider-max="600" data-slider-step="5"
-                                                     data-slider-value="[250,450]" id="min-baths" ><br />
-                                              <b class="pull-left color">1</b>
-                                              <b class="pull-right color">120</b>
-                                          </div>
-
-                                          <div class="col-xs-6">
-                                              <label for="property-geo">Min bed :</label>
-                                              <input type="text" class="span2" value="" data-slider-min="0"
-                                                     data-slider-max="600" data-slider-step="5"
-                                                     data-slider-value="[250,450]" id="min-bed" ><br />
-                                              <b class="pull-left color">1</b>
-                                              <b class="pull-right color">120</b>
-
-                                          </div>
-                                      </div>
-                                  </fieldset>
-
-                                  <fieldset class="padding-5">
-                                      <div class="row">
-                                          <div class="col-xs-6">
-                                              <div class="checkbox">
-                                                  <label> <input type="checkbox" checked> Fire Place</label>
-                                              </div>
-                                          </div>
-
-                                          <div class="col-xs-6">
-                                              <div class="checkbox">
-                                                  <label> <input type="checkbox"> Dual Sinks</label>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </fieldset>
-
-                                  <fieldset class="padding-5">
-                                      <div class="row">
-                                          <div class="col-xs-6">
-                                              <div class="checkbox">
-                                                  <label> <input type="checkbox" checked> Swimming Pool</label>
-                                              </div>
-                                          </div>
-                                          <div class="col-xs-6">
-                                              <div class="checkbox">
-                                                  <label> <input type="checkbox" checked> 2 Stories </label>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </fieldset>
-
-                                  <fieldset class="padding-5">
-                                      <div class="row">
-                                          <div class="col-xs-6">
-                                              <div class="checkbox">
-                                                  <label><input type="checkbox"> Laundry Room </label>
-                                              </div>
-                                          </div>
-                                          <div class="col-xs-6">
-                                              <div class="checkbox">
-                                                  <label> <input type="checkbox"> Emergency Exit</label>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </fieldset>
-
-                                  <fieldset class="padding-5">
-                                      <div class="row">
-                                          <div class="col-xs-6">
-                                              <div class="checkbox">
-                                                  <label>  <input type="checkbox" checked> Jog Path </label>
-                                              </div>
-                                          </div>
-                                          <div class="col-xs-6">
-                                              <div class="checkbox">
-                                                  <label>  <input type="checkbox"> 26' Ceilings </label>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </fieldset>
-
-                                  <fieldset class="padding-5">
-                                      <div class="row">
-                                          <div class="col-xs-12">
-                                              <div class="checkbox">
-                                                  <label>  <input type="checkbox"> Hurricane Shutters </label>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </fieldset>
-
-                                  <fieldset >
-                                      <div class="row">
-                                          <div class="col-xs-12">
-                                              <input class="button btn largesearch-btn" value="Search" type="submit">
-                                          </div>
-                                      </div>
-                                  </fieldset>
-                              </form>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-
-              <div class="col-md-9  pr0 padding-top-40 properties-page">
+              <div class="col-md-25  pr0 padding-top-40 properties-page">
                   <!-- Layout & order area-->
                   <div class="col-md-12 clear">
                       <div class="col-xs-10 page-subheader sorting pl0">
@@ -203,7 +58,7 @@
                   </div>
 
                   <!-- Trips area-->
-                  <div class="col-md-12 clear">
+                  <div class="col-md-125 clear">
                       <div id="list-type" class="proerty-th">
                         <form id="myForm" action="trip.php" method="post">
                           <?php
@@ -235,7 +90,7 @@
                                 error($conn->error, $conn);
                               }
 
-                              echo '<div class="col-sm-6 col-md-4 p0" name="tripContainer">
+                              echo '<div class="col-sm-6 col-md-3 p0" name="tripContainer">
                                       <div id="id" value="' . $row['id']. '"></div>
                                       <div class="box-two proerty-item">
                                           <div class="item-thumb">

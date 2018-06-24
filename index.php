@@ -135,7 +135,7 @@
                                 <div class="col-xs-6 m-padding">
                                     <div class="welcome-estate">
                                         <div class="welcome-icon">
-                                            <i class="pe-7s-photo pe-4x"></i>
+                                            <i class="pe-7s-plane pe-4x"></i>
                                         </div>
                                         <h3>Any place</h3>
                                     </div>
@@ -204,7 +204,7 @@
                                         error($conn->error, $conn);
                                       }
 
-                                      echo '<h2 class="percent" id="counter" to="1">'.($result->fetch_array())[0].'</h2>';
+                                      echo '<h2 class="percent" id="counter" to="'.($result->fetch_array())[0].'"></h2>';
                                     ?>
                                     <h5>HAPPY CUSTOMER </h5>
                                 </div>
@@ -223,7 +223,7 @@
                                         error($conn->error, $conn);
                                       }
 
-                                      echo '<h2 class="percent" id="counter1" to="1">'.($result->fetch_array())[0].'</h2>';
+                                      echo '<h2 class="percent" id="counter1" to="'.($result->fetch_array())[0].'"></h2>';
                                     ?>
                                     <h5>Trips in stock</h5>
                                 </div>
@@ -242,7 +242,7 @@
                                       error($conn->error, $conn);
                                     }
 
-                                    echo '<h2 class="percent" id="counter2" to="1">'.($result->fetch_array())[0].'</h2>';
+                                    echo '<h2 class="percent" id="counter2" to="'.($result->fetch_array())[0].'"></h2>';
 
                                     if(!$conn->close()){
                                       error($conn->error, null);

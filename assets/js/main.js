@@ -89,17 +89,17 @@ $(document).ready(function () {
         $('#counter3').text('0');
         setInterval(function () {
             var curval = parseInt($('#counter').text());
-            var curval1 = parseInt($('#counter1').text().replace(' ', ''));
+            var curval1 = parseInt($('#counter1').text());
             var curval2 = parseInt($('#counter2').text());
             var curval3 = parseInt($('#counter3').text());
-            if (curval <= $('#counter').attr("to")) {
-                $('#counter').text(curval + 1);
+            if (curval < $('#counter').attr("to")) {
+                $('#counter').text(curval+1);
             }
-            if (curval1 <= $('#counter1').attr("to")) {
-                $('#counter1').text(sdf_FTS((curval1 + 20), 0, ' '));
+            if (curval1 < $('#counter1').attr("to")) {
+                $('#counter1').text(curval1+1);
             }
-            if (curval2 <= $('#counter2').attr("to")) {
-                $('#counter2').text(curval2 + 1);
+            if (curval2 < $('#counter2').attr("to")) {
+                $('#counter2').text(curval2+1);
             }
             if (curval3 <= 1022) {
                 $('#counter3').text(curval3 + 1);

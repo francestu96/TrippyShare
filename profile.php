@@ -3,12 +3,12 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<?php     
+<?php
 
   // Se non è ancora inizializzat la sessione la inizializzo
-  if(!isset($_SESSION)) 
-  { 
-      session_start(); 
+  if(!isset($_SESSION))
+  {
+      session_start();
   }
 
   // Devo essere loggato per accedere a questa pagina
@@ -52,54 +52,55 @@
             $conn = new mysqli($mysql_server, $mysql_user, $mysql_pass, $mysql_db);
             // Controllo se devo modificare il mio profilo o voglio visualizzarne uno di un utente
             if(isset($_GET['id']) && !empty($_GET['id'])){
-                $query = "SELECT * FROM users WHERE id = ".$_GET['id'];
+                $query = "SELECT * FROM users WHERE id = ?";
             } else{
                 $query = "SELECT * FROM users WHERE email = ?";
-            }            
+            }
 
             // Cerco i dati di questo profilo
+            try{
+              if (!($stmt = $conn->prepare($query)))
+                throw new Exception($stmt->error);
 
-            if ($stmt = $conn->prepare($query)) {
-                /* bind parameters for markers */
-                $stmt->bind_param("s", $_SESSION['email']);
+              /* bind parameters for markers */
+              if(isset($_GET['id']) && !empty($_GET['id'])){
+                if(!($stmt->bind_param("i", $_GET['id'])))
+                  throw new Exception($stmt->error);
+              }
+              else{
+                if(!($stmt->bind_param("s", $_SESSION['email'])))
+                  throw new Exception($stmt->error);
+              }
 
-                if ($stmt->execute()) {
-                    $result = $stmt->get_result();
+              if(!($stmt->execute()))
+                throw new Exception($stmt->error);
 
-                    if ($result->num_rows === 1) {
-                    // output data of each row
-                        while($row = $result->fetch_assoc()) {
-                            $name = htmlspecialchars($row['name']);
-                            $surname = htmlspecialchars($row['surname']);
-                            $email = htmlspecialchars($row['email']);
-                            $birthday = $row['birthdate'];
-                            $description = htmlspecialchars($row['description']);
-                            $gender = $row['gender'];
-                            $nationality = htmlspecialchars($row['nationality']);
-                            $address = htmlspecialchars($row['address']);
-                            $phone = htmlspecialchars($row['phone']);
-                            $fileName = htmlspecialchars($row['image_name']);
-                        }
-                    }
-                    else {
-                        $_SESSION['error'] = "Errore durante la query di ricerca dell'utente";
-                        header('Location: index.php');
-                        exit();
-                    }
+              $result = $stmt->get_result();
+              // output data of each row
+              $row = $result->fetch_assoc();
 
-                }else {
-                    // si è verificato qualche errore
-                    $_SESSION['error'] = "Errore durante la query di ricerca dell'utente";
-                    header('Location: index.php');
-                    exit();
-                }
+              $name = htmlspecialchars($row['name']);
+              $surname = htmlspecialchars($row['surname']);
+              $email = htmlspecialchars($row['email']);
+              $birthday = $row['birthdate'];
+              $description = htmlspecialchars($row['description']);
+              $gender = $row['gender'];
+              $nationality = htmlspecialchars($row['nationality']);
+              $address = htmlspecialchars($row['address']);
+              $phone = htmlspecialchars($row['phone']);
+              $fileName = htmlspecialchars($row['image_name']);
+
+              /* close statement */
+              if(!$stmt->close())
+                throw new Exception($stmt->error);
+            }
+            catch(Exception $error_message){
+              error($error_message, $conn);
+            }
 
 
                 // Prova ad effettuare la SELECT
                 /* get the statement result */
-                
-                
-            }
 
             if(isset($_GET['id']) && !empty($_GET['id'])){
                 // voglio visualizzare il profilo di un utente

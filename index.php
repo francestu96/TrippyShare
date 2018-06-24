@@ -260,9 +260,6 @@
 
     <!-- popup handle -->
     <?php
-      define('REGISTRATION_ACTION', 2);
-      define('INSERT_TRIP_ACTION', 1);
-
       $message = "";
       $show_popup = false;
 

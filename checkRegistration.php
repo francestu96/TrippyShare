@@ -1,6 +1,7 @@
 <?php
   session_start();
   include('db/mysql_credentials.php');
+  require("common/costants.php");
 
  /* Il seguente script prende i dati in input dal form di registrazione
   *  Controlla che tutti i dati siano stati inseriti e prova ad inserirli.
@@ -11,8 +12,8 @@
 
   foreach($required as $field) {
     if ($_POST[$field] === "" || empty($_POST[$field])){
-      $_SESSION['registration_message'] = "Errore durante la registrazione, verifica i campi";
-      header('Location: login.php');
+      header('Location: login.php?action='.MISSING_FIELD_REGISTRATION_ACTION);
+      exit();
     }
   }
 
@@ -25,8 +26,7 @@
   // Verifico che abbiano inserito solo il nome e non altre schifezze
   if(!preg_match("/^[a-zA-Z'-]+$/", $name) || !preg_match("/^[a-zA-Z'-]+$/", $surname) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
     // Un cracker :D
-    $_SESSION['registration_message'] = "Errore durante la registrazione, verifica i campi";
-    header('Location: login.php');
+    header('Location: login.php?action='.CHECK_FIELD_REGISTRATION_ACTION);
     exit();
   }
 
@@ -34,12 +34,9 @@
   $conn = new mysqli($mysql_server, $mysql_user, $mysql_pass, $mysql_db);
 
   // Check connection
-  if ($conn->connect_error) {
-    $_SESSION['registration_message'] = "Errore durante la registrazione";
-    header('Location: login.php');
-    exit();
-  }
-
+  if ($conn->connect_error)
+    error("Connection failed: " . $conn->connect_error, null);
+  
   $query = "INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, ?)";
 
   if ($stmt = $conn->prepare($query)) {
@@ -51,12 +48,10 @@
       // L'ho inserito con successo
       $_SESSION['name'] = $name;
       $_SESSION['email'] = $email;
-      header('Location: index.php');
+      header('Location: index.php?action='.REGISTRATION_ACTION);
     } else {
       // La mail era già rpesente o si è verificato qualche errore
-      $_SESSION['registration_message'] = "Errore durante la registrazione, i tuoi dati potrebbero essere errati o hai già un account registrato";
-      header('Location: login.php');
-      exit();
+      header('Location: login.php?action='.ERROR_REGISTRATION_ACTION);
     }
 
     /* close statement */

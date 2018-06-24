@@ -5,12 +5,13 @@
       session_start();
   }
   include('db/mysql_credentials.php');
+  require("common/costants.php");
+
   $required = array('email_signin', 'password_signin');
 
   foreach($required as $field) {
     if ($_POST[$field] === "" || empty($_POST[$field])){
-      $_SESSION['login_message'] = "Errore, compila tutti i campi";
-      header('Location: login.php');
+      header('Location: login.php?action='.MISSING_FIELD_LOGIN_ACTION);
       exit();
     }
 }
@@ -22,11 +23,9 @@
   $conn = new mysqli($mysql_server, $mysql_user, $mysql_pass, $mysql_db);
 
   /* check connection */
-  if ($conn->connect_error) {
-    header('Location: login.php');
-    exit();
+  if ($conn->connect_error)
+    error("Connection failed: " . $conn->connect_error, null);
 
-  }
 
   $query = "SELECT * FROM users WHERE email=? AND password=?";
 
@@ -41,21 +40,15 @@
     /* get the statement result */
     $result = $stmt->get_result();
 
-    if ($result->num_rows === 1) {
     // output data of each row
-      while($row = $result->fetch_assoc()) {
-
-        $_SESSION['name'] = $row["name"];
-        $_SESSION['email'] = $row["email"];
-        header('Location: index.php');
-      }
+    if(!empty($row = $result->fetch_assoc()[0])){
+      $_SESSION['name'] = $row["name"];
+      $_SESSION['email'] = $row["email"];
+      header('Location: index.php');
     }
     else {
-      $_SESSION['login_message'] = "Username o password errati";
-      header('Location: login.php');
-      exit();
+      header('Location: login.php?action='.WRONG_USR_PSW_LOGIN_ACTION);
     }
-
     /* close statement */
     $stmt->close();
   }

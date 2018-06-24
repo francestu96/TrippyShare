@@ -242,7 +242,7 @@
                                       error($conn->error, $conn);
                                     }
 
-                                    echo '<h2 class="percent" id="counter2" >'.($result->fetch_array())[0].'</h2>';
+                                    echo '<h2 class="percent" id="counter2" to="1">'.($result->fetch_array())[0].'</h2>';
 
                                     if(!$conn->close()){
                                       error($conn->error, null);

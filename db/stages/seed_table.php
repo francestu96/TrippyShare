@@ -8,8 +8,13 @@
         die("Connection failed: " . $conn->connect_error);
     }
     
-    $query = ";";
-    //$query = "INSERT INTO `S4166252`.`users` (`id`, `name`, `surname`, `email`, `password`, `birthdate`, `description`) VALUES (NULL, 'Mario', 'Rossi', 'mario@rossi.it', 'd8a35e56b27694deda71223a47a98fc7bb96a94a', '2018-05-01 00:00:00', NULL);";
+    $query = "INSERT INTO `stages` (`id`, `trip_type`, `author`, `place`, `description`, `duration`) 
+              VALUES 
+                    (NULL, 'Relax', '2', 'Genoa, Italy', 'Visit Lanterna', 'One day'),
+                    (NULL, 'Visit', '2', 'Milan', 'Visit Milan', 'Two days'),
+                    (NULL, 'Visit', '3', 'Paris', 'Visit Paris', 'Three days'),
+                    (NULL, 'Relax', '1', 'Barcelona', 'Party all days', 'Three days')
+    ;";
   
     if ($conn->query($query) === TRUE) {
       echo "Table stages successfully seeded.<br/>";

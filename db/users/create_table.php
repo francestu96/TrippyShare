@@ -19,9 +19,9 @@
     `description` text,
     `gender` enum('male','female','other') DEFAULT NULL,
     `nationality` varchar(30) DEFAULT NULL,
-    `address` varchar(30) NOT NULL,
-    `phone` varchar(20) NOT NULL,
-    `image_name` varchar(40) NOT NULL,
+    `address` varchar(30) DEFAULT NULL,
+    `phone` varchar(20) DEFAULT NULL,
+    `image_name` varchar(40) DEFAULT NULL,
     PRIMARY KEY (`id`)
   );
   ";

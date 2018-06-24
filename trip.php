@@ -85,7 +85,7 @@
                   </div>
                   <!-- End page header -->';
 
-    //QUERY 2) select the name of partecipants
+    //QUERY 2) select the name of participat
     $query = "SELECT name FROM users_plannings JOIN users ON id = user_id WHERE planning_id = ?";
 
     try{
@@ -104,13 +104,13 @@
         if(!$stmt->close())
           throw new Exception($stmt->error);
 
-        //display the name of all partecipants, if any
-        $partecipants = '';
+        //display the name of all participats, if any
+        $participants = '';
         if($result->num_rows === 0)
-          $partecipants = 'No partecipants. Be the first one to join!';
+          $participants = 'No participants. Be the first one to join!';
         else
           while($row = $result->fetch_assoc())
-            $partecipants .= '<li><a href="properties.html">'. $row['name'] .'</a></li>' . PHP_EOL;
+            $participants .= '<li><a href="properties.html">'. $row['name'] .'</a></li>' . PHP_EOL;
       }
       else {
         throw new Exception($stmt->error);
@@ -141,14 +141,14 @@
                       </div>
                   </div>
                   <div class="section property-features">
-                    <h4 class="s-property-title">Partecipants</h4>
+                    <h4 class="s-property-title">Participants</h4>
                     <ul>
-                      '. $partecipants . '
+                      '. $participants . '
                     </ul>
                   </div>
                   <div class="section" style="text-align:center">
-                    <form method="post" '. ($canUjoin ? 'action="insertPartecipant.php"' : '') .'>
-                      '. ($canUjoin ? '<input type="hidden" name="trip" value="'.htmlspecialchars($trip_id).'">' : '') .'
+                    <form method="post" '. ($canUjoin ? 'action="insertParticipant.php"' : '') .'>
+                      '. ($canUjoin ? '<input type="hidden" name="trip" value="'.$trip_id.'">' : '') .'
                       <input type="'. ($canUjoin ? 'submit' : 'button') .'"
                              value="Join!"
                              style="width:100%; '. (!$canUjoin ? 'background-color:#c2c2c2' : '') .'"

@@ -41,7 +41,7 @@
     $result = $stmt->get_result();
 
     // output data of each row
-    if(!empty($row = $result->fetch_assoc()[0])){
+    if(!empty($row = $result->fetch_assoc())){
       $_SESSION['name'] = $row["name"];
       $_SESSION['email'] = $row["email"];
       header('Location: index.php');

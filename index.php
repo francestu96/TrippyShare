@@ -273,6 +273,10 @@
             $message = "<b>Congratulations!</b><br><br>You've added a new Trip, now people from all over the world can join you";
             $show_popup = true;
             break;
+          case(SUCCESSFUL_JOIN_TRIP):
+            $message = "<b>Congratulations!</b><br><br>You have took part to this trip!<br>Check your profile to look at the trips you participate in";
+            $show_popup = true;
+            break;
         }
       }
     ?>

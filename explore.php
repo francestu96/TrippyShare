@@ -49,33 +49,6 @@
                                       </div>
                                   </fieldset>
 
-                                  <fieldset>
-                                      <div class="row">
-                                          <div class="col-xs-6">
-
-                                              <select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Select Your City">
-
-                                                  <option>New york, CA</option>
-                                                  <option>Paris</option>
-                                                  <option>Casablanca</option>
-                                                  <option>Tokyo</option>
-                                                  <option>Marraekch</option>
-                                                  <option>kyoto , shibua</option>
-                                              </select>
-                                          </div>
-                                          <div class="col-xs-6">
-
-                                              <select id="basic" class="selectpicker show-tick form-control">
-                                                  <option> -Status- </option>
-                                                  <option>Rent </option>
-                                                  <option>Boy</option>
-                                                  <option>used</option>
-
-                                              </select>
-                                          </div>
-                                      </div>
-                                  </fieldset>
-
                                   <fieldset class="padding-5">
                                       <div class="row">
                                           <div class="col-xs-6">
@@ -255,6 +228,13 @@
                             }
 
                             while($row = $result->fetch_assoc()) {
+                              //select nubmber partecipants for each tripContainer
+                              $queryParticipantsNumber = "SELECT COUNT(*) as participants FROM users_plannings WHERE planning_id=". $row['id'];
+
+                              if(!($participantsNumber=$conn->query($queryParticipantsNumber))){
+                                error($conn->error, $conn);
+                              }
+
                               echo '<div class="col-sm-6 col-md-4 p0" name="tripContainer">
                                       <div id="id" value="' . $row['id']. '"></div>
                                       <div class="box-two proerty-item">
@@ -269,9 +249,7 @@
                                               <span class="proerty-price pull-right"> €' . $row['price']. '</span>
                                               <p style="display: none;">' . $row['description'] . '</p>
                                               <div class="property-icon">
-                                                  <img src="assets/img/icon/bed.png">(5)|
-                                                  <img src="assets/img/icon/shawer.png">(2)|
-                                                  <img src="assets/img/icon/cars.png">(1)
+                                                  <i class="pe-7s-users pe-2x"></i>'.$participantsNumber->fetch_assoc()['participants'].'
                                               </div>
                                           </div>
                                       </div>

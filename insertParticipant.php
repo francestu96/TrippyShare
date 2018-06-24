@@ -50,5 +50,5 @@
   if(!$conn->close()){
     error($conn->error, null);
   }
-  header('Location: index.php');
+  header('Location: index.php?action='.SUCCESSFUL_JOIN_TRIP);
 ?>

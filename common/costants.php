@@ -13,6 +13,7 @@
   define('MISSING_FIELD_REGISTRATION_ACTION', "e51e46b283da47f7cac267b70ff935a814363067");
   define('MISSING_FIELD_LOGIN_ACTION', "41a15a8bb403dd7b69ad4c9a69b36a7b21de4a5e");
   define('WRONG_USR_PSW_LOGIN_ACTION', "7d5da248002eb407419415fd1fd030bc54a490e8");
+  define('SUCCESSFUL_JOIN_TRIP', "a6d2bea740982a863afa8149e899b951316b5704");
 
 
   //if DEBUG is set show the error, otherwise redirect to the error page

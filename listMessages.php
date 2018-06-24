@@ -56,7 +56,7 @@
 
         /* get the statement result */
         $result = $stmtSelectId->get_result();
-        $id = ($result->fetch_array())[0];
+        $id = ($result->fetch_assoc())['id'];
 
         /* close statement */
         if(!$stmtSelectId->close())

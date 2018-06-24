@@ -94,9 +94,6 @@
                                   </div>
                               </div>';
                         }
-                        if(!$conn->close()){
-                          error($conn->error, null);
-                        }
                       ?>
                     </form>
                     <div class="col-sm-6 col-md-3 p0">
@@ -182,64 +179,6 @@
         </div>
     </div>
 
-    <!--TESTIMONIALS -->
-    <div class="testimonial-area recent-property" style="background-color: #FCFCFC; padding-bottom: 15px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
-                    <!-- /.feature title -->
-                    <h2>Our Users Said  </h2>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="row testimonial">
-                    <div class="col-md-12">
-                        <div id="testimonial-slider">
-                            <div class="item">
-                                <div class="client-text">
-                                    <p>I've found my place!</p>
-                                    <h4><strong>Ohidul Alam </strong></h4>
-                                </div>
-                                <div class="client-face wow fadeInRight" data-wow-delay=".9s">
-                                    <img src="assets/img/client-face1.png" alt="">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="client-text">
-                                    <p>I love Trippyshare !</p>
-                                    <h4><strong>Andrea Alam </strong></h4>
-                                </div>
-                                <div class="client-face">
-                                    <img src="assets/img/client-face2.png" alt="">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="client-text">
-                                    <p>I've found my wife in trip using trippy share</p>
-                                    <h4><strong>Andrea Balam </strong></h4>
-                                </div>
-                                <div class="client-face">
-                                    <img src="assets/img/client-face1.png" alt="">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="client-text">
-                                    <p>Best way to make friends</p>
-                                    <h4><strong>Marco Asam </strong></h4>
-                                </div>
-                                <div class="client-face">
-                                    <img src="assets/img/client-face2.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
     <!-- Count area -->
     <div class="count-area">
         <div class="container">
@@ -258,8 +197,16 @@
                                     <span class="pe-7s-users"></span>
                                 </div>
                                 <div class="chart" data-percent="5000">
-                                    <h2 class="percent" id="counter">0</h2>
-                                    <h5>USERS </h5>
+                                    <?php
+                                      $query = "SELECT COUNT(*) FROM users";
+
+                                      if(!($result=$conn->query($query))){
+                                        error($conn->error, $conn);
+                                      }
+
+                                      echo '<h2 class="percent" id="counter" to="'.($result->fetch_array())[0].'">0</h2>';
+                                    ?>
+                                    <h5>HAPPY CUSTOMER </h5>
                                 </div>
                             </div>
                         </div>
@@ -269,8 +216,16 @@
                                     <span class="pe-7s-home"></span>
                                 </div>
                                 <div class="chart" data-percent="12000">
-                                    <h2 class="percent" id="counter1">0</h2>
-                                    <h5>Trips</h5>
+                                    <?php
+                                      $query = "SELECT COUNT(*) FROM plannings";
+
+                                      if(!($result=$conn->query($query))){
+                                        error($conn->error, $conn);
+                                      }
+
+                                      echo '<h2 class="percent" id="counter1" to="'.($result->fetch_array())[0].'">0</h2>';
+                                    ?>
+                                    <h5>Trips in stock</h5>
                                 </div>
                             </div>
                         </div>
@@ -280,7 +235,19 @@
                                     <span class="pe-7s-flag"></span>
                                 </div>
                                 <div class="chart" data-percent="120">
-                                    <h2 class="percent" id="counter2">0</h2>
+                                  <?php
+                                    $query = "SELECT COUNT(DISTINCT place) FROM plannings";
+
+                                    if(!($result=$conn->query($query))){
+                                      error($conn->error, $conn);
+                                    }
+
+                                    echo '<h2 class="percent" id="counter2" to="'.($result->fetch_array())[0].'">0</h2>';
+
+                                    if(!$conn->close()){
+                                      error($conn->error, null);
+                                    }
+                                  ?>
                                     <h5>Place registered </h5>
                                 </div>
                             </div>
@@ -299,14 +266,14 @@
       $message = "";
       $show_popup = false;
 
-      if(!empty($_GET['ACTION'])){
-        switch($_GET['ACTION']){
+      if(!empty($_GET['action'])){
+        switch($_GET['action']){
           case(REGISTRATION_ACTION):
-            $message = "Successful registration!<br>Now you are part of us, share, join and live a new adventure!";
+            $message = "<b>Successful registration!</b><br><br>Now you are part of us, share, join and live a new adventure!";
             $show_popup = true;
             break;
           case(INSERT_TRIP_ACTION):
-            $message = "Congratulations!<br>You've added a new Trip, now people from all over the world can join you";
+            $message = "<b>Congratulations!</b><br><br>You've added a new Trip, now people from all over the world can join you";
             $show_popup = true;
             break;
         }

@@ -149,7 +149,7 @@
                   <div class="section" style="text-align:center">
                     <form method="post" '. ($canUjoin ? 'action="insertPartecipant.php"' : '') .'>
                       '. ($canUjoin ? '<input type="hidden" name="trip" value="'.htmlspecialchars($trip_id).'">' : '') .'
-                      <input type="submit"
+                      <input type="'. ($canUjoin ? 'submit' : 'button') .'"
                              value="Join!"
                              style="width:100%; '. (!$canUjoin ? 'background-color:#c2c2c2' : '') .'"
                              class="navbar-btn nav-button login"/>

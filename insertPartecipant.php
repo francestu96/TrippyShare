@@ -23,10 +23,10 @@
   }
 
   //insert the user to N to N table users_plannings with its id and the id of the planning
-  $query = "INSERT INTO users_plannings (user_id, planning_id) VALUES ((SELECT id FROM users WHERE email = ?), ?)";
+    $query = "INSERT IGNORE INTO users_plannings (user_id, planning_id) VALUES ((SELECT id FROM users WHERE email = ?), ?)";
 
-  try{
-    if($stmt = $conn->prepare($query)) {
+    try{
+      if($stmt = $conn->prepare($query)) {
       /* bind parameters for markers */
       if(!$stmt->bind_param("si", $_SESSION["email"], $trip_id))
         throw new Exception($stmt->error);
@@ -40,7 +40,7 @@
         throw new Exception($stmt->error);
     }
     else {
-      throw new Exception($stmt->error);
+      throw new Exception($conn->error);
     }
   }
   catch(Exception $error_message){

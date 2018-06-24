@@ -16,7 +16,6 @@
         <!-- Pulsanti in alto a destra -->
         <div class="collapse navbar-collapse yamm" id="navigation">
             <ul class="main-nav nav navbar-nav navbar-right">
-
                 <li>
                     <a class="" href="index.php">Home</a>
                 </li>

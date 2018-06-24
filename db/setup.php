@@ -40,19 +40,14 @@ include("./plannings_stages/create_table.php");
 echo "Seeding plannings_stages table<br/>";
 include("./plannings_stages/seed_table.php");
 
-// ratings
-echo "<br/>Creating ratings table<br/>";
-include("./ratings/create_table.php");
-echo "Seeding ratings table<br/>";
-include("./ratings/seed_table.php");
-
 // users_plannings
 echo "<br/>Creating users_plannings table<br/>";
 include("./users_plannings/create_table.php");
 echo "Seeding users_plannings table<br/>";
 include("./users_plannings/seed_table.php");
 
-
-
+// ratings
+echo "<br/>Creating ratings table<br/>";
+include("./ratings/create_table.php");
 
 ?>

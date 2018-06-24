@@ -196,7 +196,7 @@
                                 <div class="count-item-circle">
                                     <span class="pe-7s-users"></span>
                                 </div>
-                                <div class="chart" data-percent="5000">
+                                <div class="chart" >
                                     <?php
                                       $query = "SELECT COUNT(*) FROM users";
 
@@ -204,7 +204,7 @@
                                         error($conn->error, $conn);
                                       }
 
-                                      echo '<h2 class="percent" id="counter" to="'.($result->fetch_array())[0].'">0</h2>';
+                                      echo '<h2 class="percent" id="counter" to="1">'.($result->fetch_array())[0].'</h2>';
                                     ?>
                                     <h5>HAPPY CUSTOMER </h5>
                                 </div>
@@ -215,7 +215,7 @@
                                 <div class="count-item-circle">
                                     <span class="pe-7s-home"></span>
                                 </div>
-                                <div class="chart" data-percent="12000">
+                                <div class="chart">
                                     <?php
                                       $query = "SELECT COUNT(*) FROM plannings";
 
@@ -223,7 +223,7 @@
                                         error($conn->error, $conn);
                                       }
 
-                                      echo '<h2 class="percent" id="counter1" to="'.($result->fetch_array())[0].'">0</h2>';
+                                      echo '<h2 class="percent" id="counter1" to="1">'.($result->fetch_array())[0].'</h2>';
                                     ?>
                                     <h5>Trips in stock</h5>
                                 </div>
@@ -234,7 +234,7 @@
                                 <div class="count-item-circle">
                                     <span class="pe-7s-flag"></span>
                                 </div>
-                                <div class="chart" data-percent="120">
+                                <div class="chart" >
                                   <?php
                                     $query = "SELECT COUNT(DISTINCT place) FROM plannings";
 
@@ -242,7 +242,7 @@
                                       error($conn->error, $conn);
                                     }
 
-                                    echo '<h2 class="percent" id="counter2" to="'.($result->fetch_array())[0].'">0</h2>';
+                                    echo '<h2 class="percent" id="counter2" to="1">'.($result->fetch_array())[0].'</h2>';
 
                                     if(!$conn->close()){
                                       error($conn->error, null);

@@ -83,7 +83,7 @@
                         </div>
                         <div class="form-group">
                             <label>City :</label>
-                            <input name="city" type="text" class="form-control" value="<?= $address?>">
+                            <input name="address" type="text" class="form-control" value="<?= $address?>">
                         </div>
 
                     </div>

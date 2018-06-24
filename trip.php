@@ -121,7 +121,7 @@
     }
 
     $trip_info = '<div class="row">
-                      <img src="assets/img/uploaded/'. $trip_imagePath . '" style="width:100%"/>
+                      <img src="assets/img/uploaded/'. $trip_imagePath . '" style="width:100px"/>
                   </div>
                   <div class="single-property-header">
                       <h1 class="property-title pull-left">'. $trip_place . '</h1>

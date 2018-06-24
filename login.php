@@ -8,7 +8,7 @@
 
   // Se l'utente è già loggato allora non ha senso che l'utente arrivi in questa pagina.
   if(isset($_SESSION['name'])){
-    header('index.php');
+    header('Location: index.php');
     exit();
   }
 

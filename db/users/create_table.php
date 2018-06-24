@@ -13,7 +13,7 @@
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(20) NOT NULL,
     `surname` varchar(20) NOT NULL,
-    `email` varchar(30) NOT NULL,
+    `email` varchar(30) NOT NULL UNIQUE,
     `password` varchar(40) NOT NULL,
     `birthdate` date DEFAULT NULL,
     `description` text,

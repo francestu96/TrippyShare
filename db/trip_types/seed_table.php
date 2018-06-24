@@ -8,7 +8,13 @@
         die("Connection failed: " . $conn->connect_error);
     }
     
-    $query = "INSERT INTO `trip_types` (`type`) VALUES('relax');";
+    $query = "INSERT INTO `trip_types` (`type`) 
+              VALUES
+                    ('Hobby'),
+                    ('Relax'),
+                    ('Religious'),
+                    ('Visit')
+                    ;";
   
     if ($conn->query($query) === TRUE) {
       echo "Table trip_types successfully seeded.<br/>";

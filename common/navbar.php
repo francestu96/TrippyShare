@@ -42,14 +42,17 @@
                 <a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">' . $_SESSION['name'] . '</a>
                 <ul class="dropdown-menu navbar-nav" style="text-align: center">
                 <li>
-                        <a href="profile.php">Profile</a>
+                    <a href="profile.php">Profile</a>
                 </li>    
                 <li>
-                        <a href="newTrip.php">New Trip</a>
-                    </li>
-                    <li>
-                        <a href="logout.php">Logout</a>
-                    </li>
+                    <a href="newTrip.php">New Trip</a>
+                </li>
+                <li>
+                    <a href="listMessages.php">Messages</a>
+                </li>
+                <li>
+                    <a href="logout.php">Logout</a>
+                </li>
                 </ul>
             </li>';
     }

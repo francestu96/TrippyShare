@@ -92,7 +92,7 @@
       //echo $stmt->error;
       // Se si è verificato qualche errore
       $_SESSION['update_profile'] = "Error during updating profile";
-      header('Location: login.php');
+      header('Location: profile.php');
       exit();
     }
   }else {

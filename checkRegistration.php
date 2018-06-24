@@ -1,7 +1,9 @@
 <?php
-  session_start();
   include('db/mysql_credentials.php');
   require("common/costants.php");
+  if(!isset($_SESSION)){
+      session_start();
+  }
 
  /* Il seguente script prende i dati in input dal form di registrazione
   *  Controlla che tutti i dati siano stati inseriti e prova ad inserirli.
@@ -36,26 +38,36 @@
   // Check connection
   if ($conn->connect_error)
     error("Connection failed: " . $conn->connect_error, null);
-  
+
   $query = "INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, ?)";
 
-  if ($stmt = $conn->prepare($query)) {
-    /* bind parameters for markers */
-    $stmt->bind_param("ssss", ucfirst($name), ucfirst($surname), $email, $password);
+  try{
+    if ($stmt = $conn->prepare($query)) {
+      /* bind parameters for markers */
+      if(!($stmt->bind_param("ssss", ucfirst($name), ucfirst($surname), $email, $password))
+        throw new Exception($stmt->error);
 
-    // Prova ad effettuare la insert
-    if ($stmt->execute()) {
-      // L'ho inserito con successo
-      $_SESSION['name'] = $name;
-      $_SESSION['email'] = $email;
-      header('Location: index.php?action='.REGISTRATION_ACTION);
-    } else {
-      // La mail era già rpesente o si è verificato qualche errore
-      header('Location: login.php?action='.ERROR_REGISTRATION_ACTION);
+      // Prova ad effettuare la insert
+      if ($stmt->execute()) {
+        // L'ho inserito con successo
+        $_SESSION['name'] = $name;
+        $_SESSION['email'] = $email;
+        header('Location: index.php?action='.REGISTRATION_ACTION);
+      } else {
+        // La mail era già rpesente o si è verificato qualche errore
+        header('Location: login.php?action='.ERROR_REGISTRATION_ACTION);
+      }
+
+      /* close statement */
+      if(!$stmt->close())
+        throw new Exception($stmt->error);
     }
-
-    /* close statement */
-    $stmt->close();
+    else {
+      throw new Exception($stmt->error);
+    }
+    $conn->close();
   }
-  $conn->close();
+  catch(Exception $error_message){
+    error($error_message, $conn);
+  }
 ?>

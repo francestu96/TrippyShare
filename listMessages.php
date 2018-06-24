@@ -100,23 +100,28 @@
       }
     }
 
+    //order conversations by date
+    $conversations->sortByDate();
+
     //fill conversations HTML
     $conversations_container = '';
-    foreach($conversations->conversations as $conversation){
-      $conversations_container .= '<div class="media conversation">
-            <div class="row comment">
-                <div class="col-sm-3 col-md-3 text-center-xs">
-                    <p>
-                        <img style ="width:90%" src="assets/img/users/'. htmlspecialchars($conversation->image) .'" class="img-responsive img-circle" alt="">
-                    </p>
-                </div>
-                <div class="col-sm-9 col-md-8">
-                    <h5 class="text-uppercase" style="font-weight:bold">'. htmlspecialchars($conversation->name) .' '. htmlspecialchars($conversation->surname).'</h5>
-                    <h5>LAST MESSAGE:</5>
-                    <p>'. htmlspecialchars($conversation->messages[count($conversation->messages)-1]->message) .'</p>
-                    <p class="posted"><i class="fa fa-clock-o"></i> '. htmlspecialchars(date('F d, Y \a\t h:i a', strtotime($conversation->messages[0]->timestamp))) .'</p>
-                </div>
-            </div>
+    foreach(array_reverse($conversations->conversations) as $conversation){
+      $conversations_container .= '<div class="media conversation" id="'.$conversation->personId.'" onclick="displayMessages('.$conversation->personId.')">
+            <button style="width:100%; text-align:left">
+              <div class="row comment">
+                  <div class="col-sm-3 col-md-3 text-center-xs">
+                      <p>
+                          <img style ="width:90%" src="assets/img/users/'. htmlspecialchars($conversation->image) .'" class="img-responsive img-circle" alt="">
+                      </p>
+                  </div>
+                  <div class="col-sm-9 col-md-8">
+                      <h5 class="text-uppercase" style="font-weight:bold">'. htmlspecialchars($conversation->name) .' '. htmlspecialchars($conversation->surname).'</h5>
+                      <h5>LAST MESSAGE:</5>
+                      <p>'. htmlspecialchars($conversation->messages[count($conversation->messages)-1]->message) .'</p>
+                      <p class="posted"><i class="fa fa-clock-o"></i> '. htmlspecialchars(date('F d, Y \a\t h:i a', strtotime($conversation->lastMessageDate))) .'</p>
+                  </div>
+              </div>
+            </button>
           </div>';
     }
 
@@ -126,17 +131,17 @@
       foreach($conversation->messages as $message){
         if(empty($message->nameSender)){
           $nameSender = 'You';
-          $style = 'style="ackground-color:green; background: rgba(66, 244, 146, 0.2)"';
+          $style = 'style="border-radius:0px 25px 25px 25px; background: rgba(66, 244, 146, 0.2)"';
         }
         else{
           $nameSender = $message->nameSender;
-          $style = 'style="ackground-color:light blue; background: rgba(255, 0, 0, 0.1);"';
+          $style = 'style="border-radius:0px 25px 25px 25px; background: rgba(255, 0, 0, 0.15);"';
         }
 
-        $messages_container .= '<div class="media msg" '. $style .'>
-            <div class="media-body">
-                <small class="pull-right time" style="color:black;"><i class="fa fa-clock-o"></i>'. htmlspecialchars($message->timestamp) .'</small>
-                <h5 class="media-heading"">'. htmlspecialchars($nameSender) .'</h5>
+        $messages_container .= '<div class="media msg" id="'.$conversation->personId.'">
+            <div class="media-body" '. $style .'>
+                <small class="pull-right time" style="color:black; padding-right:15px"><i class="fa fa-clock-o"></i>'. htmlspecialchars($message->timestamp) .'</small>
+                <h5 style="font-weight:bold; color:#0070FD; margin-top:0px;">'. htmlspecialchars($nameSender) .'</h5>
                 <small class="col-lg-10" style="color:black;">'. htmlspecialchars($message->message) .'</small>
             </div>
         </div>';
@@ -149,15 +154,18 @@
                         '.$conversations_container.'
                       </div>
                       <div class="message-wrap col-lg-8">
-                        <div class="msg-wrap">
+                        <div class="msg-wrap" id="MyDivElement">
                           '.$messages_container.'
                         </div>
-                        <div class="send-wrap ">
-                            <textarea class="form-control send-message" rows="3" placeholder="Write a reply..."></textarea>
-                        </div>
-                        <div class="btn-panel">
-                            <a href="" class=" col-lg-4 text-right btn   send-message-btn" role="button"><i class="fa fa-plus"></i> Send Message</a>
-                        </div>
+                        <form id="myForm" action="sendMessage.php" method="post">
+                          <div class="send-wrap ">
+                              <textarea name="message" class="form-control send-message" rows="3" placeholder="Write a reply..."></textarea>
+                              <input id="receiverId" name="receiverId" type="hidden" value="">
+                          </div>
+                          <div class="btn-panel">
+                              <a class=" col-lg-4 text-right btn   send-message-btn" role="button" onclick="myForm.submit()"><i class="fa fa-plus"></i> Send Message</a>
+                          </div>
+                        </form>
                       </div>
                     </div>
                   </div>';
@@ -167,6 +175,8 @@
     require("common/footer.html");
     require("common/scripts.html");
   ?>
+
+  <script type="text/javascript" src="assets/js/myJs/manageMessages.js"></script>
 </body>
 
 </html>

@@ -20,6 +20,7 @@
     public $name;
     public $surname;
     public $messages;
+    public $lastMessageDate;
 
     public function __construct($row, $message, $session_to_match){
       $this->messages = array();
@@ -37,6 +38,12 @@
         $this->name = $row['nameSender'];
         $this->surname = $row['surnameSender'];
       }
+
+      $this->addMessage($message);
+    }
+
+    public function addMessage($message){
+      $this->lastMessageDate = $message->timestamp;
       array_push($this->messages, $message);
     }
   }
@@ -54,7 +61,7 @@
     }
 
     public function addMessage($conversation, $message){
-      array_push($this->conversations[$this->conversationIndex]->messages, $message);
+      $this->conversations[$this->conversationIndex]->addMessage($message);
     }
 
     public function isPresent($conversation, $sender, $reciever){
@@ -66,6 +73,15 @@
         }
       }
       return false;
+    }
+
+    public function sortByDate(){
+      usort($this->conversations, function($a,$b){
+        $a = new DateTime($a->lastMessageDate);
+        $b = new DateTime($b->lastMessageDate);
+
+        return $a->getTimestamp()-$b->getTimestamp();
+      });
     }
 
     public function printConversations(){

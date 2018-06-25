@@ -1,3 +1,4 @@
+"use strict";
 //array che contiene ogni tappa
 var stages = new Array();
 //array che contiene i markers per ogni tappa

@@ -55,32 +55,31 @@
     $fileName = "empty.png";
     //Process to store file
     if(is_uploaded_file($_FILES['image']['tmp_name'])){
-      echo "PORCODDIO ";
       $targetFolder = 'assets/img/uploaded/'; // Relative to the root
-      $tempFile = trim($_FILES['image']['tmp_name']);
-
+      $tempFile = $_FILES['image']['tmp_name'];
       $myhash = md5_file($_FILES['image']['tmp_name']);
       $temp = explode(".", $_FILES['image']['name']);
       $extension = end($temp);
       $fileName = $myhash.'.'.$extension;
-
+    
       $targetFile = rtrim($targetFolder,'/') . '/' .$myhash.'.'.$extension;
-      for($i = 1; file_exists($targetFile); $i++)
-          $targetFile = rtrim($targetFolder,'/') . '/' .$myhash + $i.'.'.$extension;
+      for($i = 1; file_exists($targetFile); $i++){
+        $targetFile = rtrim($targetFolder,'/') . '/' .$myhash + $i.'.'.$extension;
+      }
+      
 
       // Validate the file type
       $fileTypes = array('jpg','jpeg','gif','png'); // File extensions
       $fileParts = pathinfo($_FILES['image']['name']);
-
-      echo "fuori ";
+    
       if (in_array($fileParts['extension'],$fileTypes)) {
-          echo "dentro ";
-          move_uploaded_file($tempFile,$targetFile);
-          $fileName = $targetFile;
-      }
-      else{
-          throw new Exception("File corrupted");
-      }
+        move_uploaded_file($tempFile,$targetFile);
+    }
+    else{
+      // C'é un errore
+      echo "Error";
+      $fileName = "empty.jpg";
+    }
     }
 
     //QUERY 1) insert planning
@@ -146,5 +145,5 @@
     error($conn->error, null);
   }
 
-  //header('Location: index.php?action='.INSERT_TRIP_ACTION);
+  header('Location: index.php?action='.INSERT_TRIP_ACTION);
 ?>

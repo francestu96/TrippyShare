@@ -1,3 +1,4 @@
+"use strict";
 //when document is ready, display the first covenrsation messages
 $(document).ready(function() {
      displayMessages(document.getElementsByClassName("media conversation")[0].getAttribute("id"));

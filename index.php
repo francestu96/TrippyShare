@@ -25,26 +25,18 @@
             <div id="bg-slider" class="owl-carousel owl-theme">
 
                 <div class="item">
-                    <img src="./assets/img/travel.jpg" alt="Airplane">
-                </div>
-
-                <div class="item">
-                    <img src="./assets/img/hero.jpg" alt="Airplane">
+                    <img src="./assets/img/travel.jpg" alt="Woman">
                 </div>
 
                 <div class="item">
                     <img src="./assets/img/airplane.jpg" alt="Airplane">
                 </div>
 
-
-            </div>
-        </div>
-        <div class="slider-content">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                    <h2>TRIPPY SHARE</h2>
-                    <p>Start sharing your trips today.</p>
+                <div class="item">
+                    <img src="./assets/img/hero.jpg" alt="A camper">
                 </div>
+
+
             </div>
         </div>
     </div>

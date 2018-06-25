@@ -1,3 +1,5 @@
+"use strict";
+
 //quando clicclo su trip per visualizzarlo, invia a Trip.php l'id del trip interessato
 
 //IL MODULO DI INVIO DEVE AVERE:

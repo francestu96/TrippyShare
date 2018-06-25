@@ -1,3 +1,5 @@
+"use strict";
+
 function checkPassword(){
   var password = document.getElementById("password");
   var password_confirm = document.getElementById("password_confirm");

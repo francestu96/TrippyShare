@@ -1,3 +1,4 @@
+"use strict";
 //In Trip.php display all the stages in the map
 var infoWindows = new Array();
 

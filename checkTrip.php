@@ -40,7 +40,7 @@
   }
 
   // Create connection
-  include("./db/mysql_credentials.php");             
+  include("./db/mysql_credentials.php");
   $conn = new mysqli($mysql_server, $mysql_user, $mysql_pass, $mysql_db);;
   // Check connection
   if ($conn->connect_error) {
@@ -55,6 +55,7 @@
     $fileName = "empty.png";
     //Process to store file
     if(is_uploaded_file($_FILES['image']['tmp_name'])){
+      echo "PORCODDIO ";
       $targetFolder = 'assets/img/uploaded/'; // Relative to the root
       $tempFile = trim($_FILES['image']['tmp_name']);
 
@@ -71,7 +72,9 @@
       $fileTypes = array('jpg','jpeg','gif','png'); // File extensions
       $fileParts = pathinfo($_FILES['image']['name']);
 
+      echo "fuori ";
       if (in_array($fileParts['extension'],$fileTypes)) {
+          echo "dentro ";
           move_uploaded_file($tempFile,$targetFile);
           $fileName = $targetFile;
       }
@@ -143,5 +146,5 @@
     error($conn->error, null);
   }
 
-  header('Location: index.php?action=1');
+  //header('Location: index.php?action='.INSERT_TRIP_ACTION);
 ?>

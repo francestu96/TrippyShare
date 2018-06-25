@@ -36,7 +36,7 @@ function addMarker(place, duration, type, description){
 
           var infoWindow = new google.maps.InfoWindow({
             content: '<h3><b>Place: </b>'+ description +
-                         '<br><br><b>Duration: </b>'+ duration + ' days' +
+                         '<br><br><b>Duration: </b>'+ duration +
                          '<br><br><b>Type: </b>'+ type +
                          '<br><br><b>Description: </b>' +description+
                      '</h3>'

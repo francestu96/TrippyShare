@@ -43,8 +43,8 @@
     <?php
       //structures to manage conversations and messages
       require("conversationStructures.php");
-
-      include("./db/mysql_credentials.php");             
+      include("./db/mysql_credentials.php");
+      
       $conn = new mysqli($mysql_server, $mysql_user, $mysql_pass, $mysql_db);;
 
       /* check connection */
@@ -113,53 +113,56 @@
       }
     }
 
-    //order conversations by date
-    $conversations->sortByDate();
-
-    //fill conversations HTML
-    $conversations_container = '';
-    foreach(array_reverse($conversations->conversations) as $conversation){
-      $conversations_container .= '<div class="media conversation" id="'.$conversation->personId.'" onclick="displayMessages('.$conversation->personId.')">
-            <button style="width:100%; text-align:left">
-              <div class="row comment">
-                  <div class="col-sm-3 col-md-3 text-center-xs">
-                      <p>
-                        <a href="profile.php?id='.$conversation->personId.'">
-                        <img  style ="width:90%" src="assets/img/users/'. $conversation->image .'" class="img-responsive img-circle" alt="">
-                        </a>
-                      </p>
-                  </div>
-                  <div class="col-sm-9 col-md-8">
-                      <h5 class="text-uppercase" style="font-weight:bold">'. htmlspecialchars($conversation->name) .' '. htmlspecialchars($conversation->surname).'</h5>
-                      <h5>LAST MESSAGE:</5>
-                      <p>'. htmlspecialchars($conversation->messages[count($conversation->messages)-1]->message) .'</p>
-                      <p class="posted"><i class="fa fa-clock-o"></i> '. htmlspecialchars(date('F d, Y \a\t h:i a', strtotime($conversation->lastMessageDate))) .'</p>
-                  </div>
-              </div>
-            </button>
-          </div>';
-    }
-
-    //fill messages HTML
     $messages_container = '';
-    foreach($conversations->conversations as $conversation){
-      foreach($conversation->messages as $message){
-        if(empty($message->nameSender)){
-          $nameSender = 'You';
-          $style = 'style="border-radius:0px 25px 25px 25px; background: rgba(66, 244, 146, 0.2)"';
-        }
-        else{
-          $nameSender = $message->nameSender;
-          $style = 'style="border-radius:0px 25px 25px 25px; background: rgba(255, 0, 0, 0.15);"';
-        }
+    $conversations_container = '';
 
-        $messages_container .= '<div class="media msg" id="'.$conversation->personId.'">
-            <div class="media-body" '. $style .'>
-                <small class="pull-right time" style="color:black; padding-right:15px"><i class="fa fa-clock-o"></i>'. htmlspecialchars($message->timestamp) .'</small>
-                <h5 style="font-weight:bold; color:#0070FD; margin-top:0px;">'. htmlspecialchars($nameSender) .'</h5>
-                <small class="col-lg-10" style="color:black;">'. htmlspecialchars($message->message) .'</small>
-            </div>
-        </div>';
+    if(!empty($conversations)){
+      //order conversations by date
+      $conversations->sortByDate();
+
+      //fill conversations HTML
+      foreach(array_reverse($conversations->conversations) as $conversation){
+        $conversations_container .= '<div class="media conversation" id="'.$conversation->personId.'" onclick="displayMessages('.$conversation->personId.')">
+              <button style="width:100%; text-align:left">
+                <div class="row comment">
+                    <div class="col-sm-3 col-md-3 text-center-xs">
+                        <p>
+                          <a href="profile.php?id='.$conversation->personId.'">
+                          <img  style ="width:90%" src="assets/img/users/'. $conversation->image .'" class="img-responsive img-circle" alt="">
+                          </a>
+                        </p>
+                    </div>
+                    <div class="col-sm-9 col-md-8">
+                        <h5 class="text-uppercase" style="font-weight:bold">'. htmlspecialchars($conversation->name) .' '. htmlspecialchars($conversation->surname).'</h5>
+                        <h5>LAST MESSAGE:</5>
+                        <p>'. htmlspecialchars($conversation->messages[count($conversation->messages)-1]->message) .'</p>
+                        <p class="posted"><i class="fa fa-clock-o"></i> '. htmlspecialchars(date('F d, Y \a\t h:i a', strtotime($conversation->lastMessageDate))) .'</p>
+                    </div>
+                </div>
+              </button>
+            </div>';
+      }
+
+      //fill messages HTML
+      foreach($conversations->conversations as $conversation){
+        foreach($conversation->messages as $message){
+          if(empty($message->nameSender)){
+            $nameSender = 'You';
+            $style = 'style="border-radius:0px 25px 25px 25px; background: rgba(66, 244, 146, 0.2)"';
+          }
+          else{
+            $nameSender = $message->nameSender;
+            $style = 'style="border-radius:0px 25px 25px 25px; background: rgba(255, 0, 0, 0.15);"';
+          }
+
+          $messages_container .= '<div class="media msg" id="'.$conversation->personId.'">
+              <div class="media-body" '. $style .'>
+                  <small class="pull-right time" style="color:black; padding-right:15px"><i class="fa fa-clock-o"></i>'. htmlspecialchars($message->timestamp) .'</small>
+                  <h5 style="font-weight:bold; color:#0070FD; margin-top:0px;">'. htmlspecialchars($nameSender) .'</h5>
+                  <small class="col-lg-10" style="color:black;">'. htmlspecialchars($message->message) .'</small>
+              </div>
+          </div>';
+        }
       }
     }
 
@@ -187,7 +190,7 @@
     <br>';
 
     echo $container;
-    
+
 
     require("common/footer.html");
     require("common/scripts.html");

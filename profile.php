@@ -117,6 +117,7 @@
       require("common/footer.html");
       require("common/scripts.html");
     ?>
+    <script type="text/javascript" src="assets/js/myJs/submitDataToTrip.js"></script>
 </body>
 
 </html>

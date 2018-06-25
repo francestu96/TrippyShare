@@ -107,7 +107,6 @@
                             <textarea name="description" rows="10" maxlength="500" class="form-control"><?= $description?></textarea>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="col-sm-5 col-sm-offset-1">
@@ -116,7 +115,55 @@
                 </div>
                 <br>
             </form>
+            <?php
+              $query = "SELECT id, image_name, place, price
+                        FROM users_plannings JOIN plannings ON plannings.id=users_plannings.planning_id
+                        WHERE users_plannings.user_id=(SELECT id FROM users WHERE email=?)";
 
+              try{
+                if (!($stmt = $conn->prepare($query)))
+                  throw new Exception($stmt->error);
+
+                /* bind parameters for markers */
+                if(!($stmt->bind_param("s", $_SESSION['email'])))
+                  throw new Exception($stmt->error);
+
+                if(!($stmt->execute()))
+                  throw new Exception($stmt->error);
+
+                $result = $stmt->get_result();
+
+                $trips = '';
+                while($row = $result->fetch_assoc()) {
+                  $trips .= '<div class="col-sm-4 col-xs-6" name="tripContainer">
+                                <div id="id" value="' . $row['id']. '"></div>
+                                  <div class="col-xs-6">
+                                      <a href="#"><img src="assets/img/uploaded/' . $row['image_name'] . '"></a>
+                                  </div>
+                                  <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
+                                      <h6>'. htmlspecialchars($row['place']) . '</h6>
+                                      <span class="property-price">€' . $row['price'] . '</span>
+                                  </div>
+                                </div>';
+                }
+
+                /* close statement */
+                if(!$stmt->close())
+                  throw new Exception($stmt->error);
+              }
+              catch(Exception $error_message){
+                error($error_message, $conn);
+              }
+
+              echo '<form id="myForm" action="trip.php" method="post">
+                      <div class="col-md-12 col-xs-12 percent-blocks m-main">
+                        <div class="row">
+                          <h4 class="s-property-title">Trips you take part in</h4>
+                            '. $trips . '
+                        </div>
+                      </div>
+                    </form>'
+            ?>
         </div>
     </div>
     <!-- end row -->

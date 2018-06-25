@@ -23,16 +23,29 @@
 </head>
 
 <body>
-    <?php
+
+  <?php
       require("common/costants.php");
       require("common/navbar.php");
 
       preloader();
-
+    ?>
+    <div class="page-head">
+      <div class="container">
+        <div class="row">
+          <div class="page-head-content">
+            <h1 class="page-title">Messages</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <?php
       //structures to manage conversations and messages
       require("conversationStructures.php");
 
-      $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
+      include("./db/mysql_credentials.php");             
+      $conn = new mysqli($mysql_server, $mysql_user, $mysql_pass, $mysql_db);;
 
       /* check connection */
       if ($conn->connect_error) {
@@ -111,7 +124,9 @@
               <div class="row comment">
                   <div class="col-sm-3 col-md-3 text-center-xs">
                       <p>
-                          <img style ="width:90%" src="assets/img/users/'. htmlspecialchars($conversation->image) .'" class="img-responsive img-circle" alt="">
+                        <a href="profile.php?id='.$conversation->personId.'">
+                        <img  style ="width:90%" src="assets/img/users/'. $conversation->image .'" class="img-responsive img-circle" alt="">
+                        </a>
                       </p>
                   </div>
                   <div class="col-sm-9 col-md-8">
@@ -168,15 +183,17 @@
                         </form>
                       </div>
                     </div>
-                  </div>';
+                  </div>
+    <br>';
 
     echo $container;
+    
 
     require("common/footer.html");
     require("common/scripts.html");
   ?>
 
-  <script type="text/javascript" src="assets/js/myJs/manageMessages.js"></script>
+      <script type="text/javascript" src="assets/js/myJs/manageMessages.js"></script>
 </body>
 
 </html>

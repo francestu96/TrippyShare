@@ -6,7 +6,7 @@
       session_start();
   }
   if(!isset($_SESSION['name'])){
-    header('login.php');
+    header('Location: login.php');
     exit();
   }
   $conn = new mysqli($mysql_server, $mysql_user, $mysql_pass, $mysql_db);
@@ -85,13 +85,12 @@
     // Prova ad effettuare la update
     if ($status === true) {
       // Update avvenuta con successo
-      $_SESSION['update_profile'] = "Profile updated";
+      $_SESSION['email'] = $email;
       header('Location: profile.php');
       exit();
     } else {
       //echo $stmt->error;
       // Se si è verificato qualche errore
-      $_SESSION['update_profile'] = "Error during updating profile";
       header('Location: profile.php');
       exit();
     }

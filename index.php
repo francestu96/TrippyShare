@@ -25,11 +25,11 @@
             <div id="bg-slider" class="owl-carousel owl-theme">
 
                 <div class="item">
-                    <img src="./assets/img/airplane.jpg" alt="Airplane">
+                    <img src="./assets/img/travel.jpg" alt="Airplane">
                 </div>
 
                 <div class="item">
-                    <img src="./assets/img/airplane.jpg" alt="Airplane">
+                    <img src="./assets/img/hero.jpg" alt="Airplane">
                 </div>
 
                 <div class="item">
@@ -42,9 +42,8 @@
         <div class="slider-content">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
-                    <h2>Sviluppo applicazioni web</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi deserunt deleniti, ullam commodi sit
-                        ipsam laboriosam velit adipisci quibusdam aliquam teneturo!</p>
+                    <h2>TRIPPY SHARE</h2>
+                    <p>Start sharing your trips today.</p>
                 </div>
             </div>
         </div>
@@ -65,7 +64,8 @@
                 <div class="proerty-th">
                     <form id="myForm" action="trip.php" method="post">
                       <?php
-                        $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
+                        include("./db/mysql_credentials.php");             
+                        $conn = new mysqli($mysql_server, $mysql_user, $mysql_pass, $mysql_db);;
 
                         /* check connection */
                         if ($conn->connect_error) {
@@ -103,8 +103,8 @@
                             </div>
                             <div class="more-entry overflow">
                                 <h5><a href="explore.php" >CAN'T DECIDE ? </a></h5>
-                                <h5 class="tree-sub-ttl">Show all properties</h5>
-                                <button class="btn border-btn more-black" value="All properties" onclick="location.href='explore.php';">All properties</button>
+                                <h5 class="tree-sub-ttl">Show all trips</h5>
+                                <button class="btn border-btn more-black" value="All properties" onclick="location.href='explore.php';">All trips</button>
                             </div>
                         </div>
                     </div>

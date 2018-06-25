@@ -104,6 +104,7 @@
 
             if(isset($_GET['id']) && !empty($_GET['id'])){
                 // voglio visualizzare il profilo di un utente
+                $profileId = $_GET['id'];
                 require_once("viewProfile.php");
             } else{
                 // Voglio modificare il mio profilo

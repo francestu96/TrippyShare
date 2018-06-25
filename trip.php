@@ -29,7 +29,8 @@
     //if you are not logged, you cannot join trip
     empty($_SESSION['name']) ? $canUjoin = false : $canUjoin = true;
 
-    $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
+    include("./db/mysql_credentials.php");             
+    $conn = new mysqli($mysql_server, $mysql_user, $mysql_pass, $mysql_db);;
 
     /* check connection */
     if ($conn->connect_error) {
@@ -57,13 +58,13 @@
 
         $row = $result->fetch_assoc();
 
-        $trip_place=$row['place'];
-        $trip_author=$row['author'];
-        $trip_departure=$row['departure_date'];
-        $trip_arrival=$row['arrival_date'];
-        $trip_price=$row['price'];
-        $trip_description=$row['description'];
-        $trip_imagePath=$row['image_name'];
+        $trip_place = htmlspecialchars($row['place']);
+        $trip_author = htmlspecialchars($row['author']);
+        $trip_departure = htmlspecialchars($row['departure_date']);
+        $trip_arrival = $row['arrival_date'];
+        $trip_price = $row['price'];
+        $trip_description = htmlspecialchars($row['description']);
+        $trip_imagePath = $row['image_name'];
       }
       else {
         throw new Exception($stmt->error);
@@ -86,7 +87,7 @@
                   <!-- End page header -->';
 
     //QUERY 2) select the name of participat
-    $query = "SELECT name FROM users_plannings JOIN users ON id = user_id WHERE planning_id = ?";
+    $query = "SELECT name, id FROM users_plannings JOIN users ON id = user_id WHERE planning_id = ?";
 
     try{
       if ($stmt = $conn->prepare($query)) {
@@ -110,7 +111,7 @@
           $participants = 'No participants. Be the first one to join!';
         else
           while($row = $result->fetch_assoc())
-            $participants .= '<li><a href="properties.html">'. $row['name'] .'</a></li>' . PHP_EOL;
+            $participants .= '<li><a href="profile.php?id='.$row['id'].'">'. htmlspecialchars($row['name']) .'</a></li>' . PHP_EOL;
       }
       else {
         throw new Exception($stmt->error);
@@ -167,46 +168,28 @@
     // output data of the only row. It must be alone because in the WHERE clause we are matching the primary key of the table
     $row = $result->fetch_assoc();
 
-    $user_name=$row['name'];
-    $user_surname=$row['surname'];
-    $user_address=$row['address'];
-    $user_email=$row['email'];
-    $user_phone=$row['phone'];
-    $user_description=$row['description'];
-    $user_imageName=$row['image_name'];
+    $user_name = htmlspecialchars($row['name']);
+    $user_surname = htmlspecialchars($row['surname']);
+    $user_address = htmlspecialchars($row['address']);
+    $user_email = htmlspecialchars($row['email']);
+    $user_phone = htmlspecialchars($row['phone']);
+    $user_description = htmlspecialchars($row['description']);
+    $user_imageName = htmlspecialchars($row['image_name']);
 
     //use info just retrived to fill out html with the user who entered the trip
     $user_info = '<div class="dealer-widget">
                     <div class="dealer-content">
                         <div class="inner-wrapper">
-
                             <div class="clear">
                                 <div class="col-xs-4 col-sm-4 dealer-face">
-                                    <a href="">
-                                        <img src="assets/img/users/'. (empty($user_imageName) ? 'no-photo.jpg' : $user_imageName) . '" class="img-circle">
+                                    <a href="profile.php?id='.$trip_author.'">
+                                        <img src="assets/img/users/'. $user_imageName. '" class="img-circle">
                                     </a>
                                 </div>
                                 <div class="col-xs-8 col-sm-8 ">
                                     <h3 class="dealer-name">
-                                        <a href="#">'. $user_name. ' '. $user_surname. '</a>
+                                        <a href="profile.php?id='.$trip_author.'">'. $user_name. ' '. $user_surname. '</a>
                                     </h3>
-                                    <div class="dealer-social-media">
-                                        <a class="twitter" target="_blank" href="">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                        <a class="facebook" target="_blank" href="">
-                                            <i class="fa fa-facebook"></i>
-                                        </a>
-                                        <a class="gplus" target="_blank" href="">
-                                            <i class="fa fa-google-plus"></i>
-                                        </a>
-                                        <a class="linkedin" target="_blank" href="">
-                                            <i class="fa fa-linkedin"></i>
-                                        </a>
-                                        <a class="instagram" target="_blank" href="">
-                                            <i class="fa fa-instagram"></i>
-                                        </a>
-                                    </div>
 
                                 </div>
                             </div>
@@ -242,7 +225,7 @@
                                   <a href="#"><img src="assets/img/uploaded/' . $row['image_name'] . '"></a>
                               </div>
                               <div class="col-md-8 col-sm-8 col-xs-8 blg-entry">
-                                  <h6>'. $row['place'] . '</h6>
+                                  <h6>'. htmlspecialchars($row['place']) . '</h6>
                                   <span class="property-price">€' . $row['price'] . '</span>
                               </div>
                           </li>
@@ -271,7 +254,7 @@
         //creste a different <div> for each stage. These <div> will be managed by "showMap.js" script
         $stages = '';
         while($row = $result->fetch_assoc())
-          $stages .= '<div name="stages" place="'. $row['place'] .'" description="'. $row['description'] .'" trip_type="'. $row['trip_type'] .'" duration="'. $row['duration'] .'"></div>' . PHP_EOL;
+          $stages .= '<div name="stages" place="'. htmlspecialchars($row['place']) .'" description="'. htmlspecialchars($row['description']) .'" trip_type="'. $row['trip_type'] .'" duration="'. htmlspecialchars($row['duration']) .'"></div>' . PHP_EOL;
       }
       else {
         throw new Exception($stmt->error);

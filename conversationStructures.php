@@ -7,9 +7,9 @@
     public $timestamp;
 
     public function __construct($nameSender, $nameReceiver, $message, $timestamp){
-      $this->nameSender = $nameSender;
-      $this->nameReceiver = $nameReceiver;
-      $this->message = $message;
+      $this->nameSender = htmlspecialchars($nameSender);
+      $this->nameReceiver = htmlspecialchars($nameReceiver);
+      $this->message = htmlspecialchars($message);
       $this->timestamp = $timestamp;
     }
   }
@@ -29,14 +29,14 @@
       if($row['sender'] == $session_to_match){
         $this->personId = $row['receiver'];
         $this->image = $row['imageReceiver'];
-        $this->name = $row['nameReceiver'];
-        $this->surname = $row['surnameReceiver'];
+        $this->name = htmlspecialchars($row['nameReceiver']);
+        $this->surname = htmlspecialchars($row['surnameReceiver']);
       }
       else{
-        $this->personId = $row['sender'];
+        $this->personId = htmlspecialchars($row['sender']);
         $this->image = $row['imageSender'];
-        $this->name = $row['nameSender'];
-        $this->surname = $row['surnameSender'];
+        $this->name = htmlspecialchars($row['nameSender']);
+        $this->surname =htmlspecialchars( $row['surnameSender']);
       }
 
       $this->addMessage($message);

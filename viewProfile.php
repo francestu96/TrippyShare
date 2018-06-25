@@ -33,6 +33,7 @@
                             </label>
                             <input name="email" type="email" class="form-control" readonly value="<?= $email?>">
                         </div>
+                        
                     </div>
                     <div class="col-sm-3 padding-top-25">
                         <div class="form-group">
@@ -77,7 +78,7 @@
                         </div>
                     </div>
                     <br>
-                    <hr>
+                    <br>
                     <br>
                     <div class="col-sm-10 col-sm-offset-1">
                         <div class="form-group">
@@ -85,6 +86,12 @@
                             <textarea name="description" rows="10" maxlength="500" readonly class="form-control" ><?= $description?></textarea>
                         </div>
                     </div>
+
+                    <br>
+                    <br>
+                    <?php
+                        require_once('common/contactForm.php');
+                    ?>
 
                 </div>
         </div>

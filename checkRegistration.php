@@ -39,12 +39,12 @@
   if ($conn->connect_error)
     error("Connection failed: " . $conn->connect_error, null);
 
-  $query = "INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, ?)";
+  $query = "INSERT INTO users (name, surname, email, password ) VALUES (?, ?, ?, ?)";
 
   try{
     if ($stmt = $conn->prepare($query)) {
       /* bind parameters for markers */
-      if(!($stmt->bind_param("ssss", ucfirst($name), ucfirst($surname), $email, $password))
+      if(!($stmt->bind_param("ssss", ucfirst($name), ucfirst($surname), $email, $password)))
         throw new Exception($stmt->error);
 
       // Prova ad effettuare la insert

@@ -64,7 +64,8 @@
                           <?php
                             $orderBy = "departure_date";
 
-                            $conn = new mysqli("localhost", "S4166252", "]-vqPx]QhpU4tn", "S4166252");
+                            include("./db/mysql_credentials.php");             
+                            $conn = new mysqli($mysql_server, $mysql_user, $mysql_pass, $mysql_db);;
 
                             /* check connection */
                             if ($conn->connect_error) {

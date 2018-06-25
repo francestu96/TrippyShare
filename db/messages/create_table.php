@@ -15,6 +15,7 @@
       `receiver` int(11) NOT NULL,
       `date` datetime NOT NULL,
       `message` text NOT NULL,
+      `message_read` varchar(10),
       PRIMARY KEY (`id`),
       FOREIGN KEY (`sender`) REFERENCES `users` (`id`),
       FOREIGN KEY (`receiver`) REFERENCES `users` (`id`)

@@ -21,7 +21,7 @@
     `nationality` varchar(30) DEFAULT NULL,
     `address` varchar(30) DEFAULT NULL,
     `phone` varchar(20) DEFAULT NULL,
-    `image_name` varchar(40) DEFAULT NULL,
+    `image_name` varchar(40) DEFAULT 'no-photo.jpg',
     PRIMARY KEY (`id`)
   );
   ";

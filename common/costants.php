@@ -1,6 +1,6 @@
 <?php
   //uncomment the following line if you don't want error info
-  define("DEBUG", 0);
+  //define("DEBUG", 0);
 
   //qui mettiamo le costanti che possiamo usare per i vari messaggi di successo/fallimento di qualcosa
   //potremmo mettere valori inventati per dare professionalità alla cosa e passarli semplicemente in GET.

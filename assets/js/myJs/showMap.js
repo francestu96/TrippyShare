@@ -1,6 +1,8 @@
 "use strict";
 //In Trip.php display all the stages in the map
 var infoWindows = new Array();
+var bounds;
+var map;
 
 $(document).ready(function(){
   var stages = document.getElementsByName("stages");

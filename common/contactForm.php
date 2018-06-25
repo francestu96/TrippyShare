@@ -12,8 +12,7 @@
             <input name="receiverId" type="hidden" class="form-control" value="<?= $profileId?>">
             <div class="form-group">
                 <label>Contact him:</label>
-                <textarea name="message" rows="10" maxlength="500" class="form-control">
-                </textarea>
+                <textarea name="message" rows="10" maxlength="500" class="form-control"></textarea>
             </div>
             <div class="col-sm-5">
                 <br>
